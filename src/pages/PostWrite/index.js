@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import {
   Editor,
@@ -31,28 +31,30 @@ export default function PostWrite() {
     return getDefaultKeyBinding(e);
   };
 
-  const getContentAsRawJson = () => {
-    const contentState = editorContentState.getCurrentContent();
+  const getContentAsRawJson = editorState => () => {
+    const contentState = editorState.getCurrentContent();
     const raw = convertToRaw(contentState);
     return JSON.stringify(raw, null, 2);
   };
 
   const saveContent = () => {
-    const json = getContentAsRawJson();
-    localStorage.setItem("DraftEditorContentJson", json);
+    const titleJson = getContentAsRawJson(editorTitleState)();
+    const contentJson = getContentAsRawJson(editorContentState)();
+    localStorage.setItem("DraftEditorTitleJson", titleJson);
+    localStorage.setItem("DraftEditorContentJson", contentJson);
   };
 
-  const loadContent = () => {
-    const savedData = localStorage.getItem("DraftEditorContentJson");
+  const loadContent = item => () => {
+    const savedData = localStorage.getItem(item);
     return savedData ? JSON.parse(savedData) : null;
   };
 
-  const setEditorState = () => {
-    const rawEditorData = loadContent();
+  const populateEditorState = (item, setEditorState) => () => {
+    const rawEditorData = loadContent(item)();
     if (rawEditorData !== null) {
       const contentState = convertFromRaw(rawEditorData);
       const newEditorState = EditorState.createWithContent(contentState);
-      setEditorContentState(newEditorState);
+      setEditorState(newEditorState);
     }
   };
 
@@ -60,7 +62,9 @@ export default function PostWrite() {
     <StyledEditorContainer>
       <StyledPostHeader
         saveContent={saveContent}
-        setEditorState={setEditorState}
+        populateEditorState={populateEditorState}
+        setEditorTitleState={setEditorTitleState}
+        setEditorContentState={setEditorContentState}
       ></StyledPostHeader>
 
       <StyledEditorTitle>
@@ -90,6 +94,7 @@ export default function PostWrite() {
           customStyleMap={styleMap}
           placeholder={"내용을 입력하세요..."}
         />
+        <SideBarController />
       </StyledEditorContent>
       <pre>{getContentAsRawJson()}</pre>
     </StyledEditorContainer>
@@ -136,6 +141,16 @@ const InlineStyleController = ({ editorState, setEditorState }) => {
   );
 };
 
+const SideBarController = () => {
+  const fileInput = useRef(null);
+  return (
+    <>
+      <input style={{ display: "none" }} type={"file"} ref={fileInput} />
+      <button onClick={() => fileInput.current.click()}>이미지</button>
+    </>
+  );
+};
+
 const ControlButton = ({ label, style, editorState, setEditorState }) => {
   let className = "RichEditor-ControlButton";
   return (
@@ -148,16 +163,33 @@ const ControlButton = ({ label, style, editorState, setEditorState }) => {
   );
 };
 
-const PostHeader = ({ className, saveContent, setEditorState }) => {
+const PostHeader = ({
+  className,
+  saveContent,
+  populateEditorState,
+  setEditorTitleState,
+  setEditorContentState
+}) => {
   return (
     <div className={className}>
       <StyledButton onClick={() => saveContent()}>저장</StyledButton>
-      <StyledButton onClick={() => setEditorState()}>불러오기</StyledButton>
+      <StyledButton
+        onClick={() => {
+          populateEditorState("DraftEditorTitleJson", setEditorTitleState)();
+          populateEditorState(
+            "DraftEditorContentJson",
+            setEditorContentState
+          )();
+        }}
+      >
+        불러오기
+      </StyledButton>
     </div>
   );
 };
 
 const StyledEditorContainer = styled.div`
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
