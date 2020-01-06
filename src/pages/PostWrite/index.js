@@ -6,12 +6,11 @@ import {
   RichUtils,
   getDefaultKeyBinding,
   KeyBindingUtil,
-  convertToRaw,
-  convertFromRaw
+  convertToRaw
 } from "draft-js";
 import "medium-draft/lib/index.css";
 
-import * as pallete from "styleVariables";
+import PostHeader from "components/Editors/PostHeader";
 
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -37,35 +36,14 @@ export default function PostWrite() {
     return JSON.stringify(raw, null, 2);
   };
 
-  const saveContent = () => {
-    const titleJson = getContentAsRawJson(editorTitleState)();
-    const contentJson = getContentAsRawJson(editorContentState)();
-    localStorage.setItem("DraftEditorTitleJson", titleJson);
-    localStorage.setItem("DraftEditorContentJson", contentJson);
-  };
-
-  const loadContent = item => () => {
-    const savedData = localStorage.getItem(item);
-    return savedData ? JSON.parse(savedData) : null;
-  };
-
-  const populateEditorState = (item, setEditorState) => () => {
-    const rawEditorData = loadContent(item)();
-    if (rawEditorData !== null) {
-      const contentState = convertFromRaw(rawEditorData);
-      const newEditorState = EditorState.createWithContent(contentState);
-      setEditorState(newEditorState);
-    }
-  };
-
   return (
     <StyledEditorContainer>
-      <StyledPostHeader
-        saveContent={saveContent}
-        populateEditorState={populateEditorState}
+      <PostHeader
+        editorTitleState={editorTitleState}
+        editorContentState={editorContentState}
         setEditorTitleState={setEditorTitleState}
         setEditorContentState={setEditorContentState}
-      ></StyledPostHeader>
+      />
 
       <StyledEditorTitle>
         <Editor
@@ -78,10 +56,12 @@ export default function PostWrite() {
           placeholder={"제목을 입력하세요..."}
         />
       </StyledEditorTitle>
+
       <InlineStyleController
         editorState={editorContentState}
         setEditorState={setEditorContentState}
       />
+
       <StyledEditorContent>
         <Editor
           editorState={editorContentState}
@@ -94,8 +74,10 @@ export default function PostWrite() {
           customStyleMap={styleMap}
           placeholder={"내용을 입력하세요..."}
         />
+
         <SideBarController />
       </StyledEditorContent>
+
       <pre>{getContentAsRawJson()}</pre>
     </StyledEditorContainer>
   );
@@ -163,31 +145,6 @@ const ControlButton = ({ label, style, editorState, setEditorState }) => {
   );
 };
 
-const PostHeader = ({
-  className,
-  saveContent,
-  populateEditorState,
-  setEditorTitleState,
-  setEditorContentState
-}) => {
-  return (
-    <div className={className}>
-      <StyledButton onClick={() => saveContent()}>저장</StyledButton>
-      <StyledButton
-        onClick={() => {
-          populateEditorState("DraftEditorTitleJson", setEditorTitleState)();
-          populateEditorState(
-            "DraftEditorContentJson",
-            setEditorContentState
-          )();
-        }}
-      >
-        불러오기
-      </StyledButton>
-    </div>
-  );
-};
-
 const StyledEditorContainer = styled.div`
   margin-top: 30px;
   display: flex;
@@ -230,20 +187,4 @@ const StyledEditorControl = styled.div`
     padding: 2px 0;
     display: inline-block;
   }
-`;
-
-const StyledPostHeader = styled(PostHeader)`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const StyledButton = styled.button`
-  border-radius: 33px;
-  border: 1px solid #bbb
-  color: #666;
-  margin: 10px;
-  font-size: 12px;
-  width: 66px;
-  height: 30px;
-  text-align: center;
 `;
