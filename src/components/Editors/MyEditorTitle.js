@@ -13,7 +13,7 @@ export default function MyEditorTitle({
       <Editor
         editorState={editorState}
         onChange={setEditorState}
-        handleKeyCommand={
+        handleKeyCoKmmand={
           handleKeyCommand
             ? handleKeyCommand(editorState, setEditorState)
             : null

@@ -1,6 +1,8 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
-import { Editor, getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
+import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
+import PlugInsEditor from "components/Editors/PlugInsEditor";
+import SideBarController from "components/Editors/SideBarController";
 
 export default function MyEditorContent({
   editorState,
@@ -8,9 +10,11 @@ export default function MyEditorContent({
   handleKeyCommand,
   readOnly = false
 }) {
+  const contentState = editorState.getCurrentContent();
+
   return (
     <StyledEditorContent>
-      <Editor
+      <PlugInsEditor
         editorState={editorState}
         onChange={setEditorState}
         handleKeyCommand={
@@ -23,7 +27,13 @@ export default function MyEditorContent({
         placeholder={"내용을 입력하세요..."}
         readOnly={readOnly}
       />
-      {readOnly ? null : <SideBarController />}
+      {readOnly ? null : (
+        <SideBarController
+          editorState={editorState}
+          onChange={setEditorState}
+          contentState={contentState}
+        />
+      )}
     </StyledEditorContent>
   );
 }
@@ -47,30 +57,17 @@ const styleMap = {
   }
 };
 
-const SideBarController = () => {
-  const fileInput = useRef(null);
-  const fileSelectHandler = e => {
-    const selectedFile = e.target.files[0];
-    console.log("selectedFile", selectedFile);
-  };
-  return (
-    <>
-      <input
-        style={{ display: "none" }}
-        type={"file"}
-        onChange={fileSelectHandler}
-        ref={fileInput}
-      />
-      <button onClick={() => fileInput.current.click()}>이미지</button>
-    </>
-  );
-};
-
 const StyledEditorContent = styled.div`
   width: 80%;
   .DraftEditor-root {
     margin: 20px 10px 10px 10px;
-    // border: 1px solid;
+
+    figure {
+      text-align: center;
+    }
+    img {
+      width: 60%;
+    }
   }
   .public-DraftStyleDefault-pre {
     background-color: rgba(0, 0, 0, 0.05);

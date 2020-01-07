@@ -22,6 +22,7 @@ export default function InlineStyleController({
     <StyledEditorControl>
       {INLINE_STYLES.map(type => (
         <ControlButton
+          key={type.label}
           label={type.label}
           style={type.style}
           editorState={editorState}

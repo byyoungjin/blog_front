@@ -35,8 +35,16 @@ export default function PostDetail() {
 
   return (
     <StyledEditorContainer>
-      <MyEditorTitle editorState={editorTitleState} readOnly={true} />
-      <MyEditorContent editorState={editorContentState} readOnly={true} />
+      <MyEditorTitle
+        editorState={editorTitleState}
+        setEditorState={setEditorTitleState}
+        readOnly={true}
+      />
+      <MyEditorContent
+        editorState={editorContentState}
+        setEditorState={setEditorContentState}
+        readOnly={true}
+      />
     </StyledEditorContainer>
   );
 }
