@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, memo } from "react";
 import Editor from "draft-js-plugins-editor";
 import createImagePlugin from "draft-js-image-plugin";
+import PluginEditor from "draft-js-plugins-editor";
 
 const imagePlugin = createImagePlugin();
 
-export default function PlugInsEditor({ editorState, onChange, ...rest }) {
+const PlugInsEditor = memo(({ editorState, onChange, ...rest }) => {
   // imagePlugin 이 아래 코드들을 대체한다.
 
   // const mediaBlockRenderer = block => {
@@ -36,7 +37,7 @@ export default function PlugInsEditor({ editorState, onChange, ...rest }) {
   //   return media;
   // };
 
-  console.log("rendered");
+  console.log("PluginsEditor rendered!");
   return (
     <Editor
       editorState={editorState}
@@ -45,4 +46,6 @@ export default function PlugInsEditor({ editorState, onChange, ...rest }) {
       plugins={[imagePlugin]}
     />
   );
-}
+});
+
+export default PlugInsEditor;

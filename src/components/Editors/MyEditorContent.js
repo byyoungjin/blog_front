@@ -1,42 +1,40 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, memo } from "react";
 import styled from "styled-components";
 import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
 import PlugInsEditor from "components/Editors/PlugInsEditor";
 import SideBarController from "components/Editors/SideBarController";
 
-export default function MyEditorContent({
-  editorState,
-  setEditorState,
-  handleKeyCommand,
-  readOnly = false
-}) {
-  const contentState = editorState.getCurrentContent();
+const MyEditorContent = memo(
+  ({ editorState, setEditorState, handleKeyCommand, readOnly = false }) => {
+    const contentState = editorState.getCurrentContent();
 
-  return (
-    <StyledEditorContent>
-      <PlugInsEditor
-        editorState={editorState}
-        onChange={setEditorState}
-        handleKeyCommand={
-          handleKeyCommand
-            ? handleKeyCommand(editorState, setEditorState)
-            : null
-        }
-        keyBindingFn={myKeyBindingFn}
-        customStyleMap={styleMap}
-        placeholder={"내용을 입력하세요..."}
-        readOnly={readOnly}
-      />
-      {readOnly ? null : (
-        <SideBarController
+    console.log("contents rendered!");
+    return (
+      <StyledEditorContent>
+        <PlugInsEditor
           editorState={editorState}
           onChange={setEditorState}
-          contentState={contentState}
+          handleKeyCommand={
+            handleKeyCommand
+              ? handleKeyCommand(editorState, setEditorState)
+              : null
+          }
+          keyBindingFn={myKeyBindingFn}
+          customStyleMap={styleMap}
+          placeholder={"내용을 입력하세요..."}
+          readOnly={readOnly}
         />
-      )}
-    </StyledEditorContent>
-  );
-}
+        {readOnly ? null : (
+          <SideBarController
+            editorState={editorState}
+            onChange={setEditorState}
+            contentState={contentState}
+          />
+        )}
+      </StyledEditorContent>
+    );
+  }
+);
 
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -76,3 +74,5 @@ const StyledEditorContent = styled.div`
     padding: 20px;
   }
 `;
+
+export default MyEditorContent;

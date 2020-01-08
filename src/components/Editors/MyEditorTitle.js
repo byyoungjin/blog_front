@@ -1,29 +1,27 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { Editor } from "draft-js";
 
-export default function MyEditorTitle({
-  editorState,
-  setEditorState,
-  handleKeyCommand,
-  readOnly = false
-}) {
-  return (
-    <StyledEditorTitle>
-      <Editor
-        editorState={editorState}
-        onChange={setEditorState}
-        handleKeyCoKmmand={
-          handleKeyCommand
-            ? handleKeyCommand(editorState, setEditorState)
-            : null
-        }
-        placeholder={"제목을 입력하세요..."}
-        readOnly={readOnly}
-      />
-    </StyledEditorTitle>
-  );
-}
+const MyEditorTitle = memo(
+  ({ editorState, setEditorState, handleKeyCommand, readOnly = false }) => {
+    console.log("title rendered!");
+    return (
+      <StyledEditorTitle>
+        <Editor
+          editorState={editorState}
+          onChange={setEditorState}
+          handleKeyCoKmmand={
+            handleKeyCommand
+              ? handleKeyCommand(editorState, setEditorState)
+              : null
+          }
+          placeholder={"제목을 입력하세요..."}
+          readOnly={readOnly}
+        />
+      </StyledEditorTitle>
+    );
+  }
+);
 
 const StyledEditorTitle = styled.div`
   width: 80%;
@@ -33,3 +31,5 @@ const StyledEditorTitle = styled.div`
   cursor: text;
   opacity: 0.6;
 `;
+
+export default MyEditorTitle;
