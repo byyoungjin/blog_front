@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import image from "components/profile.JPG";
+import image from "./profile.JPG";
 
 export default function Post() {
   return (

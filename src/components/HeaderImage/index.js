@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import image from "components/coverImage.JPG";
+import image from "components/HeaderImage/coverImage.JPG";
 
 export default function HeaderImage() {
   return (

@@ -5,13 +5,15 @@ import * as Yup from "yup";
 
 import apis from "api";
 
-export default function Login() {
+export default function Register() {
   const initialValues = {
     emailAddress: "",
-    password: ""
+    password: "",
+    firstName: "",
+    lastName: ""
   };
   const onSubmit = values => {
-    apis.authApi.login(values).then(res => console.log("res", res));
+    apis.authApi.register(values).then(res => console.log("res", res));
   };
   const yupValidationSchema = Yup.object({
     emailAddress: Yup.string()
@@ -20,7 +22,9 @@ export default function Login() {
     password: Yup.string()
       .min(5, "비밀번호는 5글자 이상이어야 합니다.")
       .max(20, "비밀번호는 20글자 이하이어야 합나다.")
-      .required("필수 항목입니다.")
+      .required("필수 항목입니다."),
+    firstName: Yup.string().required("필수 항목입니다."),
+    lastName: Yup.string().required("필수 항목입니다.")
   });
   return (
     <StyledFormContainer>
@@ -34,7 +38,11 @@ export default function Login() {
           <ErrorMessage name="emailAddress" />
           <Field name="password" type="password" placeholder="비밀번호" />
           <ErrorMessage name="password" />
-          <StyledButton type="submit">로그인</StyledButton>
+          <Field name="firstName" type="firstName" placeholder="성" />
+          <ErrorMessage name="firstName" />
+          <Field name="lastName" type="lastName" placeholder="이름" />
+          <ErrorMessage name="lastName" />
+          <StyledButton type="submit">가입</StyledButton>
         </Form>
       </Formik>
     </StyledFormContainer>

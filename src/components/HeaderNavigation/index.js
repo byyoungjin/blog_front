@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import NavItem from "components/NavItem";
+import NavItem from "components/HeaderNavigation/NavItem";
 
 export default function HeaderNavigation() {
   return (
     <Navigation>
       <NavItem text="로그인" to="/login" />
+      <NavItem text="회원가입" to="/register" />
       <NavItem text="글쓰기" to="/postWrite" />
     </Navigation>
   );
