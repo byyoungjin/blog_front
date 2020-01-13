@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export default function NavItem({ to, text, action }) {
+import toggle from "hocs/toggle";
+
+function NavItem({ to, text, action }) {
   const onClickAnchor = e => {
     if (action) {
       e.preventDefault();
@@ -35,3 +37,5 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   cursor: pointer;
 `;
+
+export default toggle(NavItem);

@@ -14,7 +14,7 @@ export default function user(state = INITIAL_STATE, action = {}) {
     case AT.SET_USER_SESSION:
       return { ...state, userSession: action.userSession };
     case AT.RESET_AUTH:
-      return { ...state, userSession: null };
+      return { ...state, userSession: null, [AT.LOG_IN]: Remote.NotAsked };
     case AT.LOG_IN_LOADING:
       return { ...state, [AT.LOG_IN]: Remote.Loading };
     case AT.LOG_IN_SUCCESS:

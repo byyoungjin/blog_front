@@ -1,20 +1,21 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import apis from "api";
+import { actions } from "data";
 
 export default function Register() {
+  const dispatch = useDispatch();
   const initialValues = {
     emailAddress: "",
     password: "",
     firstName: "",
     lastName: ""
   };
-  const onSubmit = values => {
-    apis.authApi.register(values).then(res => console.log("res", res));
-  };
+  const onSubmit = values => dispatch(actions.user.register(values));
   const yupValidationSchema = Yup.object({
     emailAddress: Yup.string()
       .email("유효하지 않은 이메일 입니다.")

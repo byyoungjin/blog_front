@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
 import "./App.css";
 import Home from "pages/Home";
 import PostDetail from "pages/PostDetail";
@@ -7,9 +8,9 @@ import PostWrite from "pages/PostWrite";
 import Login from "pages/Login";
 import Register from "pages/Register";
 
-function App() {
+function App({ history }) {
   return (
-    <Router>
+    <ConnectedRouter history={history}>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
@@ -17,7 +18,7 @@ function App() {
         <Route path="/postDetail" component={PostDetail} />
         <Route path="/postWrite" component={PostWrite} />
       </Switch>
-    </Router>
+    </ConnectedRouter>
   );
 }
 

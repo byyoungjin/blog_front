@@ -9,18 +9,18 @@ import { createRootReducer } from "data/rootReducer";
 import rootSaga from "data/rootSaga";
 
 const history = createBrowserHistory();
-const sagaMiddleWare = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 const rootReducer = createRootReducer(history);
 
 export default function configureStore() {
   const store = createStore(
     rootReducer,
     composeWithDevTools(
-      applyMiddleware(thunk, sagaMiddleWare, routerMiddleware(history))
+      applyMiddleware(thunk, sagaMiddleware, routerMiddleware(history))
     )
   );
 
-  sagaMiddleWare.run(rootSaga);
+  sagaMiddleware.run(rootSaga);
 
   return { history, store };
 }

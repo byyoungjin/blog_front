@@ -1,4 +1,4 @@
-import * as AT from "data/RootActionTypes";
+import * as AT from "data/rootActionTypes";
 
 export const setUserSession = userSession => ({
   type: AT.SET_USER_SESSION,
@@ -7,6 +7,15 @@ export const setUserSession = userSession => ({
 
 export const resetAuth = () => ({
   type: AT.RESET_AUTH
+});
+
+export const login = userLoginInfo => ({
+  type: AT.LOG_IN,
+  userLoginInfo
+});
+
+export const logout = () => ({
+  type: AT.LOG_OUT
 });
 
 export const loginLoading = () => ({
@@ -21,6 +30,11 @@ export const loginFailure = error => ({
 export const loginSuccess = data => ({
   type: AT.LOG_IN_SUCCESS,
   data
+});
+
+export const register = userRegisterInfo => ({
+  type: AT.REGISTER,
+  userRegisterInfo
 });
 
 export const registerLoading = () => ({
