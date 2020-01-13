@@ -1,50 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Editor, EditorState, convertFromRaw } from "draft-js";
 import "medium-draft/lib/index.css";
 
 import MyEditorContent from "components/Editors/MyEditorContent";
 import MyEditorTitle from "components/Editors/MyEditorTitle";
+import { actions, selectors } from "data";
 
-export default function PostDetail() {
-  const [editorTitleState, setEditorTitleState] = useState(
-    EditorState.createEmpty()
-  );
-  const [editorContentState, setEditorContentState] = useState(
-    EditorState.createEmpty()
-  );
+export default function PostDetail({ match }) {
+  const dispatch = useDispatch();
 
-  const loadContent = item => () => {
-    const savedData = localStorage.getItem(item);
-    return savedData ? JSON.parse(savedData) : null;
-  };
+  const editorTitleState = useSelector(selectors.post.getEditorTitleState);
+  const editorContentState = useSelector(selectors.post.getEditorContentState);
 
-  const populateEditorState = (item, setEditorState) => () => {
-    const rawEditorData = loadContent(item)();
-    if (rawEditorData !== null) {
-      const contentState = convertFromRaw(rawEditorData);
-      const newEditorState = EditorState.createWithContent(contentState);
-      setEditorState(newEditorState);
-    }
-  };
+  const { postId } = match.params;
 
   useEffect(() => {
-    populateEditorState("DraftEditorTitleJson", setEditorTitleState)();
-    populateEditorState("DraftEditorContentJson", setEditorContentState)();
+    console.log("useEffect");
+    dispatch(actions.post.getOnePost(postId));
   }, []);
 
   return (
     <StyledEditorContainer>
-      <MyEditorTitle
-        editorState={editorTitleState}
-        setEditorState={setEditorTitleState}
-        readOnly={true}
-      />
-      <MyEditorContent
-        editorState={editorContentState}
-        setEditorState={setEditorContentState}
-        readOnly={true}
-      />
+      <MyEditorTitle editorState={editorTitleState} readOnly={true} />
+      <MyEditorContent editorState={editorContentState} readOnly={true} />
     </StyledEditorContainer>
   );
 }

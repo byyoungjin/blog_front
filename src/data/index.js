@@ -1,9 +1,5 @@
 import * as actions from "./rootActions";
 import * as actionTypes from "./rootActionTypes";
-// import * as selectors from './rootSelectors'
+import * as selectors from "./rootSelectors";
 
-export {
-  actions,
-  actionTypes
-  // selectors
-};
+export { actions, actionTypes, selectors };

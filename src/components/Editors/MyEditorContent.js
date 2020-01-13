@@ -13,7 +13,7 @@ const MyEditorContent = memo(
       <StyledEditorContent>
         <PlugInsEditor
           editorState={editorState}
-          onChange={setEditorState}
+          onChange={setEditorState ? setEditorState : () => true}
           handleKeyCommand={
             handleKeyCommand
               ? handleKeyCommand(editorState, setEditorState)

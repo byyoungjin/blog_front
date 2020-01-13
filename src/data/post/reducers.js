@@ -1,7 +1,13 @@
+import { EditorState } from "draft-js";
+
 import Remote from "data/remote";
-import * as AT from "data/rootActions";
+import * as AT from "data/rootActionTypes";
 
 const INITIAL_STATE = {
+  currentPost: {
+    editorContentState: EditorState.createEmpty(),
+    editorTitleState: EditorState.createEmpty()
+  },
   [AT.GET_POSTS]: Remote.NotAsked,
   [AT.GET_ONE_POST]: Remote.NotAsked
 };
@@ -18,7 +24,15 @@ export default function posts(state = INITIAL_STATE, action = {}) {
     case AT.GET_ONE_POST_LOADING:
       return { ...state, [AT.GET_ONE_POST]: Remote.loading };
     case AT.GET_ONE_POST_SUCCESS:
-      return { ...state, [AT.GET_ONE_POST]: Remote.Success(action.data) };
+      const newCurrentPost = {
+        editorTitleState: action.data.editorTitleState,
+        editorContentState: action.data.editorContentState
+      };
+      return {
+        ...state,
+        [AT.GET_ONE_POST]: Remote.Success(action.data),
+        currentPost: newCurrentPost
+      };
     case AT.GET_ONE_POST_FAILURE:
       return { ...state, [AT.GET_ONE_POST]: Remote.Failure(action.error) };
 

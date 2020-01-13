@@ -1,10 +1,9 @@
-import Cookies from "js-cookie";
-
+import { getAuthCookie } from "data/cookie";
 import Remote from "data/remote";
 import * as AT from "data/rootActionTypes";
 
 const INITIAL_STATE = {
-  userSession: Cookies.get("apiToken") || null,
+  userSession: getAuthCookie() || null,
   [AT.LOG_IN]: Remote.NotAsked,
   [AT.REGISTER]: Remote.NotAsked
 };

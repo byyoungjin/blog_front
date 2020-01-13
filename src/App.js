@@ -15,7 +15,7 @@ function App({ history }) {
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/postDetail" component={PostDetail} />
+        <Route path="/postDetail/:postId" component={PostDetail} />
         <Route path="/postWrite" component={PostWrite} />
       </Switch>
     </ConnectedRouter>

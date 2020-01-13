@@ -1,4 +1,4 @@
-import * as AT from "data/rootActions";
+import * as AT from "data/rootActionTypes";
 
 export const getPosts = userId => ({
   type: AT.GET_POSTS,
@@ -15,12 +15,12 @@ export const getPostsSuccess = data => ({
 });
 
 export const getPostsFailure = error => ({
-  type: AT.GET_POSTS_FAilure,
+  type: AT.GET_POSTS_FAILURE,
   error
 });
 
 export const getOnePost = postId => ({
-  type: AT.GET_POSTS,
+  type: AT.GET_ONE_POST,
   postId
 });
 
@@ -34,6 +34,11 @@ export const getOnePostSuccess = data => ({
 });
 
 export const getOnePostFailure = error => ({
-  type: AT.GET_ONE_POST_FAilure,
+  type: AT.GET_ONE_POST_FAILURE,
   error
+});
+
+export const createPost = postStates => ({
+  type: AT.CREATE_POST,
+  postStates
 });
