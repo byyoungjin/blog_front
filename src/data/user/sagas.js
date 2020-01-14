@@ -25,6 +25,7 @@ export function* login(action) {
 export function* logout() {
   yield put(actions.user.resetAuth());
   clearAuthCookie();
+  yield put(actions.post.getPostsSuccess([]));
 }
 
 export function* register(action) {

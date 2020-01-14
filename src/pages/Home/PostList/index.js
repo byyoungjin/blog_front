@@ -8,7 +8,7 @@ import { actions, selectors } from "data";
 export default function PostList({ user }) {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
-  const userId = user.id;
+  const userId = user?.id;
 
   useEffect(() => {
     dispatch(actions.post.getPosts(userId));

@@ -6,7 +6,9 @@ import api from "api";
 export function* createPost(action) {
   try {
     const { postStates } = action;
-    yield api.postApi.createPost(postStates);
+    const res = yield api.postApi.createPost(postStates);
+    const { createdPostId } = res.data;
+    yield put(actions.post.getOnePost(createdPostId));
   } catch (error) {
     console.log("error", error);
   }
