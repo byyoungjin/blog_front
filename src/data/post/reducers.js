@@ -8,6 +8,7 @@ const INITIAL_STATE = {
     editorContentState: EditorState.createEmpty(),
     editorTitleState: EditorState.createEmpty()
   },
+  posts: [],
   [AT.GET_POSTS]: Remote.NotAsked,
   [AT.GET_ONE_POST]: Remote.NotAsked
 };
@@ -17,7 +18,11 @@ export default function posts(state = INITIAL_STATE, action = {}) {
     case AT.GET_POSTS_LOADING:
       return { ...state, [AT.GET_POSTS]: Remote.loading };
     case AT.GET_POSTS_SUCCESS:
-      return { ...state, [AT.GET_POSTS]: Remote.Success(action.data) };
+      return {
+        ...state,
+        [AT.GET_POSTS]: Remote.Success(action.data),
+        posts: action.data
+      };
     case AT.GET_POSTS_FAILURE:
       return { ...state, [AT.GET_POSTS]: Remote.Failure(action.error) };
 

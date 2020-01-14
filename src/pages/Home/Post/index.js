@@ -1,11 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import image from "./profile.JPG";
+import { actions } from "data";
 
-export default function Post() {
+export default function Post({ postId }) {
+  const dispatch = useDispatch();
+  const _handlePostClick = () => {
+    dispatch(actions.post.getOnePost(postId));
+  };
   return (
-    <PostContainer>
+    <PostContainer onClick={_handlePostClick}>
       <CoverImage></CoverImage>
       <PostText>
         It is a long established fact that a reader will be distracted by the

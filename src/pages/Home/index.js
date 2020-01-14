@@ -15,7 +15,7 @@ export default function Home() {
       <HeaderImage />
       <HeaderNavigation user={user} />
       <PostListContainer>
-        <PostList />
+        <PostList user={user} />
       </PostListContainer>
     </div>
   );

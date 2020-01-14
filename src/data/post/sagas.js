@@ -22,8 +22,20 @@ export function* getOnePost(action) {
     const post = yield api.postApi.getPostById(postId);
 
     yield put(actions.post.getOnePostSuccess(post));
+    yield put(actions.router.push(`/postDetail/${postId}`));
   } catch (error) {
     console.log("error", error);
     yield put(actions.post.getOnePostFailure(error));
+  }
+}
+
+export function* getPosts(action) {
+  try {
+    const { userId } = action;
+    yield put(actions.post.getPostsLoading());
+    const posts = yield api.postApi.getPostsOfUser(userId);
+    yield put(actions.post.getPostsSuccess(posts));
+  } catch (error) {
+    yield put(actions.post.getPostsFailure(error));
   }
 }

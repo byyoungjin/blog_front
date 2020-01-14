@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import Post from "pages/Home/Post";
 
-export default function PostList() {
+import Post from "pages/Home/Post";
+import { actions, selectors } from "data";
+
+export default function PostList({ user }) {
+  const dispatch = useDispatch();
+  const posts = useSelector(selectors.post.getPosts);
+  const userId = user.id;
+
+  useEffect(() => {
+    dispatch(actions.post.getPosts(userId));
+  }, []);
   return (
     <>
       <PostsWrapper>
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        {posts.map(post => {
+          return <Post key={post.id} postId={post.id} />;
+        })}
       </PostsWrapper>
     </>
   );

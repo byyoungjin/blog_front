@@ -8,7 +8,6 @@ export const api = {
   },
   getPostById: async postId => {
     const res = await socialApiClient.get(`/api/post/getPost/${postId}`);
-    console.log("res", res);
     const post = res.data.post;
     const convertFromRawPost = {
       editorContentState: EditorState.createWithContent(
