@@ -1,5 +1,10 @@
 import * as AT from "data/rootActionTypes";
 
+export const currentPostChange = post => ({
+  type: AT.CURRENT_POST_CHANGE,
+  post
+});
+
 export const getPosts = userId => ({
   type: AT.GET_POSTS,
   userId
@@ -41,4 +46,15 @@ export const getOnePostFailure = error => ({
 export const createPost = postStates => ({
   type: AT.CREATE_POST,
   postStates
+});
+
+export const updatePost = ({ postId, newPost }) => ({
+  type: AT.UPDATE_POST,
+  postId,
+  newPost
+});
+
+export const deletePost = postId => ({
+  type: AT.DELETE_POST,
+  postId
 });

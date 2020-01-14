@@ -5,11 +5,8 @@ import api from "api";
 
 export function* createPost(action) {
   try {
-    console.log("createPost saga");
     const { postStates } = action;
-    console.log("postStates", postStates);
     yield api.postApi.createPost(postStates);
-    console.log("post created");
   } catch (error) {
     console.log("error", error);
   }
@@ -38,4 +35,16 @@ export function* getPosts(action) {
   } catch (error) {
     yield put(actions.post.getPostsFailure(error));
   }
+}
+
+export function* updatePost(action) {
+  const { postId, newPost } = action;
+  yield api.postApi.updatePost({ postId, newPost });
+  yield put(actions.post.getOnePost(postId));
+}
+
+export function* deletePost(action) {
+  const { postId } = action;
+  yield api.postApi.deletePost(postId);
+  yield put(actions.router.push("/"));
 }

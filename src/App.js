@@ -7,6 +7,7 @@ import PostDetail from "pages/PostDetail";
 import PostWrite from "pages/PostWrite";
 import Login from "pages/Login";
 import Register from "pages/Register";
+import PostUpdate from "pages/PostUpdate";
 
 function App({ history }) {
   return (
@@ -17,6 +18,7 @@ function App({ history }) {
         <Route path="/register" component={Register} />
         <Route path="/postDetail/:postId" component={PostDetail} />
         <Route path="/postWrite" component={PostWrite} />
+        <Route path="/postUpdate/:postId" component={PostUpdate} />
       </Switch>
     </ConnectedRouter>
   );

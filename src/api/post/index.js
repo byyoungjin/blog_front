@@ -18,20 +18,10 @@ export const api = {
       ),
       UserId: post.UserId
     };
-    console.log("convertFromRawPost", convertFromRawPost);
     return convertFromRawPost;
   },
   createPost: async postContent => {
-    const convertToRawPost = {
-      editorContentState: JSON.stringify(
-        convertToRaw(postContent.editorContentState.getCurrentContent())
-      ),
-      editorTitleState: JSON.stringify(
-        convertToRaw(postContent.editorTitleState.getCurrentContent())
-      ),
-      UserId: postContent.UserId
-    };
-    console.log("convertToRawPost", convertToRawPost);
+    const convertToRawPost = getConvertToRawPost(postContent);
     const res = await socialApiClient.post("api/post/createPost", {
       ...convertToRawPost
     });
@@ -42,9 +32,23 @@ export const api = {
     return res;
   },
   updatePost: async ({ postId, newPost }) => {
+    const convertToRawPost = getConvertToRawPost(newPost);
     const res = await socialApiClient.put(`api/post/updatePost/${postId}`, {
-      ...newPost
+      ...convertToRawPost
     });
+    console.log("res", res);
     return res;
   }
+};
+
+const getConvertToRawPost = postContent => {
+  return {
+    editorContentState: JSON.stringify(
+      convertToRaw(postContent.editorContentState.getCurrentContent())
+    ),
+    editorTitleState: JSON.stringify(
+      convertToRaw(postContent.editorTitleState.getCurrentContent())
+    ),
+    UserId: postContent.UserId
+  };
 };

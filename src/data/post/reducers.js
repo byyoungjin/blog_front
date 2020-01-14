@@ -2,6 +2,7 @@ import { EditorState } from "draft-js";
 
 import Remote from "data/remote";
 import * as AT from "data/rootActionTypes";
+import { actions } from "data";
 
 const INITIAL_STATE = {
   currentPost: {
@@ -15,6 +16,8 @@ const INITIAL_STATE = {
 
 export default function posts(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
+    case AT.CURRENT_POST_CHANGE:
+      return { ...state, currentPost: actions.post };
     case AT.GET_POSTS_LOADING:
       return { ...state, [AT.GET_POSTS]: Remote.loading };
     case AT.GET_POSTS_SUCCESS:
