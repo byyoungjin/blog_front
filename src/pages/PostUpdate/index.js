@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { EditorState, RichUtils } from "draft-js";
 import "medium-draft/lib/index.css";
@@ -12,7 +12,6 @@ import MyEditorInspector from "components/Editors/MyEditorInspector";
 import { selectors, actions } from "data";
 
 export default function PostUpdate({ match }) {
-  const dispatch = useDispatch();
   const [editorTitleState, setEditorTitleState] = useState(
     useSelector(selectors.post.getEditorTitleState)
   );

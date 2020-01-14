@@ -9,9 +9,14 @@ import PostHeader from "components/Editors/PostHeader";
 import { actions, selectors } from "data";
 
 export default function PostDetail({ match }) {
+  const dispatch = useDispatch();
   const editorTitleState = useSelector(selectors.post.getEditorTitleState);
   const editorContentState = useSelector(selectors.post.getEditorContentState);
   const { postId } = match.params;
+
+  useEffect(() => {
+    dispatch(actions.post.getOnePost(postId));
+  }, []);
   return (
     <StyledEditorContainer>
       <PostHeader
