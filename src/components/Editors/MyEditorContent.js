@@ -8,7 +8,6 @@ const MyEditorContent = memo(
   ({ editorState, setEditorState, handleKeyCommand, readOnly = false }) => {
     const contentState = editorState.getCurrentContent();
 
-    console.log("contents rendered!");
     return (
       <StyledEditorContent>
         <PlugInsEditor
@@ -40,7 +39,6 @@ const { hasCommandModifier } = KeyBindingUtil;
 
 const myKeyBindingFn = e => {
   if (e.keyCode === 83 && hasCommandModifier(e)) {
-    console.log("myeditor-save");
     return "myeditor-save";
   }
   return getDefaultKeyBinding(e);

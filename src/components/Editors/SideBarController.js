@@ -10,7 +10,6 @@ export default function SideBarController({
   const fileInput = useRef(null);
 
   const fileSelectHandler = e => {
-    console.log("file changed");
     getFileImg(e);
   };
 

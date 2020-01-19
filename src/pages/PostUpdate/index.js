@@ -26,8 +26,6 @@ export default function PostUpdate({ match }) {
     editorContentState
   };
 
-  console.log("newPost", newPost);
-
   return (
     <StyledEditorContainer>
       <PostHeader

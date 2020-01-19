@@ -36,8 +36,6 @@ const PlugInsEditor = memo(({ editorState, onChange, ...rest }) => {
 
   //   return media;
   // };
-
-  console.log("PluginsEditor rendered!");
   return (
     <Editor
       editorState={editorState}

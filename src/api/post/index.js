@@ -36,7 +36,6 @@ export const api = {
     const res = await socialApiClient.put(`api/post/updatePost/${postId}`, {
       ...convertToRawPost
     });
-    console.log("res", res);
     return res;
   }
 };

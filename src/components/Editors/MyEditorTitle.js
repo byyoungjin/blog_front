@@ -4,7 +4,6 @@ import { Editor } from "draft-js";
 
 const MyEditorTitle = memo(
   ({ editorState, setEditorState, handleKeyCommand, readOnly = false }) => {
-    console.log("title rendered!");
     return (
       <StyledEditorTitle>
         <Editor
