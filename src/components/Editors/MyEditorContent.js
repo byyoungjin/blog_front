@@ -1,4 +1,4 @@
-import React, { useState, useRef, memo } from "react";
+import React, { memo } from "react";
 import styled from "styled-components";
 import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js";
 import PlugInsEditor from "components/Editors/PlugInsEditor";

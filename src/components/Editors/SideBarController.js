@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import styled from "styled-components";
 import { EditorState, AtomicBlockUtils } from "draft-js";
 
 export default function SideBarController({
@@ -58,7 +57,3 @@ export default function SideBarController({
     </>
   );
 }
-
-const StyledImg = styled.img`
-  width: 100%;
-`;

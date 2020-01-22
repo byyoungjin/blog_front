@@ -30,24 +30,45 @@ export default function Login() {
         onSubmit={onSubmit}
         validationSchema={yupValidationSchema}
       >
-        <Form>
-          <Field name="emailAddress" type="email" placeholder="이메일" />
+        <StyledForm>
+          <StyledLabel>LOG IN</StyledLabel>
+          <StyledField name="emailAddress" type="email" placeholder="이메일" />
           <ErrorMessage name="emailAddress" />
-          <Field name="password" type="password" placeholder="비밀번호" />
+          <StyledField name="password" type="password" placeholder="비밀번호" />
           <ErrorMessage name="password" />
           <StyledButton type="submit">로그인</StyledButton>
-        </Form>
+        </StyledForm>
       </Formik>
     </StyledFormContainer>
   );
 }
+const StyledLabel = styled.label`
+  font-size: 30px;
+  margin-bottom: 10px;
+`;
+
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledField = styled(Field)`
+  width: 400px;
+  margin-bottom: 10px;
+  height: auto;
+  font-size: 20px;
+`;
 
 const StyledFormContainer = styled.div`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  justify-contents: center;
+  justify-content: center;
 `;
 
-const StyledButton = styled.button``;
+const StyledButton = styled.button`
+  width: 100px;
+`;

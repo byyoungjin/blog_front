@@ -1,7 +1,6 @@
-import React, { useCallback, useMemo, memo } from "react";
+import React, { memo } from "react";
 import Editor from "draft-js-plugins-editor";
 import createImagePlugin from "draft-js-image-plugin";
-import PluginEditor from "draft-js-plugins-editor";
 
 const imagePlugin = createImagePlugin();
 

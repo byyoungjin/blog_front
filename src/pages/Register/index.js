@@ -34,28 +34,50 @@ export default function Register() {
         onSubmit={onSubmit}
         validationSchema={yupValidationSchema}
       >
-        <Form>
-          <Field name="emailAddress" type="email" placeholder="이메일" />
+        <StyledForm>
+          <StyledLabel>REGISTER</StyledLabel>
+          <StyledField name="emailAddress" type="email" placeholder="이메일" />
           <ErrorMessage name="emailAddress" />
-          <Field name="password" type="password" placeholder="비밀번호" />
+          <StyledField name="password" type="password" placeholder="비밀번호" />
           <ErrorMessage name="password" />
-          <Field name="firstName" type="firstName" placeholder="성" />
+          <StyledField name="firstName" type="firstName" placeholder="성" />
           <ErrorMessage name="firstName" />
-          <Field name="lastName" type="lastName" placeholder="이름" />
+          <StyledField name="lastName" type="lastName" placeholder="이름" />
           <ErrorMessage name="lastName" />
           <StyledButton type="submit">가입</StyledButton>
-        </Form>
+        </StyledForm>
       </Formik>
     </StyledFormContainer>
   );
 }
 
 const StyledFormContainer = styled.div`
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  justify-contents: center;
+  justify-content: center;
 `;
 
-const StyledButton = styled.button``;
+const StyledLabel = styled.label`
+  font-size: 30px;
+  margin-bottom: 10px;
+`;
+
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const StyledField = styled(Field)`
+  width: 400px;
+  margin-bottom: 10px;
+  height: auto;
+  font-size: 20px;
+`;
+
+const StyledButton = styled.button`
+  width: 100px;
+`;
