@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import HeaderNavigation from "components/HeaderNavigation";
-import PostList from "pages/Home/PostList";
+import PostList from "pages/MyPage/PostList";
 import HeaderImage from "components/HeaderImage";
 import * as pallete from "styleVariables";
 import { getUserSession } from "data/user/selectors";

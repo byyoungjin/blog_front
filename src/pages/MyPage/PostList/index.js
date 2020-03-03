@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import Post from "pages/Home/Post";
+import Post from "pages/MyPage/Post";
 import { actions, selectors } from "data";
 
 export default function PostList({ user }) {
