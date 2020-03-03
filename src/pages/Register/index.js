@@ -1,11 +1,14 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
 
-import apis from "api";
 import { actions } from "data";
+import { MyTextInput } from "components";
+import { DefaultLayout } from "layout";
+import { colors } from "theme";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -28,56 +31,97 @@ export default function Register() {
     lastName: Yup.string().required("필수 항목입니다.")
   });
   return (
-    <StyledFormContainer>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={yupValidationSchema}
-      >
-        <StyledForm>
-          <StyledLabel>REGISTER</StyledLabel>
-          <StyledField name="emailAddress" type="email" placeholder="이메일" />
-          <ErrorMessage name="emailAddress" />
-          <StyledField name="password" type="password" placeholder="비밀번호" />
-          <ErrorMessage name="password" />
-          <StyledField name="firstName" type="firstName" placeholder="성" />
-          <ErrorMessage name="firstName" />
-          <StyledField name="lastName" type="lastName" placeholder="이름" />
-          <ErrorMessage name="lastName" />
-          <StyledButton type="submit">가입</StyledButton>
-        </StyledForm>
-      </Formik>
-    </StyledFormContainer>
+    <DefaultLayout logo>
+      <FormContainer>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={yupValidationSchema}
+        >
+          <FormStyled>
+            <LabelStyled>LOG IN</LabelStyled>
+            <MyTextInput
+              name="emailAddress"
+              label="이메일"
+              type="email"
+              placeholder="이메일"
+            />
+            <MyTextInput
+              name="password"
+              label="비밀번호"
+              type="password"
+              placeholder="비밀번호"
+            />
+            <MyTextInput
+              name="firstName"
+              label="성"
+              type="firstName"
+              placeholder="성"
+            />
+            <MyTextInput
+              name="lastName"
+              label="이름"
+              type="lastName"
+              placeholder="이름"
+            />
+            <Controller>
+              <LinkStyled to="/login">
+                이미 가입하셨나요? 로그인하러 가기.
+              </LinkStyled>
+              <ButtonStyled type="submit">가입하기</ButtonStyled>
+            </Controller>
+          </FormStyled>
+        </Formik>
+      </FormContainer>
+    </DefaultLayout>
   );
 }
 
-const StyledFormContainer = styled.div`
-  margin: 0 auto;
+const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
   justify-content: center;
+  min-height: 100vh;
 `;
 
-const StyledLabel = styled.label`
-  font-size: 30px;
-  margin-bottom: 10px;
-`;
-
-const StyledForm = styled(Form)`
+const FormStyled = styled(Form)`
   display: flex;
   flex-direction: column;
+  height: 400px;
+  justify-content: space-around;
+`;
+
+const LabelStyled = styled.label`
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: ${colors.yellow};
+`;
+
+const Controller = styled.div`
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 `;
 
-const StyledField = styled(Field)`
-  width: 400px;
-  margin-bottom: 10px;
-  height: auto;
-  font-size: 20px;
+const ButtonStyled = styled.button`
+  width: 150px;
+  height: 70px;
+  align-self: flex-end;
+
+  border: none;
+  background-color: ${colors.yellow};
+  color: white;
+  font-size: 32px;
+  border-radius: 30px;
+
+  cursor: pointer;
 `;
 
-const StyledButton = styled.button`
-  width: 100px;
+const LinkStyled = styled(Link)`
+  color: ${colors.gray_light};
+  font-size: 16px;
+  margin-right: 50px;
+  text-decoration: none;
+  cursor: pointer;
 `;

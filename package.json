@@ -9,6 +9,7 @@
     "axios": "^0.19.1",
     "connected-react-router": "^6.6.1",
     "daggy": "^1.4.0",
+    "date-fns": "^2.10.0",
     "draft-js": "^0.11.3",
     "draft-js-image-plugin": "^2.0.7",
     "draft-js-plugins-editor": "^3.0.0",
@@ -31,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync . s3://hyjpost.com --acl public-read"
   },
   "eslintConfig": {
     "extends": "react-app"
