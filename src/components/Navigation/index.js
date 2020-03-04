@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import NavItem from "./NavItem";
 
-export default function NavigationComp() {
+export default function NavigationComp({ userSession }) {
   return (
     <Navigation>
-      <NavItem text="MYLOG" to="/myPage" />
-      <NavItem text="LOGIN" to="/login" />
-      <NavItem text="SIGN IN" to="/register" />
+      <NavItem text="MYLOG" to="/myPage" show={userSession} />
+      <NavItem text="LOGIN" to="/login" show={!userSession} />
+      <NavItem text="SIGN IN" to="/register" show={!userSession} />
     </Navigation>
   );
 }

@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import colors from "theme/colors";
+import toggle from "hocs/toggle";
 
-export default function NavItemComp({ text, to }) {
+function NavItemComp({ text, to }) {
   return <NavItem to={to}>{text}</NavItem>;
 }
 
@@ -18,3 +19,5 @@ const NavItem = styled(StyledLink)`
   color: ${colors.yellow};
   margin: 0 10px;
 `;
+
+export default toggle(NavItemComp);

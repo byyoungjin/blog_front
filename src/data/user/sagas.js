@@ -26,6 +26,7 @@ export function* logout() {
   yield put(actions.user.resetAuth());
   clearAuthCookie();
   yield put(actions.post.getPostsSuccess([]));
+  yield put(actions.router.push("/"));
 }
 
 export function* register(action) {

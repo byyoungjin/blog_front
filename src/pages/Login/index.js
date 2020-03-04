@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
 import { actions } from "data";
-import { MyTextInput } from "components";
+import { MyTextInput, Button } from "components";
 import { DefaultLayout } from "layout";
 import { colors } from "theme";
 
@@ -53,7 +53,7 @@ export default function Login() {
               <LinkStyled to="/register">
                 처음이신가요? 가입하러가기.
               </LinkStyled>
-              <ButtonStyled type="submit">로그인</ButtonStyled>
+              <Button type="submit">로그인</Button>
             </Controller>
           </FormStyled>
         </Formik>
@@ -87,19 +87,6 @@ const Controller = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-
-const ButtonStyled = styled.button`
-  width: 150px;
-  height: 70px;
-
-  border: none;
-  background-color: ${colors.yellow};
-  color: white;
-  font-size: 32px;
-  border-radius: 30px;
-
-  cursor: pointer;
 `;
 
 const LinkStyled = styled(Link)`

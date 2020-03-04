@@ -1,14 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
-import { MainLogo, Navigation } from "components";
+import { MainLogo, Navigation, AddPost } from "components";
+import { selectors } from "data";
 
-export default function DefaultLayoutComp({ logo, navigation, children }) {
+export default function DefaultLayoutComp({
+  logo,
+  navigation,
+  addPost,
+  children
+}) {
+  const userSession = useSelector(selectors.user.getUserSession);
   return (
     <DefaultLayout>
       {logo && <MainLogo />}
-      {navigation && <Navigation />}
+      {navigation && <Navigation userSession={userSession} />}
       {children}
+      {addPost && userSession && <AddPost />}
     </DefaultLayout>
   );
 }

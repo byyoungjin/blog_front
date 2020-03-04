@@ -1,14 +1,13 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
-import MyPage from "pages/MyPage";
 import PostDetail from "pages/PostDetail";
 import PostWrite from "pages/PostWrite";
 import Login from "pages/Login";
 import Register from "pages/Register";
 import PostUpdate from "pages/PostUpdate";
 
-import { Home } from "pages";
+import { Home, MyPage } from "pages";
 
 function App({ history }) {
   return (
