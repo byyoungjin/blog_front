@@ -19,7 +19,7 @@ const ProfileRound = styled.img`
   height: ${({ diameter }) => diameter};
   border-radius: 50%;
   background-size: cover;
-  border: 10px solid ${colors.blue_dark};
+  border: 3px solid ${colors.blue_dark};
   backgroud-color: ${colors.yellow};
 `;
 

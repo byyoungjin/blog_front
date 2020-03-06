@@ -5,6 +5,8 @@ import MainLogo from "./MainLogo";
 import AddPost from "./AddPost";
 import ProfilePicture from "./ProfilePicture";
 import Button from "./Button";
+import Controller from "./Controller";
+import MyEditor from "./MyEditor";
 
 export {
   Post,
@@ -13,5 +15,7 @@ export {
   MainLogo,
   AddPost,
   ProfilePicture,
-  Button
+  Button,
+  Controller,
+  MyEditor
 };

@@ -7,7 +7,8 @@ const colors = {
   pink: "#E14577",
   gray_1: "#707070",
   gray_light: "#C7D2E6",
-  blueGray: "#5C719A"
+  blueGray: "#5C719A",
+  black_84: "rgba(0,0,0,.84)"
 };
 
 export default colors;

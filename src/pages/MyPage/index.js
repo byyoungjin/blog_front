@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 
-import { Post, AddPost } from "components";
+import { Post } from "components";
 import { DefaultLayout } from "layout";
 import { posts } from "models/dummyData/posts";
 import { ProfilePicture, Button } from "components";
@@ -56,12 +56,13 @@ const MyProfile = styled.div`
 
 const Name = styled.div`
   font-size: 40px;
-  margin-top: 30px;
+  margin-top: 50px;
 `;
 
 const MyPageUrl = styled.div`
   font-size: 40px;
   color: ${colors.blueGray};
+  margin-bottom: 50px;
 `;
 
 const Label = styled.div`
