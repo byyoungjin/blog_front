@@ -5,7 +5,8 @@ import BasicEditor from "./BasicEditor";
 
 export default function MyEditor() {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const editorRef = useRef(null);
+  const editorRef = useRef();
+
   return (
     <BasicEditor
       editorState={editorState}

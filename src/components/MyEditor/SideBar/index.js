@@ -22,19 +22,24 @@ export default function SideBarComp({ editorState, children }) {
       `[data-offset-key="${offsetKey}"]`
     )[0];
 
+    const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
+    const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
+
     const isEmpty = currentBlock.getText() === "";
 
     if (!isEmpty) {
       setSidebarPosition({
         transform: "scale(0)",
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
-        top: node.offsetTop - 10
+        top: node.offsetTop - 10,
+        left: rootEditorNodeRect.left - 50
       });
     } else {
       setSidebarPosition({
         transform: "scale(1)",
         top: node.offsetTop - 10,
-        transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)"
+        transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
+        left: rootEditorNodeRect.left - 50
       });
     }
   }, [editorState, isOpen]);
@@ -52,7 +57,6 @@ export default function SideBarComp({ editorState, children }) {
 const SideBarContainer = styled.div`
   display: flex;
   position: absolute;
-  left: -50px;
 `;
 
 const SideBar = styled.div`

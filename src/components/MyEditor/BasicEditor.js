@@ -67,7 +67,7 @@ export default function BasicEditor({
         {...props}
       />
       <SideBar editorState={editorState} />
-      <UpperBar editorState={editorState} />
+      <UpperBar editorState={editorState} editorRef={editorRef} />
     </EditorWrapper>
   );
 }
@@ -77,7 +77,7 @@ const EditorWrapper = styled.div`
 
   padding: 20px;
   grid-area: editor;
-  position: relative;
+
   font-size: 24px;
   color: ${colors.black_84};
 `;
