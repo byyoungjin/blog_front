@@ -2,9 +2,11 @@ import { socialApiClient } from "api/client";
 
 export const api = {
   login: async userLoginInfo => {
+    console.log("userLoginInfo", userLoginInfo);
     return await socialApiClient
-      .post("/api/auth/login", userLoginInfo)
+      .post("api/auth/login", userLoginInfo)
       .catch(error => {
+        console.log("error", error);
         throw Error(error.message);
       });
   },
@@ -14,5 +16,10 @@ export const api = {
       .catch(error => {
         throw Error(error.message);
       });
+  },
+  whoAmI: async () => {
+    return await socialApiClient.get("api/auth/whoAmi").catch(error => {
+      throw Error(error.message);
+    });
   }
 };

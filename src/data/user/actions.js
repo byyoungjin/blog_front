@@ -14,10 +14,6 @@ export const login = userLoginInfo => ({
   userLoginInfo
 });
 
-export const logout = () => ({
-  type: AT.LOG_OUT
-});
-
 export const loginLoading = () => ({
   type: AT.LOG_IN_LOADING
 });
@@ -30,6 +26,10 @@ export const loginFailure = error => ({
 export const loginSuccess = data => ({
   type: AT.LOG_IN_SUCCESS,
   data
+});
+
+export const logout = () => ({
+  type: AT.LOG_OUT
 });
 
 export const register = userRegisterInfo => ({
@@ -48,5 +48,23 @@ export const registerFailure = error => ({
 
 export const registerSuccess = data => ({
   type: AT.REGISTER_SUCCESS,
+  data
+});
+
+export const whoAmI = () => ({
+  type: AT.WHO_AM_I
+});
+
+export const whoAmILoading = () => ({
+  type: AT.WHO_AM_I_LOADING
+});
+
+export const whoAmIFailure = error => ({
+  type: AT.WHO_AM_I_FAILURE,
+  error
+});
+
+export const whoAmISuccess = data => ({
+  type: AT.WHO_AM_I_SUCCESS,
   data
 });

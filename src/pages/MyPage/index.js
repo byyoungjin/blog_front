@@ -15,29 +15,27 @@ export default function Mypage() {
 
   const logoutHandler = () => dispatch(actions.user.logout());
   return (
-    <DefaultLayout logo navigation addPost>
-      <ContentsContainer>
-        <MyProfile>
-          <ProfilePicture src={user.pictureUrl} diameter="300px" />
-          <Name>하영진</Name>
-          <MyPageUrl>hyjpost.com/@teen14y</MyPageUrl>
-          <Button onClick={logoutHandler}>로그아웃</Button>
-        </MyProfile>
-        <Label>내 포스트</Label>
-        <PostContainer>
-          {posts.map(({ url, title, subTitle, contents, date }, index) => (
-            <Post
-              key={title + index}
-              url={url}
-              title={title}
-              subTilte={subTitle}
-              contents={contents}
-              date={date}
-            />
-          ))}
-        </PostContainer>
-      </ContentsContainer>
-    </DefaultLayout>
+    <ContentsContainer>
+      <MyProfile>
+        <ProfilePicture src={user.pictureUrl} diameter="300px" />
+        <Name>하영진</Name>
+        <MyPageUrl>hyjpost.com/@teen14y</MyPageUrl>
+        <Button onClick={logoutHandler}>로그아웃</Button>
+      </MyProfile>
+      <Label>내 포스트</Label>
+      <PostContainer>
+        {posts.map(({ url, title, subTitle, contents, date }, index) => (
+          <Post
+            key={title + index}
+            url={url}
+            title={title}
+            subTilte={subTitle}
+            contents={contents}
+            date={date}
+          />
+        ))}
+      </PostContainer>
+    </ContentsContainer>
   );
 }
 

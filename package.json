@@ -33,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "aws s3 sync . s3://hyjpost.com --acl public-read"
+    "deploy": "npm run build && cd build && aws s3 sync . s3://hyjpost.com --acl public-read"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -7,20 +7,18 @@ import { posts } from "models/dummyData/posts";
 
 export default function Home() {
   return (
-    <DefaultLayout logo navigation addPost>
-      <PostContainer>
-        {posts.map(({ url, title, subTitle, contents, date }, index) => (
-          <Post
-            key={title + index}
-            url={url}
-            title={title}
-            subTilte={subTitle}
-            contents={contents}
-            date={date}
-          />
-        ))}
-      </PostContainer>
-    </DefaultLayout>
+    <PostContainer>
+      {posts.map(({ url, title, subTitle, contents, date }, index) => (
+        <Post
+          key={title + index}
+          url={url}
+          title={title}
+          subTilte={subTitle}
+          contents={contents}
+          date={date}
+        />
+      ))}
+    </PostContainer>
   );
 }
 

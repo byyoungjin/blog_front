@@ -49,7 +49,7 @@ export default function SideBarComp({ editorState, children }) {
       <SideBar onMouseDown={toggleSidebar}>
         <img src={plus} alt="plus" />
       </SideBar>
-      {isOpen && <BlockButtons />}
+      <BlockButtons isOpen={isOpen} />
     </SideBarContainer>
   );
 }

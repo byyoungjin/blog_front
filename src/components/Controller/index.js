@@ -4,11 +4,19 @@ import styled from "styled-components";
 import ProfilePicture from "../ProfilePicture";
 import { colors } from "theme";
 
-export default function ControllerComp() {
+export default function ControllerComp({ userSession }) {
+  const { id } = userSession;
+  const saveHandler = () => {
+    console.log("id", id);
+  };
+  const publishHandler = () => {
+    console.log("id", id);
+  };
+
   return (
     <Controller>
-      <Button>SAVE</Button>
-      <Button>PUBLISH</Button>
+      <Button onClick={saveHandler}>SAVE</Button>
+      <Button onClick={publishHandler}>PUBLISH</Button>
       <ProfilePicture diameter="50px" />
     </Controller>
   );

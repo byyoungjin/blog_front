@@ -15,3 +15,8 @@ export const REGISTER_LOADING = loading(REGISTER);
 export const RESET_AUTH = "RESET_AUTH";
 
 export const SET_USER_SESSION = "SET_USER_SESSION";
+
+export const WHO_AM_I = "WHO_AM_I";
+export const WHO_AM_I_SUCCESS = success(WHO_AM_I);
+export const WHO_AM_I_FAILURE = failure(WHO_AM_I);
+export const WHO_AM_I_LOADING = loading(WHO_AM_I);

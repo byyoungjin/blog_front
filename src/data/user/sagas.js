@@ -1,6 +1,6 @@
-import { put, call } from "redux-saga/effects";
+import { put } from "redux-saga/effects";
 import { actions } from "data";
-import { setAuthCookie, getAuthCookie, clearAuthCookie } from "data/cookie";
+import { setAuthCookie, clearAuthCookie } from "data/cookie";
 import api from "api";
 
 export function* login(action) {
@@ -10,15 +10,14 @@ export function* login(action) {
 
     // 1. get token and set it on store & cookie
     const res = yield api.authApi.login(userLoginInfo);
-    const { userData } = res.data;
+    const userData = res.data;
     yield put(actions.user.setUserSession(userData));
-    setAuthCookie(userData);
+    setAuthCookie(userData.token);
 
     yield put(actions.user.loginSuccess(userData));
     yield put(actions.router.push("/"));
   } catch (e) {
     yield put(actions.user.loginFailure(e));
-    alert(e);
   }
 }
 
@@ -43,6 +42,19 @@ export function* register(action) {
     yield put(actions.user.registerSuccess());
   } catch (e) {
     console.log("error", e);
-    yield put(actions.user.registerFailure());
+    yield put(actions.user.registerFailure(e));
+  }
+}
+
+export function* whoAmI() {
+  try {
+    yield put(actions.user.whoAmILoading());
+    const res = yield api.authApi.whoAmI();
+    const user = res.data;
+    yield put(actions.user.setUserSession(user));
+    yield put(actions.user.whoAmISuccess(user));
+  } catch (e) {
+    console.log("error", e);
+    yield put(actions.user.whoAmIFailure(e));
   }
 }
