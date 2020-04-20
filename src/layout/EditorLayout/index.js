@@ -1,16 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 
 import { MainLogo, Controller } from "components";
-import { selectors } from "data";
 
 export default function EditorLayoutComp({ children }) {
-  const userSession = useSelector(selectors.user.getUserSession);
   return (
     <EditorLayout>
       <MainLogo />
-      <Controller userSession={userSession} />
       {children}
     </EditorLayout>
   );

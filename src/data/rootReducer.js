@@ -3,13 +3,15 @@ import { combineReducers } from "redux";
 // import loading from "data/loading";
 import post from "data/post/reducers";
 import user from "data/user/reducers";
+import modal from "data/modal/reducer";
 
 const createRootReducer = history =>
   combineReducers({
     // loading,
     post,
     user,
-    router: connectRouter(history)
+    router: connectRouter(history),
+    modal
   });
 
 export { createRootReducer };

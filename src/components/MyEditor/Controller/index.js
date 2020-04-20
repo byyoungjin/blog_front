@@ -1,13 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-import ProfilePicture from "../ProfilePicture";
-import { colors } from "theme";
+import ProfilePicture from "../../ProfilePicture";
 
-export default function ControllerComp({ userSession }) {
+import { colors } from "theme";
+import { saveContent } from "../helper";
+
+export default function ControllerComp({
+  userSession,
+  editorState,
+  modalUpAndGo
+}) {
   const { id } = userSession;
   const saveHandler = () => {
-    console.log("id", id);
+    saveContent({ editorState, id });
+    modalUpAndGo();
   };
   const publishHandler = () => {
     console.log("id", id);

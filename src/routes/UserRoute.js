@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import useWhoAmI from "hooks/useWhoAmI";
+import useModal from "hooks/useModal";
+import Modal from "components/Modal";
 
 export default function UserRoute({
   path,
@@ -10,6 +12,8 @@ export default function UserRoute({
   ...rest
 }) {
   const whoAmIRemote = useWhoAmI();
+  const { modal } = useModal();
+
   const route = (
     <Route
       {...rest}
@@ -17,6 +21,7 @@ export default function UserRoute({
       render={matchProps => (
         <Layout>
           <Component {...matchProps} {...rest} />
+          <Modal modal={modal} />
         </Layout>
       )}
     />

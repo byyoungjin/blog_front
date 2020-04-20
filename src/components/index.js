@@ -5,7 +5,7 @@ import MainLogo from "./MainLogo";
 import AddPost from "./AddPost";
 import ProfilePicture from "./ProfilePicture";
 import Button from "./Button";
-import Controller from "./Controller";
+import Controller from "./MyEditor/Controller";
 import MyEditor from "./MyEditor";
 
 export {

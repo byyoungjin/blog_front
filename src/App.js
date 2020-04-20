@@ -10,25 +10,32 @@ import { DefaultLayout, EditorLayout } from "layout";
 
 function App({ history }) {
   return (
-    <ConnectedRouter history={history}>
-      <Switch>
-        <DefaultRoute exact path="/" component={Home} layout={DefaultLayout} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <DefaultRoute
-          path="/myPage"
-          component={MyPage}
-          layout={DefaultLayout}
-        />
-        {/* <Route path="/postDetail/:postId" component={PostDetail} /> */}
-        <UserRoute
-          path="/postWrite"
-          component={PostWrite}
-          layout={EditorLayout}
-        />
-        {/* <Route path="/postUpdate/:postId" component={PostUpdate} /> */}
-      </Switch>
-    </ConnectedRouter>
+    <>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <DefaultRoute
+            exact
+            path="/"
+            component={Home}
+            layout={DefaultLayout}
+          />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <DefaultRoute
+            path="/myPage"
+            component={MyPage}
+            layout={DefaultLayout}
+          />
+          {/* <Route path="/postDetail/:postId" component={PostDetail} /> */}
+          <UserRoute
+            path="/postWrite"
+            component={PostWrite}
+            layout={EditorLayout}
+          />
+          {/* <Route path="/postUpdate/:postId" component={PostUpdate} /> */}
+        </Switch>
+      </ConnectedRouter>
+    </>
   );
 }
 
