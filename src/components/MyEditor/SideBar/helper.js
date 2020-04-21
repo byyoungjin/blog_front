@@ -1,4 +1,5 @@
 import { EditorState, AtomicBlockUtils, RichUtils } from "draft-js";
+import api from "api";
 
 export const addMedia = ({ editorState, src, type }) => {
   if (!src) {
@@ -21,12 +22,32 @@ export const addMedia = ({ editorState, src, type }) => {
 };
 
 export const fileSelectHandler = (editorState, onChange, e) => {
-  const selctedFile = e.target.files[0];
-
+  const selectedFile = e.target.files[0];
   const reader = new FileReader();
-  reader.onload = e => {
-    onChange(addMedia({ type: "image", src: e.target.result, editorState }));
+
+  reader.onload = async e => {
+    const fileInfo = {
+      fileName: selectedFile.name,
+      fileType: selectedFile.type
+    };
+    const res = await api.awsApi.signS3(fileInfo);
+    const { signedRequest, url } = res.data.data;
+    const options = {
+      headers: {
+        "Content-Type": fileInfo.fileType
+      }
+    };
+    const uploadInfo = {
+      signedRequest,
+      file: selectedFile,
+      options
+    };
+    const resUpload = await api.awsApi.uploadImage(uploadInfo);
+
+    onChange(addMedia({ type: "image", src: url, editorState }));
+
+    console.log("resUpload", resUpload);
   };
 
-  reader.readAsDataURL(selctedFile);
+  reader.readAsDataURL(selectedFile);
 };
