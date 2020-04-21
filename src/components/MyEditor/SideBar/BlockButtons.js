@@ -1,9 +1,11 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 
+import { useEditorState } from "../hooks";
 import { fileSelectHandler } from "./helper";
 
-export default function BlockButtons({ editorState, isOpen, onChange }) {
+export default function BlockButtons({ isOpen }) {
+  const [editorState, setEditorState] = useEditorState();
   const fileInput = useRef(null);
 
   const photoUplaodHandler = () => {
@@ -40,7 +42,11 @@ export default function BlockButtons({ editorState, isOpen, onChange }) {
             <input
               style={{ display: "none" }}
               type="file"
-              onChange={fileSelectHandler.bind(this, editorState, onChange)}
+              onChange={fileSelectHandler.bind(
+                this,
+                editorState,
+                setEditorState
+              )}
               ref={fileInput}
             />
           )}

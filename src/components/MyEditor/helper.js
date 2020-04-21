@@ -18,7 +18,7 @@ const loadContentFromStorage = item => {
   return savedData ? JSON.parse(savedData) : null;
 };
 
-export const populateEditorState = ({ setEditorState, id }) => {
+export const populateEditorState = ({ id, setEditorState }) => {
   const rawEditorState = loadContentFromStorage(EDITOR_STATE + id);
   if (rawEditorState !== null) {
     const contentState = convertFromRaw(rawEditorState);

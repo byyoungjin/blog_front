@@ -3,57 +3,21 @@ import styled from "styled-components";
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 
 import BlockButtons from "./BlockButtons";
+import { useSidebarPosition } from "../hooks";
+
 const plus = "icons/editor/block/plus.svg";
 
-export default function SideBarComp({ editorState, onChange, children }) {
+export default function SideBarComp({ children }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [sidebarPosition, setSidebarPosition] = useState({
-    transform: "scale(0)"
-  });
+  const sidebarPosition = useSidebarPosition();
   const toggleSidebar = () => setIsOpen(prev => !prev);
-
-  useEffect(() => {
-    const currentContent = editorState.getCurrentContent();
-    const selection = editorState.getSelection();
-
-    const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
-    const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
-    const node = document.querySelectorAll(
-      `[data-offset-key="${offsetKey}"]`
-    )[0];
-
-    const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
-    const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
-
-    const isEmpty = currentBlock.getText() === "";
-
-    if (!isEmpty) {
-      setSidebarPosition({
-        transform: "scale(0)",
-        transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
-        top: node.offsetTop - 10,
-        left: rootEditorNodeRect.left - 50
-      });
-    } else {
-      setSidebarPosition({
-        transform: "scale(1)",
-        top: node.offsetTop - 10,
-        transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
-        left: rootEditorNodeRect.left - 50
-      });
-    }
-  }, [editorState, isOpen]);
 
   return (
     <SideBarContainer style={sidebarPosition}>
       <SideBar onMouseDown={toggleSidebar}>
         <img src={plus} alt="plus" />
       </SideBar>
-      <BlockButtons
-        isOpen={isOpen}
-        editorState={editorState}
-        onChange={onChange}
-      />
+      <BlockButtons isOpen={isOpen} />
     </SideBarContainer>
   );
 }

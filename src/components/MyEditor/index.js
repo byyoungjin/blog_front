@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import BasicEditor from "./BasicEditor";
 import Controller from "./Controller";
 import { selectors } from "data";
-import useEditorState from "./hooks";
+import { useEditorState } from "./hooks";
 import useModal from "hooks/useModal";
 import { saveContent } from "./helper";
 

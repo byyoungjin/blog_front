@@ -5,6 +5,7 @@ import { getVisibleSelectionRect } from "draft-js";
 
 import { colors } from "theme";
 import { useRect } from "utils/Dom";
+import { useUppperBarPosition } from "../hooks";
 
 const bold = "icons/editor/inline/bold.svg";
 const italic = "icons/editor/inline/italic.svg";
@@ -13,37 +14,8 @@ const quote = "icons/editor/inline/quote.svg";
 const subTitle = "icons/editor/inline/subTitle.svg";
 const title = "icons/editor/inline/title.svg";
 
-export default function UpperBarComp({ editorState, editorRef }) {
-  const [upperBarPosition, setUpperBarPosition] = useState({
-    transform: "scale(0)"
-  });
-
-  useEffect(() => {
-    const selection = editorState.getSelection();
-
-    // const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
-    // const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
-
-    const selectionRect = getVisibleSelectionRect(window);
-
-    if (!selection.isCollapsed()) {
-      setUpperBarPosition({
-        transform: "scale(1)",
-        top: selectionRect && selectionRect.top - 60,
-        left:
-          selectionRect && selectionRect.left + selectionRect.width / 2 - 150,
-        transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)"
-      });
-    } else {
-      setUpperBarPosition({
-        transform: "scale(0)",
-        transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
-        top: selectionRect && selectionRect.top - 60,
-        left:
-          selectionRect && selectionRect.left + selectionRect.width / 2 - 150
-      });
-    }
-  }, [editorState, editorRef]);
+export default function UpperBarComp({ editorRef }) {
+  const upperBarPosition = useUppperBarPosition({ editorRef });
 
   return (
     <UpperBar style={upperBarPosition}>

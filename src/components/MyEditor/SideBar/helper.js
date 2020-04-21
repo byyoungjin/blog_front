@@ -1,7 +1,8 @@
-import { EditorState, AtomicBlockUtils, RichUtils } from "draft-js";
+import { EditorState, AtomicBlockUtils } from "draft-js";
+
 import api from "api";
 
-export const addMedia = ({ editorState, src, type }) => {
+const addMedia = ({ editorState, src, type }) => {
   if (!src) {
     return;
   }
@@ -21,7 +22,7 @@ export const addMedia = ({ editorState, src, type }) => {
   return newState;
 };
 
-export const fileSelectHandler = (editorState, onChange, e) => {
+export const fileSelectHandler = (editorState, setEditorState, e) => {
   const selectedFile = e.target.files[0];
   const reader = new FileReader();
 
@@ -44,7 +45,7 @@ export const fileSelectHandler = (editorState, onChange, e) => {
     };
     const resUpload = await api.awsApi.uploadImage(uploadInfo);
 
-    onChange(addMedia({ type: "image", src: url, editorState }));
+    setEditorState(addMedia({ type: "image", src: url, editorState }));
 
     console.log("resUpload", resUpload);
   };
