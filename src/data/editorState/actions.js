@@ -1,5 +1,10 @@
 import * as AT from "data/rootActionTypes";
 
+export const addImage = data => ({
+  type: AT.ADD_IMAGE,
+  data
+});
+
 export const addImageLoading = () => ({
   type: AT.ADD_IMAGE_LOADING
 });
@@ -10,7 +15,7 @@ export const addImageFailure = error => ({
 });
 
 export const addImageSuccess = data => ({
-  type: AT.ADD_IMAGE,
+  type: AT.ADD_IMAGE_SUCCESS,
   data
 });
 

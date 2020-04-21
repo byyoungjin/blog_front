@@ -1,12 +1,14 @@
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { useEditorState } from "../hooks";
-import { fileSelectHandler } from "./helper";
+import { actions } from "data";
 
 export default function BlockButtons({ isOpen }) {
-  const [editorState, setEditorState] = useEditorState();
+  const [editorState] = useEditorState();
   const fileInput = useRef(null);
+  const dispatch = useDispatch();
 
   const photoUplaodHandler = () => {
     fileInput.current.click();
@@ -28,6 +30,15 @@ export default function BlockButtons({ isOpen }) {
     { title: "video", image: "icons/editor/block/video.svg", onClick: () => {} }
   ];
 
+  const fileSelectHandler = e => {
+    const selectedFile = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = e => {
+      dispatch(actions.editorState.addImage({ selectedFile, editorState }));
+    };
+    reader.readAsDataURL(selectedFile);
+  };
+
   return (
     <ButtonsContainer isOpen={isOpen}>
       {buttons.map((button, i) => (
@@ -42,11 +53,7 @@ export default function BlockButtons({ isOpen }) {
             <input
               style={{ display: "none" }}
               type="file"
-              onChange={fileSelectHandler.bind(
-                this,
-                editorState,
-                setEditorState
-              )}
+              onChange={fileSelectHandler}
               ref={fileInput}
             />
           )}
