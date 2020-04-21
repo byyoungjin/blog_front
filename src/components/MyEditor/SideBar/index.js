@@ -5,7 +5,7 @@ import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 import BlockButtons from "./BlockButtons";
 const plus = "icons/editor/block/plus.svg";
 
-export default function SideBarComp({ editorState, children }) {
+export default function SideBarComp({ editorState, onChange, children }) {
   const [isOpen, setIsOpen] = useState(false);
   const [sidebarPosition, setSidebarPosition] = useState({
     transform: "scale(0)"
@@ -49,7 +49,11 @@ export default function SideBarComp({ editorState, children }) {
       <SideBar onMouseDown={toggleSidebar}>
         <img src={plus} alt="plus" />
       </SideBar>
-      <BlockButtons isOpen={isOpen} />
+      <BlockButtons
+        isOpen={isOpen}
+        editorState={editorState}
+        onChange={onChange}
+      />
     </SideBarContainer>
   );
 }

@@ -11,6 +11,7 @@ import {
 import SideBar from "./SideBar";
 import UpperBar from "./UpperBar";
 import { colors } from "theme";
+import Media from "./Media";
 
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -18,6 +19,7 @@ export default function BasicEditor({
   editorState,
   setEditorState,
   editorRef,
+  saveHandler,
   ...props
 }) {
   const focusOnEditor = useCallback(() => editorRef.current.focus(), [
@@ -40,13 +42,23 @@ export default function BasicEditor({
   const handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (command === "myeditor-save") {
-      console.log("saved!");
+      saveHandler();
     }
     if (newState) {
       onChangeHandler(newState);
       return "handled";
     }
     return "not-handled";
+  };
+
+  const mediaBlockRenderer = block => {
+    if (block.getType() === "atomic") {
+      return {
+        component: Media,
+        editable: false
+      };
+    }
+    return null;
   };
 
   const logCurrentBlock = () => {
@@ -64,10 +76,15 @@ export default function BasicEditor({
         handleKeyCommand={handleKeyCommand}
         keyBindingFn={myKeybindingFn}
         ref={editorRef}
+        blockRendererFn={mediaBlockRenderer}
         {...props}
       />
-      <SideBar editorState={editorState} />
-      <UpperBar editorState={editorState} editorRef={editorRef} />
+      <SideBar editorState={editorState} onChange={onChangeHandler} />
+      <UpperBar
+        editorState={editorState}
+        onChange={onChangeHandler}
+        editorRef={editorRef}
+      />
     </EditorWrapper>
   );
 }

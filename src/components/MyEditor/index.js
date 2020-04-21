@@ -6,6 +6,7 @@ import Controller from "./Controller";
 import { selectors } from "data";
 import useEditorState from "./hooks";
 import useModal from "hooks/useModal";
+import { saveContent } from "./helper";
 
 export default function MyEditor() {
   const userSession = useSelector(selectors.user.getUserSession);
@@ -15,17 +16,19 @@ export default function MyEditor() {
   const editorRef = useRef();
   const { modalUpAndGo } = useModal();
 
+  const saveHandler = () => {
+    saveContent({ editorState, id });
+    modalUpAndGo();
+  };
+
   return (
     <>
-      <Controller
-        userSession={userSession}
-        editorState={editorState}
-        modalUpAndGo={modalUpAndGo}
-      />
+      <Controller saveHandler={saveHandler} />
       <BasicEditor
         editorState={editorState}
         setEditorState={setEditorState}
         editorRef={editorRef}
+        saveHandler={saveHandler}
       />
     </>
   );

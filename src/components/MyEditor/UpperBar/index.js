@@ -21,12 +21,10 @@ export default function UpperBarComp({ editorState, editorRef }) {
   useEffect(() => {
     const selection = editorState.getSelection();
 
-    const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
-    const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
-    console.log("rootEditorNodeRect", rootEditorNodeRect);
+    // const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
+    // const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
 
     const selectionRect = getVisibleSelectionRect(window);
-    console.log("selectionRect", selectionRect);
 
     if (!selection.isCollapsed()) {
       setUpperBarPosition({

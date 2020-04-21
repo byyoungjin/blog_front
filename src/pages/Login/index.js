@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 import { actions } from "data";
 import { MyTextInput, Button } from "components";
-import { DefaultLayout } from "layout";
+import { EditorLayout } from "layout";
 import { colors } from "theme";
 
 export default function Login() {
@@ -28,7 +28,7 @@ export default function Login() {
       .required("필수 항목입니다.")
   });
   return (
-    <DefaultLayout logo>
+    <EditorLayout logo>
       <FormContainer>
         <Formik
           initialValues={initialValues}
@@ -58,7 +58,7 @@ export default function Login() {
           </FormStyled>
         </Formik>
       </FormContainer>
-    </DefaultLayout>
+    </EditorLayout>
   );
 }
 

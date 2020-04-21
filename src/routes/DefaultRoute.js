@@ -12,7 +12,7 @@ export default function DefaultRoute({
   ...rest
 }) {
   const whoAmIRemote = useWhoAmI();
-  const { modalUp } = useModal();
+  const { modal } = useModal();
 
   const route = (
     <Route
@@ -21,7 +21,7 @@ export default function DefaultRoute({
       render={matchProps => (
         <Layout>
           <Component {...matchProps} {...rest} />
-          <Modal modalUp={modalUp} />
+          <Modal modal={modal} />
         </Layout>
       )}
     />

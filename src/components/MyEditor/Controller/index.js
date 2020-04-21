@@ -4,20 +4,10 @@ import styled from "styled-components";
 import ProfilePicture from "../../ProfilePicture";
 
 import { colors } from "theme";
-import { saveContent } from "../helper";
 
-export default function ControllerComp({
-  userSession,
-  editorState,
-  modalUpAndGo
-}) {
-  const { id } = userSession;
-  const saveHandler = () => {
-    saveContent({ editorState, id });
-    modalUpAndGo();
-  };
+export default function ControllerComp({ saveHandler }) {
   const publishHandler = () => {
-    console.log("id", id);
+    console.log("published");
   };
 
   return (

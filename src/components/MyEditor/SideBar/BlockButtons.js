@@ -1,21 +1,49 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
-const images = [
-  "icons/editor/block/code.svg",
-  "icons/editor/block/dash.svg",
-  "icons/editor/block/photo.svg",
-  "icons/editor/block/search.svg",
-  "icons/editor/block/video.svg"
-];
+import { fileSelectHandler } from "./helper";
 
-export default function BlockButtons({ isOpen }) {
-  console.log("isOpen", isOpen);
+export default function BlockButtons({ editorState, isOpen, onChange }) {
+  const fileInput = useRef(null);
+
+  const photoUplaodHandler = () => {
+    fileInput.current.click();
+  };
+
+  const buttons = [
+    { title: "photo", image: "icons/editor/block/dash.svg", onClick: () => {} },
+    { title: "code", image: "icons/editor/block/code.svg", onClick: () => {} },
+    {
+      title: "photo",
+      image: "icons/editor/block/photo.svg",
+      onClick: photoUplaodHandler
+    },
+    {
+      title: "search",
+      image: "icons/editor/block/search.svg",
+      onClick: () => {}
+    },
+    { title: "video", image: "icons/editor/block/video.svg", onClick: () => {} }
+  ];
+
   return (
     <ButtonsContainer isOpen={isOpen}>
-      {images.map((image, i) => (
-        <Button isOpen={isOpen} i={i} key={image}>
-          <Image src={image} alt={image} />
+      {buttons.map((button, i) => (
+        <Button
+          isOpen={isOpen}
+          i={i}
+          key={button.image}
+          onClick={button.onClick}
+        >
+          <Image src={button.image} alt={button.image} />
+          {button.title === "photo" && (
+            <input
+              style={{ display: "none" }}
+              type="file"
+              onChange={fileSelectHandler.bind(this, editorState, onChange)}
+              ref={fileInput}
+            />
+          )}
         </Button>
       ))}
     </ButtonsContainer>
@@ -28,7 +56,7 @@ const ButtonsContainer = styled.div`
 `;
 
 const Button = styled.div`
-z-index:-1;
+z-index:${({ isOpen }) => (isOpen ? 0 : -1)};
   display: flex;
   justify-content: center;
   align-items: center;
