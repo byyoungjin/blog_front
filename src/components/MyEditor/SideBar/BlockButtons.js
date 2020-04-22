@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { useEditorState } from "../hooks";
+import { readFile } from "../helper";
 import { actions, selectors } from "data";
 
 export default function BlockButtons({ isOpen }) {
@@ -32,17 +33,12 @@ export default function BlockButtons({ isOpen }) {
   ];
 
   const fileSelectHandler = e => {
-    const selectedFile = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = e => {
+    const files = e.target.files;
+    const onLoadHandler = selectedFile =>
       dispatch(
         actions.editorState.addImage({ selectedFile, editorState, userId })
       );
-    };
-    reader.onerror = e => {
-      reader.abort();
-    };
-    reader.readAsDataURL(selectedFile);
+    readFile({ files, onLoadHandler });
     e.target.value = "";
   };
 

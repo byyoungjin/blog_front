@@ -26,3 +26,13 @@ export const populateEditorState = ({ id, setEditorState }) => {
     setEditorState(editorState);
   }
 };
+
+export const readFile = ({ files, onLoadHandler }) => {
+  const selectedFile = files[0];
+  const reader = new FileReader();
+  reader.onload = e => onLoadHandler(selectedFile);
+  reader.onerror = e => {
+    reader.abort();
+  };
+  reader.readAsDataURL(selectedFile);
+};

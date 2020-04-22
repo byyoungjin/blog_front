@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   Editor,
@@ -8,6 +9,8 @@ import {
   convertToRaw
 } from "draft-js";
 
+import { actions, selectors } from "data";
+import { readFile } from "./helper";
 import SideBar from "./SideBar";
 import UpperBar from "./UpperBar";
 import { colors } from "theme";
@@ -22,6 +25,8 @@ export default function BasicEditor({
   saveHandler,
   ...props
 }) {
+  const dispatch = useDispatch();
+  const userId = useSelector(selectors.user.getUserId);
   const focusOnEditor = useCallback(() => editorRef.current.focus(), [
     editorRef
   ]);
@@ -59,6 +64,14 @@ export default function BasicEditor({
     return null;
   };
 
+  const handlePastedFilesFn = files => {
+    const onLoadHandler = selectedFile =>
+      dispatch(
+        actions.editorState.addImage({ selectedFile, editorState, userId })
+      );
+    readFile({ files, onLoadHandler });
+  };
+
   const logCurrentBlock = () => {
     const contentState = editorState.getCurrentContent();
     const raw = convertToRaw(contentState);
@@ -75,6 +88,7 @@ export default function BasicEditor({
         keyBindingFn={myKeybindingFn}
         ref={editorRef}
         blockRendererFn={mediaBlockRenderer}
+        handlePastedFiles={handlePastedFilesFn}
         {...props}
       />
       <SideBar />
