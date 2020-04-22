@@ -1,7 +1,7 @@
 import { EditorState, AtomicBlockUtils } from "draft-js";
 
 export const addMedia = ({ editorState, src, type }) => {
-  if (!src) {
+  if (!src && type !== "placeholder") {
     return;
   }
   const contentState = editorState.getCurrentContent();

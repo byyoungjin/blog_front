@@ -103,3 +103,11 @@ export const useSidebarPosition = () => {
 
   return sidbarPosition;
 };
+
+export const useSideBarIsOpen = () => {
+  const dispatch = useDispatch();
+  const isOpen = useSelector(selectors.editorState.getSideBarIsOpen);
+  const toggleSidbarIsOpen = data =>
+    dispatch(actions.editorState.updateSideBarIsOpen(!isOpen));
+  return [isOpen, toggleSidbarIsOpen];
+};

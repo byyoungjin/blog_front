@@ -1,7 +1,5 @@
 import { loading, failure, success } from "data/utils";
 
-export const CURRENT_POST_CHANGE = "CURRENT_POST_CHANGE";
-
 export const GET_POSTS = "GET_POSTS";
 export const GET_POSTS_SUCCESS = success(GET_POSTS);
 export const GET_POSTS_FAILURE = failure(GET_POSTS);

@@ -3,13 +3,25 @@ import { put } from "redux-saga/effects";
 import { actions } from "data";
 import { addMedia } from "./helper";
 import api from "api";
+import generateUUID from "utils/generateUUID";
 
 export function* addImage(action) {
   try {
+    const { selectedFile, editorState, userId } = action.data;
+    const editorStateWithPlaceholder = addMedia({
+      type: "placeholder",
+      editorState
+    });
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState: editorStateWithPlaceholder
+      })
+    );
+
     yield put(actions.editorState.addImageLoading());
-    const { selectedFile, editorState } = action.data;
+    const uuid = generateUUID();
     const fileInfo = {
-      fileName: selectedFile.name,
+      fileName: `${userId}/${uuid}`,
       fileType: selectedFile.type
     };
 
@@ -31,6 +43,10 @@ export function* addImage(action) {
 
     yield put(actions.editorState.updateEditorState({ newEditorState }));
     yield put(actions.editorState.addImageSuccess({ newEditorState }));
+    yield put(actions.editorState.updateSideBarIsOpen(false));
+    yield put(
+      actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
+    );
   } catch (e) {
     console.log("e.message", e.message);
     yield put(actions.editorState.addImageFailure(e));

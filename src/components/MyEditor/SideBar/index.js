@@ -3,18 +3,17 @@ import styled from "styled-components";
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 
 import BlockButtons from "./BlockButtons";
-import { useSidebarPosition } from "../hooks";
+import { useSidebarPosition, useSideBarIsOpen } from "../hooks";
 
 const plus = "icons/editor/block/plus.svg";
 
 export default function SideBarComp({ children }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, toggleSidbarIsOpen] = useSideBarIsOpen();
   const sidebarPosition = useSidebarPosition();
-  const toggleSidebar = () => setIsOpen(prev => !prev);
 
   return (
     <SideBarContainer style={sidebarPosition}>
-      <SideBar onMouseDown={toggleSidebar}>
+      <SideBar onMouseDown={toggleSidbarIsOpen}>
         <img src={plus} alt="plus" />
       </SideBar>
       <BlockButtons isOpen={isOpen} />

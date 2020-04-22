@@ -1,14 +1,15 @@
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { useEditorState } from "../hooks";
-import { actions } from "data";
+import { actions, selectors } from "data";
 
 export default function BlockButtons({ isOpen }) {
   const [editorState] = useEditorState();
   const fileInput = useRef(null);
   const dispatch = useDispatch();
+  const userId = useSelector(selectors.user.getUserId);
 
   const photoUplaodHandler = () => {
     fileInput.current.click();
@@ -34,9 +35,15 @@ export default function BlockButtons({ isOpen }) {
     const selectedFile = e.target.files[0];
     const reader = new FileReader();
     reader.onload = e => {
-      dispatch(actions.editorState.addImage({ selectedFile, editorState }));
+      dispatch(
+        actions.editorState.addImage({ selectedFile, editorState, userId })
+      );
+    };
+    reader.onerror = e => {
+      reader.abort();
     };
     reader.readAsDataURL(selectedFile);
+    e.target.value = "";
   };
 
   return (

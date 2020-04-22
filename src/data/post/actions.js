@@ -1,10 +1,5 @@
 import * as AT from "data/rootActionTypes";
 
-export const currentPostChange = post => ({
-  type: AT.CURRENT_POST_CHANGE,
-  post
-});
-
 export const getPosts = userId => ({
   type: AT.GET_POSTS,
   userId
