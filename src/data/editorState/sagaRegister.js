@@ -4,5 +4,6 @@ import { takeEvery } from "redux-saga/effects";
 
 export default function*() {
   yield takeEvery(AT.ADD_IMAGE, sagas.addImage);
-  yield takeEvery(AT.ADD_BLOCK, sagas.addBlock);
+  yield takeEvery(AT.TOGGLE_BLOCK, sagas.toggleBlock);
+  yield takeEvery(AT.ADD_DASH, sagas.addDash);
 }

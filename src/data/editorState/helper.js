@@ -1,7 +1,7 @@
 import { EditorState, AtomicBlockUtils, RichUtils } from "draft-js";
 
 export const addMedia = ({ editorState, src, type }) => {
-  if (!src && type !== "placeholder") {
+  if (!src && type === "image") {
     return;
   }
   const contentState = editorState.getCurrentContent();
@@ -9,6 +9,26 @@ export const addMedia = ({ editorState, src, type }) => {
     src
   });
   const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+  const newEditorState = EditorState.set(editorState, {
+    currentContent: contentStateWithEntity
+  });
+  const newState = AtomicBlockUtils.insertAtomicBlock(
+    newEditorState,
+    entityKey,
+    " "
+  );
+  return newState;
+};
+
+export const addAtomic = ({ editorState, type }) => {
+  const contentState = editorState.getCurrentContent();
+  const contentStateWithEntity = contentState.createEntity(
+    type,
+    "IMMUTABLE",
+    null
+  );
+  const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+  console.log("entityKey", entityKey);
   const newEditorState = EditorState.set(editorState, {
     currentContent: contentStateWithEntity
   });

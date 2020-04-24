@@ -1,7 +1,7 @@
 import { put } from "redux-saga/effects";
 
 import { actions } from "data";
-import { addMedia, toggleBlockType } from "./helper";
+import { addMedia, toggleBlockType, addAtomic } from "./helper";
 import api from "api";
 import generateUUID from "utils/generateUUID";
 
@@ -53,7 +53,22 @@ export function* addImage(action) {
   }
 }
 
-export function* addBlock(action) {
+export function* addDash(action) {
+  const { editorState } = action.data;
+  const newEditorState = addAtomic({ type: "dash", editorState });
+  yield new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("success");
+    }, 10);
+  });
+  yield put(actions.editorState.updateEditorState({ newEditorState }));
+  yield put(actions.editorState.updateSideBarIsOpen(false));
+  yield put(
+    actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
+  );
+}
+
+export function* toggleBlock(action) {
   try {
     const { editorState, type } = action.data;
     const newEditorState = toggleBlockType({ editorState, type });

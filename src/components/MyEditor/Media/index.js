@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import Loading from "components/Placeholder/Loading";
+import Dash from "components/MyEditor/Blocks/Dash";
 
 export default function Media({ contentState, block }) {
   const entity = contentState.getEntity(block.getEntityAt(0));
@@ -14,6 +15,9 @@ export default function Media({ contentState, block }) {
       break;
     case "placeholder":
       media = <Loading />;
+      break;
+    case "dash":
+      media = <Dash />;
       break;
     default:
       return;

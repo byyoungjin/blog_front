@@ -7,11 +7,13 @@ export const useInsertHandlers = editorState => {
   const dispatch = useDispatch();
 
   const insertDashHandler = () => {
-    dispatch(actions.editorState.addBlock({ editorState, type: "dash" }));
+    dispatch(actions.editorState.addDash({ editorState }));
   };
 
   const insertCodeHandler = () => {
-    dispatch(actions.editorState.addBlock({ editorState, type: "code-block" }));
+    dispatch(
+      actions.editorState.toggleBlock({ editorState, type: "code-block" })
+    );
   };
 
   const insertSearchHandler = () => {};

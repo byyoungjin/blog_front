@@ -36,7 +36,12 @@ export const updateUpperBarPostion = data => ({
   data
 });
 
-export const addBlock = data => ({
-  type: AT.ADD_BLOCK,
+export const toggleBlock = data => ({
+  type: AT.TOGGLE_BLOCK,
+  data
+});
+
+export const addDash = data => ({
+  type: AT.ADD_DASH,
   data
 });

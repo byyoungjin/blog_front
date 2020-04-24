@@ -14,4 +14,6 @@ export const UPDATE_UPPPER_BAR_POSITION = "UPDATE_UPPPER_BAR_POSITION";
 
 export const DELETE_IMAGE = "DELETE_IMAGE";
 
-export const ADD_BLOCK = "ADD_BLOCK";
+export const TOGGLE_BLOCK = "TOGGLE_BLOCK";
+
+export const ADD_DASH = "ADD_DASH";
