@@ -1,7 +1,7 @@
 import { put } from "redux-saga/effects";
 
 import { actions } from "data";
-import { addMedia } from "./helper";
+import { addMedia, toggleBlockType } from "./helper";
 import api from "api";
 import generateUUID from "utils/generateUUID";
 
@@ -51,4 +51,21 @@ export function* addImage(action) {
     console.log("e.message", e.message);
     yield put(actions.editorState.addImageFailure(e));
   }
+}
+
+export function* addBlock(action) {
+  try {
+    const { editorState, type } = action.data;
+    const newEditorState = toggleBlockType({ editorState, type });
+    yield new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("success");
+      }, 10);
+    });
+    yield put(actions.editorState.updateEditorState({ newEditorState }));
+    yield put(actions.editorState.updateSideBarIsOpen(false));
+    yield put(
+      actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
+    );
+  } catch (e) {}
 }

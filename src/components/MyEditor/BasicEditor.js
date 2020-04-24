@@ -6,8 +6,10 @@ import {
   RichUtils,
   getDefaultKeyBinding,
   KeyBindingUtil,
-  convertToRaw
+  convertToRaw,
+  DefaultDraftBlockRenderMap
 } from "draft-js";
+import Immutable from "immutable";
 
 import { actions, selectors } from "data";
 import { readFile } from "./helper";
@@ -15,6 +17,10 @@ import SideBar from "./SideBar";
 import UpperBar from "./UpperBar";
 import { colors } from "theme";
 import Media from "./Media";
+import Code from "./Blocks/Code";
+import Dash from "./Blocks/Dash";
+
+import log from "utils/log";
 
 const { hasCommandModifier } = KeyBindingUtil;
 
@@ -55,14 +61,27 @@ export default function BasicEditor({
   };
 
   const mediaBlockRenderer = block => {
-    if (block.getType() === "atomic") {
-      return {
-        component: Media,
-        editable: false
-      };
+    const type = block.getType();
+    switch (type) {
+      case "atomic":
+        return {
+          component: Media,
+          editable: false
+        };
+      default:
+        return null;
     }
-    return null;
   };
+  const blockRenderMap = Immutable.Map({
+    "code-block": {
+      element: "div",
+      wrapper: <Code />
+    }
+  });
+
+  const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(
+    blockRenderMap
+  );
 
   const handlePastedFilesFn = files => {
     const onLoadHandler = selectedFile =>
@@ -73,21 +92,20 @@ export default function BasicEditor({
   };
 
   const logCurrentBlock = () => {
-    const contentState = editorState.getCurrentContent();
-    const raw = convertToRaw(contentState);
-    console.log(JSON.stringify(raw, null, 2));
+    log(editorState);
   };
 
   return (
     <EditorWrapper onClick={focusOnEditor}>
-      {/* <button onMouseDown={logCurrentBlock}>log</button> */}
+      <button onMouseDown={logCurrentBlock}>log</button>
       <Editor
         editorState={editorState}
-        onChange={setEditorState}
+        onChange={editorState => setEditorState(editorState)}
         handleKeyCommand={handleKeyCommand}
         keyBindingFn={myKeybindingFn}
         ref={editorRef}
         blockRendererFn={mediaBlockRenderer}
+        blockRenderMap={extendedBlockRenderMap}
         handlePastedFiles={handlePastedFilesFn}
         {...props}
       />

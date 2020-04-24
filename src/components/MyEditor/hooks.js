@@ -9,14 +9,17 @@ import { actions, selectors } from "data";
 export function useEditorState(id) {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
-  const setEditorState = newEditorState =>
-    dispatch(actions.editorState.updateEditorState({ newEditorState }));
+  const setEditorState = useCallback(
+    newEditorState =>
+      dispatch(actions.editorState.updateEditorState({ newEditorState })),
+    []
+  );
 
   useEffect(() => {
     if (id) {
       populateEditorState({ id, setEditorState });
     }
-  }, []);
+  }, [id, setEditorState]);
 
   return [editorState, setEditorState];
 }
@@ -66,8 +69,10 @@ export const useSidebarPosition = () => {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
   const sidbarPosition = useSelector(selectors.editorState.getSideBarPosition);
-  const setSidebarPosition = position =>
-    dispatch(actions.editorState.updateSideBarPosition(position));
+  const setSidebarPosition = useCallback(
+    position => dispatch(actions.editorState.updateSideBarPosition(position)),
+    [dispatch]
+  );
 
   useEffect(() => {
     const currentContent = editorState.getCurrentContent();
@@ -99,7 +104,7 @@ export const useSidebarPosition = () => {
         left: rootEditorNodeRect.left - 50
       });
     }
-  }, [editorState]);
+  }, [editorState, setSidebarPosition]);
 
   return sidbarPosition;
 };

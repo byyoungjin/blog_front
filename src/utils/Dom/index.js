@@ -58,7 +58,6 @@ export const useRect = ref => {
 };
 
 function getRect(element) {
-  console.log("element", element);
   if (!element) {
     return {
       bottom: 0,

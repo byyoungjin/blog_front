@@ -2,23 +2,38 @@ import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { useEditorState } from "../hooks";
 import { readFile } from "../helper";
+import { useInsertHandlers } from "./hooks";
 import { actions, selectors } from "data";
 
 export default function BlockButtons({ isOpen }) {
-  const [editorState] = useEditorState();
+  const editorState = useSelector(selectors.editorState.getEditorState);
   const fileInput = useRef(null);
   const dispatch = useDispatch();
   const userId = useSelector(selectors.user.getUserId);
+
+  const [
+    insertDashHandler,
+    insertCodeHandler,
+    insertSearchHandler,
+    insertVideoHandler
+  ] = useInsertHandlers(editorState);
 
   const photoUplaodHandler = () => {
     fileInput.current.click();
   };
 
   const buttons = [
-    { title: "photo", image: "icons/editor/block/dash.svg", onClick: () => {} },
-    { title: "code", image: "icons/editor/block/code.svg", onClick: () => {} },
+    {
+      title: "dash",
+      image: "icons/editor/block/dash.svg",
+      onClick: insertDashHandler
+    },
+    {
+      title: "code",
+      image: "icons/editor/block/code.svg",
+      onClick: insertCodeHandler
+    },
     {
       title: "photo",
       image: "icons/editor/block/photo.svg",
@@ -27,9 +42,13 @@ export default function BlockButtons({ isOpen }) {
     {
       title: "search",
       image: "icons/editor/block/search.svg",
-      onClick: () => {}
+      onClick: insertSearchHandler
     },
-    { title: "video", image: "icons/editor/block/video.svg", onClick: () => {} }
+    {
+      title: "video",
+      image: "icons/editor/block/video.svg",
+      onClick: insertVideoHandler
+    }
   ];
 
   const fileSelectHandler = e => {

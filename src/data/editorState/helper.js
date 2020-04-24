@@ -1,4 +1,4 @@
-import { EditorState, AtomicBlockUtils } from "draft-js";
+import { EditorState, AtomicBlockUtils, RichUtils } from "draft-js";
 
 export const addMedia = ({ editorState, src, type }) => {
   if (!src && type !== "placeholder") {
@@ -18,4 +18,10 @@ export const addMedia = ({ editorState, src, type }) => {
     " "
   );
   return newState;
+};
+
+export const toggleBlockType = ({ editorState, type }) => {
+  const newEditorState = RichUtils.toggleBlockType(editorState, type);
+  const focusedNewEditorState = EditorState.moveFocusToEnd(newEditorState);
+  return focusedNewEditorState;
 };

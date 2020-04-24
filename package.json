@@ -16,6 +16,7 @@
     "formik": "^2.1.1",
     "halogen": "^0.2.0",
     "halogenium": "^2.3.0",
+    "immutable": "^4.0.0-rc.12",
     "js-cookie": "^2.2.1",
     "medium-draft": "^0.5.18",
     "react": "^16.12.0",

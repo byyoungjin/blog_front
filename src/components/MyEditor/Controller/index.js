@@ -6,9 +6,7 @@ import ProfilePicture from "../../ProfilePicture";
 import { colors } from "theme";
 
 export default function ControllerComp({ saveHandler }) {
-  const publishHandler = () => {
-    console.log("published");
-  };
+  const publishHandler = () => {};
 
   return (
     <Controller>

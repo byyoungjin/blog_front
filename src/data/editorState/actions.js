@@ -35,3 +35,8 @@ export const updateUpperBarPostion = data => ({
   type: AT.UPDATE_UPPPER_BAR_POSITION,
   data
 });
+
+export const addBlock = data => ({
+  type: AT.ADD_BLOCK,
+  data
+});

@@ -23,7 +23,9 @@ export const populateEditorState = ({ id, setEditorState }) => {
   if (rawEditorState !== null) {
     const contentState = convertFromRaw(rawEditorState);
     const editorState = EditorState.createWithContent(contentState);
-    setEditorState(editorState);
+    const focusedEditorState = EditorState.moveFocusToEnd(editorState);
+
+    setEditorState(focusedEditorState);
   }
 };
 
