@@ -7,7 +7,7 @@ export const useInsertHandlers = editorState => {
   const dispatch = useDispatch();
 
   const insertDashHandler = () => {
-    dispatch(actions.editorState.addDash({ editorState }));
+    dispatch(actions.editorState.addAtomicBlock({ editorState, type: "dash" }));
   };
 
   const insertCodeHandler = () => {
@@ -18,7 +18,11 @@ export const useInsertHandlers = editorState => {
 
   const insertSearchHandler = () => {};
 
-  const insertVideoHandler = () => {};
+  const insertVideoHandler = () => {
+    dispatch(
+      actions.editorState.addAtomicBlock({ editorState, type: "youtube" })
+    );
+  };
 
   return [
     insertDashHandler,

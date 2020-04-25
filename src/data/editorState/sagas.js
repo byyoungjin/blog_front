@@ -53,9 +53,9 @@ export function* addImage(action) {
   }
 }
 
-export function* addDash(action) {
-  const { editorState } = action.data;
-  const newEditorState = addAtomic({ type: "dash", editorState });
+export function* addAtomicBlock(action) {
+  const { editorState, type } = action.data;
+  const newEditorState = addAtomic({ type, editorState });
   yield new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve("success");
@@ -66,6 +66,7 @@ export function* addDash(action) {
   yield put(
     actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
   );
+  // yield put(actions.editorState.toggleEditorReadOnly());
 }
 
 export function* toggleBlock(action) {

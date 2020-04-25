@@ -41,7 +41,12 @@ export const toggleBlock = data => ({
   data
 });
 
-export const addDash = data => ({
-  type: AT.ADD_DASH,
+export const addAtomicBlock = data => ({
+  type: AT.ADD_ATOMIC_BLOCK,
+  data
+});
+
+export const toggleEditorReadOnly = data => ({
+  type: AT.TOGGLE_EDITOR_READ_ONLY,
   data
 });

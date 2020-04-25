@@ -16,4 +16,6 @@ export const DELETE_IMAGE = "DELETE_IMAGE";
 
 export const TOGGLE_BLOCK = "TOGGLE_BLOCK";
 
-export const ADD_DASH = "ADD_DASH";
+export const ADD_ATOMIC_BLOCK = "ADD_ATOMIC_BLOCK";
+
+export const TOGGLE_EDITOR_READ_ONLY = "TOGGLE_EDITOR_READ_ONLY";

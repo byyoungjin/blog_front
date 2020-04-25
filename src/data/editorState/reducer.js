@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   editorState: EditorState.createEmpty(),
   sideBar: { position: { transfrom: "scale(0)" }, isOpen: false },
   upperBar: { position: { transfrom: "scale(0)" } },
+  readOnly: false,
   [AT.ADD_IMAGE]: Remote.NotAsked
 };
 
@@ -34,6 +35,9 @@ export default produce((draft, action) => {
       break;
     case AT.UPDATE_UPPPER_BAR_POSITION:
       draft.upperBar.position = action.data;
+      break;
+    case AT.TOGGLE_EDITOR_READ_ONLY:
+      draft.readOnly = action.data;
       break;
     default:
       return;

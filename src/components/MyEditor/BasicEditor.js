@@ -18,7 +18,7 @@ import UpperBar from "./UpperBar";
 import { colors } from "theme";
 import Media from "./Media";
 import Code from "./Blocks/Code";
-import Dash from "./Blocks/Dash";
+import Youtube from "./Blocks/YouTube";
 
 import log from "utils/log";
 
@@ -33,6 +33,7 @@ export default function BasicEditor({
 }) {
   const dispatch = useDispatch();
   const userId = useSelector(selectors.user.getUserId);
+  const readOnly = useSelector(selectors.editorState.getEditorReadOnly);
   const focusOnEditor = useCallback(() => editorRef.current.focus(), [
     editorRef
   ]);
@@ -107,6 +108,7 @@ export default function BasicEditor({
         blockRendererFn={mediaBlockRenderer}
         blockRenderMap={extendedBlockRenderMap}
         handlePastedFiles={handlePastedFilesFn}
+        readOnly={readOnly}
         {...props}
       />
       <SideBar />

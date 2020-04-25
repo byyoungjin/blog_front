@@ -17,7 +17,8 @@ export const addMedia = ({ editorState, src, type }) => {
     entityKey,
     " "
   );
-  return newState;
+  const focusedNewEditorState = EditorState.moveFocusToEnd(newState);
+  return focusedNewEditorState;
 };
 
 export const addAtomic = ({ editorState, type }) => {
@@ -37,7 +38,9 @@ export const addAtomic = ({ editorState, type }) => {
     entityKey,
     " "
   );
-  return newState;
+  const focusedNewEditorState = EditorState.moveFocusToEnd(newState);
+
+  return focusedNewEditorState;
 };
 
 export const toggleBlockType = ({ editorState, type }) => {

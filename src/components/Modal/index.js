@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function Modal({ modal }) {
   return (
     <Container modal={modal}>
-      <ModalComp>modal</ModalComp>
+      <ModalComp>saved!</ModalComp>
     </Container>
   );
 }

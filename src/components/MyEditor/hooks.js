@@ -14,7 +14,6 @@ export function useEditorState(id) {
       dispatch(actions.editorState.updateEditorState({ newEditorState })),
     []
   );
-
   useEffect(() => {
     if (id) {
       populateEditorState({ id, setEditorState });

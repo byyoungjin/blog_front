@@ -5,3 +5,5 @@ export const getSideBarIsOpen = state => state.editorState.sideBar.isOpen;
 
 export const getUppperBarPosition = state =>
   state.editorState.upperBar.position;
+
+export const getEditorReadOnly = state => state.editorState.readOnly;
