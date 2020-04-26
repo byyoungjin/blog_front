@@ -19,6 +19,9 @@ import { colors } from "theme";
 import Media from "./Media";
 import Code from "./Blocks/Code";
 import Youtube from "./Blocks/YouTube";
+import Title from "./Blocks/Title";
+import SubTitle from "./Blocks/SubTitle";
+import QuoteBlock from "./Blocks/QuoteBlock";
 
 import log from "utils/log";
 
@@ -77,6 +80,15 @@ export default function BasicEditor({
     "code-block": {
       element: "div",
       wrapper: <Code />
+    },
+    title: {
+      element: Title
+    },
+    subTitle: {
+      element: SubTitle
+    },
+    quoteBlock: {
+      element: QuoteBlock
     }
   });
 

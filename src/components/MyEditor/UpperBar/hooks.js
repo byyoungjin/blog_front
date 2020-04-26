@@ -12,10 +12,15 @@ export const useToggleStyleHandler = () => {
 
   const toggleBlocktype = blockType => {
     const newEditorState = RichUtils.toggleBlockType(editorState, blockType);
-    dispatch(actions.editorState.updateEditorState({ newEditorState }));
+    dispatch(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "toggleBlockType"
+      })
+    );
   };
 
-  const toggleLinkStyle = (url = "google.com") => {
+  const toggleLinkStyle = url => {
     dispatch(actions.editorState.toggleLink({ editorState, url }));
   };
 

@@ -47,17 +47,23 @@ const UpperBarComp = ({ editorRef }) => {
     {
       title: "quote",
       image: "icons/editor/inline/quote.svg",
-      onClick: () => {}
+      onClick: () => {
+        toggleBlocktype("quoteBlock");
+      }
     },
     {
       title: "subTitle",
       image: "icons/editor/inline/subTitle.svg",
-      onClick: () => {}
+      onClick: () => {
+        toggleBlocktype("subTitle");
+      }
     },
     {
       title: "title",
       image: "icons/editor/inline/title.svg",
-      onClick: () => {}
+      onClick: () => {
+        toggleBlocktype("title");
+      }
     }
   ];
 
@@ -76,8 +82,12 @@ const UpperBarComp = ({ editorRef }) => {
       ))}
       <Seperator />
       {blockButtons.map(button => (
-        <Button key={button.title} onClick={button.onClick}>
-          <img src={button.image} alt={button.title} />
+        <Button key={button.title}>
+          <img
+            src={button.image}
+            alt={button.title}
+            onMouseDown={button.onClick}
+          />
         </Button>
       ))}
     </>
