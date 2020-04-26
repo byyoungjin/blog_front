@@ -3,12 +3,14 @@ import { EditorState } from "draft-js";
 
 import * as AT from "data/rootActionTypes";
 import Remote from "data/remote";
+import { compositeDecorator } from "./helper/decorators";
 
 const INITIAL_STATE = {
-  editorState: EditorState.createEmpty(),
+  editorState: EditorState.createEmpty(compositeDecorator),
   sideBar: { position: { transfrom: "scale(0)" }, isOpen: false },
   upperBar: { position: { transfrom: "scale(0)" } },
   readOnly: false,
+  isLinkInput: false,
   [AT.ADD_IMAGE]: Remote.NotAsked
 };
 
@@ -38,6 +40,9 @@ export default produce((draft, action) => {
       break;
     case AT.TOGGLE_EDITOR_READ_ONLY:
       draft.readOnly = action.data;
+      break;
+    case AT.TOGGLE_IS_LINK_INPUT:
+      draft.isLinkInput = action.data;
       break;
     default:
       return;

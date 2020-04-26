@@ -48,3 +48,25 @@ export const toggleBlockType = ({ editorState, type }) => {
   const focusedNewEditorState = EditorState.moveFocusToEnd(newEditorState);
   return focusedNewEditorState;
 };
+
+export const toggleInlineStyle = ({ editorState, inlineStyle }) =>
+  RichUtils.toggleInlineStyle(editorState, inlineStyle);
+
+export const toggleLinkStyle = ({ editorState, url }) => {
+  const contentState = editorState.getCurrentContent();
+  const contentStateWithEntity = contentState.createEntity("LINK", "MUTABLE", {
+    url
+  });
+
+  const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+  const newEditorState = EditorState.set(editorState, {
+    currentContent: contentStateWithEntity
+  });
+  const toggledNewEditorState = RichUtils.toggleLink(
+    newEditorState,
+    newEditorState.getSelection(),
+    entityKey
+  );
+
+  return toggledNewEditorState;
+};

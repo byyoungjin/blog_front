@@ -31,7 +31,7 @@ export const updateSideBarPosition = data => ({
   type: AT.UPDATE_SIDE_BAR_POSITION,
   data
 });
-export const updateUpperBarPostion = data => ({
+export const updateUpperBarPosition = data => ({
   type: AT.UPDATE_UPPPER_BAR_POSITION,
   data
 });
@@ -48,5 +48,19 @@ export const addAtomicBlock = data => ({
 
 export const toggleEditorReadOnly = data => ({
   type: AT.TOGGLE_EDITOR_READ_ONLY,
+  data
+});
+
+export const toggleIsLinkInput = data => ({
+  type: AT.TOGGLE_IS_LINK_INPUT,
+  data
+});
+
+export const toggleInline = data => ({
+  type: AT.TOGGLE_INLINE,
+  data
+});
+export const toggleLink = data => ({
+  type: AT.TOGGLE_LINK,
   data
 });

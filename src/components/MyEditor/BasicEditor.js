@@ -38,9 +38,9 @@ export default function BasicEditor({
     editorRef
   ]);
 
-  useEffect(() => {
-    focusOnEditor();
-  }, [focusOnEditor]);
+  // useEffect(() => {
+  //   focusOnEditor();
+  // }, [focusOnEditor]);
 
   const myKeybindingFn = e => {
     if (e.keyCode === 83 && hasCommandModifier(e)) {
@@ -50,12 +50,12 @@ export default function BasicEditor({
   };
 
   const handleKeyCommand = (command, editorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
+    const newEditorState = RichUtils.handleKeyCommand(editorState, command);
     if (command === "myeditor-save") {
       saveHandler();
     }
-    if (newState) {
-      setEditorState(newState);
+    if (newEditorState) {
+      setEditorState({ newEditorState, from: "handleKeyCommand" });
       return "handled";
     }
     return "not-handled";
@@ -101,7 +101,9 @@ export default function BasicEditor({
       <button onMouseDown={logCurrentBlock}>log</button>
       <Editor
         editorState={editorState}
-        onChange={editorState => setEditorState(editorState)}
+        onChange={newEditorState =>
+          setEditorState({ newEditorState, from: "EditorOnChange" })
+        }
         handleKeyCommand={handleKeyCommand}
         keyBindingFn={myKeybindingFn}
         ref={editorRef}

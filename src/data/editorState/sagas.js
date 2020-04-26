@@ -1,7 +1,13 @@
 import { put } from "redux-saga/effects";
 
 import { actions } from "data";
-import { addMedia, toggleBlockType, addAtomic } from "./helper";
+import {
+  addMedia,
+  toggleBlockType,
+  addAtomic,
+  toggleInlineStyle,
+  toggleLinkStyle
+} from "./helper";
 import api from "api";
 import generateUUID from "utils/generateUUID";
 
@@ -14,7 +20,8 @@ export function* addImage(action) {
     });
     yield put(
       actions.editorState.updateEditorState({
-        newEditorState: editorStateWithPlaceholder
+        newEditorState: editorStateWithPlaceholder,
+        from: "addImage placeholder"
       })
     );
 
@@ -41,7 +48,12 @@ export function* addImage(action) {
 
     const newEditorState = addMedia({ type: "image", src: url, editorState });
 
-    yield put(actions.editorState.updateEditorState({ newEditorState }));
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "addImageSaga"
+      })
+    );
     yield put(actions.editorState.addImageSuccess({ newEditorState }));
     yield put(actions.editorState.updateSideBarIsOpen(false));
     yield put(
@@ -61,7 +73,12 @@ export function* addAtomicBlock(action) {
       resolve("success");
     }, 10);
   });
-  yield put(actions.editorState.updateEditorState({ newEditorState }));
+  yield put(
+    actions.editorState.updateEditorState({
+      newEditorState,
+      from: "addAtomicBlockSaga"
+    })
+  );
   yield put(actions.editorState.updateSideBarIsOpen(false));
   yield put(
     actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
@@ -78,10 +95,60 @@ export function* toggleBlock(action) {
         resolve("success");
       }, 10);
     });
-    yield put(actions.editorState.updateEditorState({ newEditorState }));
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "toggleBlockSaga"
+      })
+    );
     yield put(actions.editorState.updateSideBarIsOpen(false));
     yield put(
       actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
     );
-  } catch (e) {}
+  } catch (e) {
+    console.log("e", e);
+  }
+}
+
+export function* toggleInline(action) {
+  try {
+    const { editorState, inlineStyle } = action.data;
+    const newEditorState = toggleInlineStyle({ editorState, inlineStyle });
+    yield new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("success");
+      }, 10);
+    });
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "toggleInlineSaga"
+      })
+    );
+    yield put(
+      actions.editorState.updateUpperBarPosition({ transfrom: "scale(0)" })
+    );
+  } catch (e) {
+    console.log("e", e);
+  }
+}
+
+export function* toggleLink(action) {
+  const { editorState, url } = action.data;
+  try {
+    const newEditorState = toggleLinkStyle({ editorState, url });
+    yield new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("success");
+      }, 10);
+    });
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "toggleLinkSaga"
+      })
+    );
+  } catch (e) {
+    console.log("e", e);
+  }
 }

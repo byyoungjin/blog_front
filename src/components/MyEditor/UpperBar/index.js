@@ -1,47 +1,92 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
-import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
-import { getVisibleSelectionRect } from "draft-js";
+import { useSelector } from "react-redux";
 
+import { selectors } from "data";
 import { colors } from "theme";
 import { useRect } from "utils/Dom";
 import { useUppperBarPosition } from "../hooks";
+import { useToggleStyleHandler } from "./hooks";
+import LinkInput from "components/MyEditor/Blocks/LinkInput";
 
-const bold = "icons/editor/inline/bold.svg";
-const italic = "icons/editor/inline/italic.svg";
-const link = "icons/editor/inline/link.svg";
-const quote = "icons/editor/inline/quote.svg";
-const subTitle = "icons/editor/inline/subTitle.svg";
-const title = "icons/editor/inline/title.svg";
-
-export default function UpperBarComp({ editorRef }) {
+const UpperBarComp = ({ editorRef }) => {
   const upperBarPosition = useUppperBarPosition({ editorRef });
+  const isLinkInput = useSelector(selectors.editorState.getIsLinkInput);
+  const [
+    toggleInlineStyle,
+    toggleBlocktype,
+    toggleLinkStyle,
+    inputLinkHandler
+  ] = useToggleStyleHandler();
 
-  return (
-    <UpperBar style={upperBarPosition}>
-      {/* <button onMouseClick={() => editorRef.current.focus()}>focus</button> */}
-      <Button>
-        <img src={bold} alt="bold" />
-      </Button>
-      <Button>
-        <img src={italic} alt="italic" />
-      </Button>
-      <Button>
-        <img src={link} alt="link" />
-      </Button>
+  const inlineButtons = [
+    {
+      title: "bold",
+      image: "icons/editor/inline/bold.svg",
+      onClick: () => {
+        toggleInlineStyle("BOLD");
+      }
+    },
+    {
+      title: "italic",
+      image: "icons/editor/inline/italic.svg",
+      onClick: () => {
+        toggleInlineStyle("ITALIC");
+      }
+    },
+    {
+      title: "link",
+      image: "icons/editor/inline/link.svg",
+      onClick: () => {
+        inputLinkHandler();
+      }
+    }
+  ];
+
+  const blockButtons = [
+    {
+      title: "quote",
+      image: "icons/editor/inline/quote.svg",
+      onClick: () => {}
+    },
+    {
+      title: "subTitle",
+      image: "icons/editor/inline/subTitle.svg",
+      onClick: () => {}
+    },
+    {
+      title: "title",
+      image: "icons/editor/inline/title.svg",
+      onClick: () => {}
+    }
+  ];
+
+  const upperBarContents = isLinkInput ? (
+    <LinkInput />
+  ) : (
+    <>
+      {inlineButtons.map(button => (
+        <Button key={button.title}>
+          <img
+            src={button.image}
+            alt={button.title}
+            onMouseDown={button.onClick}
+          />
+        </Button>
+      ))}
       <Seperator />
-      <Button>
-        <img src={title} alt="title" />
-      </Button>
-      <Button>
-        <img src={subTitle} alt="subTitle" />
-      </Button>
-      <Button>
-        <img src={quote} alt="quote" />
-      </Button>
-    </UpperBar>
+      {blockButtons.map(button => (
+        <Button key={button.title} onClick={button.onClick}>
+          <img src={button.image} alt={button.title} />
+        </Button>
+      ))}
+    </>
   );
-}
+
+  return <UpperBar style={upperBarPosition}>{upperBarContents}</UpperBar>;
+};
+
+export default UpperBarComp;
 
 const Seperator = styled.div`
   display: inline-block;

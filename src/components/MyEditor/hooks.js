@@ -9,15 +9,19 @@ import { actions, selectors } from "data";
 export function useEditorState(id) {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
-  const setEditorState = useCallback(
-    newEditorState =>
-      dispatch(actions.editorState.updateEditorState({ newEditorState })),
-    []
-  );
+  const setEditorState = useCallback(({ newEditorState, from }) => {
+    dispatch(actions.editorState.updateEditorState({ newEditorState, from }));
+  }, []);
   useEffect(() => {
-    if (id) {
-      populateEditorState({ id, setEditorState });
-    }
+    dispatch(
+      actions.editorState.updateEditorState({
+        newEditorState: editorState,
+        from: "useEditorState"
+      })
+    );
+    // if (id) {
+    //   populateEditorState({ id, setEditorState });
+    // }
   }, [id, setEditorState]);
 
   return [editorState, setEditorState];
@@ -30,7 +34,7 @@ export const useUppperBarPosition = ({ editorRef }) => {
     selectors.editorState.getUppperBarPosition
   );
   const setUpperBarPosition = useCallback(position => {
-    dispatch(actions.editorState.updateUpperBarPostion(position));
+    dispatch(actions.editorState.updateUpperBarPosition(position));
   }, []);
   const editorState = useSelector(selectors.editorState.getEditorState);
 

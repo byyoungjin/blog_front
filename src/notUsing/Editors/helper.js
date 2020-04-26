@@ -23,6 +23,6 @@ export const populateEditorState = (item, setEditorState) => () => {
   if (rawEditorData !== null) {
     const contentState = convertFromRaw(rawEditorData);
     const newEditorState = EditorState.createWithContent(contentState);
-    setEditorState(newEditorState);
+    setEditorState({ newEditorState, from: "populateEditorState" });
   }
 };

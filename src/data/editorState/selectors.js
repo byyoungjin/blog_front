@@ -7,3 +7,5 @@ export const getUppperBarPosition = state =>
   state.editorState.upperBar.position;
 
 export const getEditorReadOnly = state => state.editorState.readOnly;
+
+export const getIsLinkInput = state => state.editorState.isLinkInput;

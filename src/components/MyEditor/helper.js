@@ -25,7 +25,10 @@ export const populateEditorState = ({ id, setEditorState }) => {
     const editorState = EditorState.createWithContent(contentState);
     const focusedEditorState = EditorState.moveFocusToEnd(editorState);
 
-    setEditorState(focusedEditorState);
+    setEditorState({
+      newEditorState: focusedEditorState,
+      from: "populateEditorState"
+    });
   }
 };
 
