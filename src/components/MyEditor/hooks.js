@@ -39,7 +39,14 @@ export const useUppperBarPosition = ({ editorRef }) => {
   }, []);
 
   useEffect(() => {
+    const currentContent = editorState.getCurrentContent();
     const selection = editorState.getSelection();
+
+    const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
+    const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
+    const node = document.querySelectorAll(
+      `[data-offset-key="${offsetKey}"]`
+    )[0];
 
     // const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
     // const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
@@ -49,7 +56,7 @@ export const useUppperBarPosition = ({ editorRef }) => {
     if (!selection.isCollapsed()) {
       setUpperBarPosition({
         transform: "scale(1)",
-        top: selectionRect && selectionRect.top,
+        top: node.offsetTop - 60,
         left:
           selectionRect && selectionRect.left + selectionRect.width / 2 - 150,
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)"
@@ -58,7 +65,7 @@ export const useUppperBarPosition = ({ editorRef }) => {
       setUpperBarPosition({
         transform: "scale(0)",
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
-        top: selectionRect && selectionRect.top - 60,
+        top: node.offsetTop - 60,
         left:
           selectionRect && selectionRect.left + selectionRect.width / 2 - 150
       });
