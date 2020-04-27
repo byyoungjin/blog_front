@@ -18,12 +18,14 @@ const loadContentFromStorage = item => {
   return savedData ? JSON.parse(savedData) : null;
 };
 
-export const populateEditorState = ({ id, setEditorState }) => {
+export const populateEditorState = ({ id, setEditorState, editorState }) => {
   const rawEditorState = loadContentFromStorage(EDITOR_STATE + id);
   if (rawEditorState !== null) {
     const contentState = convertFromRaw(rawEditorState);
-    const editorState = EditorState.createWithContent(contentState);
-    const focusedEditorState = EditorState.moveFocusToEnd(editorState);
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentState
+    });
+    const focusedEditorState = EditorState.moveFocusToEnd(newEditorState);
 
     setEditorState({
       newEditorState: focusedEditorState,

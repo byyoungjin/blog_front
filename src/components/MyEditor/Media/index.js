@@ -4,10 +4,12 @@ import styled from "styled-components";
 import Loading from "components/Placeholder/Loading";
 import Dash from "components/MyEditor/Blocks/Dash";
 import YouTube from "components/MyEditor/Blocks/YouTube";
+import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
+import SplashImage from "components/MyEditor/Blocks/SplashImage";
 
 export default function Media({ contentState, block }) {
   const entity = contentState.getEntity(block.getEntityAt(0));
-  const { src } = entity.getData();
+  const { src, splashInfo } = entity.getData();
   const type = entity.getType();
   let media;
   switch (type) {
@@ -22,6 +24,13 @@ export default function Media({ contentState, block }) {
       break;
     case "youtube":
       media = <YouTube />;
+      break;
+    case "unsplash":
+      media = splashInfo ? (
+        <SplashImage splashInfo={splashInfo} />
+      ) : (
+        <SplashSearch />
+      );
       break;
     default:
       return;

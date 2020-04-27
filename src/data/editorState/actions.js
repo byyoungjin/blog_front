@@ -64,3 +64,8 @@ export const toggleLink = data => ({
   type: AT.TOGGLE_LINK,
   data
 });
+
+export const addSplashImage = data => ({
+  type: AT.ADD_SPLASH_IMAGE,
+  data
+});

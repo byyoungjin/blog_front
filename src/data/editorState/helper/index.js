@@ -70,3 +70,19 @@ export const toggleLinkStyle = ({ editorState, url }) => {
 
   return toggledNewEditorState;
 };
+
+export const addSplashData = ({ editorState, splashInfo }) => {
+  const contentState = editorState.getCurrentContent();
+  const selection = editorState.getSelection();
+  const selectedKey = selection.getFocusKey();
+  const selectedBlock = contentState.getBlockForKey(selectedKey);
+  const entity = selectedBlock.getEntityAt(0);
+
+  const replacedContentState = contentState.replaceEntityData(entity, {
+    splashInfo
+  });
+  const newEditorState = EditorState.set(editorState, {
+    currentContent: replacedContentState
+  });
+  return newEditorState;
+};

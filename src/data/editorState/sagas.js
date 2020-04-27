@@ -6,7 +6,8 @@ import {
   toggleBlockType,
   addAtomic,
   toggleInlineStyle,
-  toggleLinkStyle
+  toggleLinkStyle,
+  addSplashData
 } from "./helper";
 import api from "api";
 import generateUUID from "utils/generateUUID";
@@ -63,6 +64,18 @@ export function* addImage(action) {
     console.log("e.message", e.message);
     yield put(actions.editorState.addImageFailure(e));
   }
+}
+
+export function* addSpalashImage(action) {
+  const { splashInfo, editorState } = action.data;
+
+  const newEditorState = addSplashData({ editorState, splashInfo });
+  yield put(
+    actions.editorState.updateEditorState({
+      newEditorState,
+      from: "addSplashImage"
+    })
+  );
 }
 
 export function* addAtomicBlock(action) {

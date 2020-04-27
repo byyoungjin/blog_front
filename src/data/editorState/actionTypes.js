@@ -25,3 +25,5 @@ export const TOGGLE_IS_LINK_INPUT = "TOGGLE_IS_LINK_INPUT";
 export const TOGGLE_INLINE = "TOGGLE_INLINE";
 
 export const TOGGLE_LINK = "TOGGLE_LINK";
+
+export const ADD_SPLASH_IMAGE = "ADD_SPLASH_IMAGE";

@@ -16,7 +16,11 @@ export const useInsertHandlers = editorState => {
     );
   };
 
-  const insertSearchHandler = () => {};
+  const insertSearchHandler = () => {
+    dispatch(
+      actions.editorState.addAtomicBlock({ editorState, type: "unsplash" })
+    );
+  };
 
   const insertVideoHandler = () => {
     dispatch(

@@ -19,9 +19,9 @@ export function useEditorState(id) {
         from: "useEditorState"
       })
     );
-    // if (id) {
-    //   populateEditorState({ id, setEditorState });
-    // }
+    if (id) {
+      populateEditorState({ id, setEditorState, editorState });
+    }
   }, [id, setEditorState]);
 
   return [editorState, setEditorState];
@@ -30,13 +30,13 @@ export function useEditorState(id) {
 //upper bar position 을 선택한 라인에 맞춰서 표시해준다.
 export const useUppperBarPosition = ({ editorRef }) => {
   const dispatch = useDispatch();
+  const editorState = useSelector(selectors.editorState.getEditorState);
   const upperBarPosition = useSelector(
     selectors.editorState.getUppperBarPosition
   );
   const setUpperBarPosition = useCallback(position => {
     dispatch(actions.editorState.updateUpperBarPosition(position));
   }, []);
-  const editorState = useSelector(selectors.editorState.getEditorState);
 
   useEffect(() => {
     const selection = editorState.getSelection();
@@ -49,7 +49,7 @@ export const useUppperBarPosition = ({ editorRef }) => {
     if (!selection.isCollapsed()) {
       setUpperBarPosition({
         transform: "scale(1)",
-        top: selectionRect && selectionRect.top - 60,
+        top: selectionRect && selectionRect.top,
         left:
           selectionRect && selectionRect.left + selectionRect.width / 2 - 150,
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)"

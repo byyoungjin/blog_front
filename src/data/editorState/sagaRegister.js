@@ -8,4 +8,5 @@ export default function*() {
   yield takeEvery(AT.ADD_ATOMIC_BLOCK, sagas.addAtomicBlock);
   yield takeEvery(AT.TOGGLE_INLINE, sagas.toggleInline);
   yield takeEvery(AT.TOGGLE_LINK, sagas.toggleLink);
+  yield takeEvery(AT.ADD_SPLASH_IMAGE, sagas.addSpalashImage);
 }
