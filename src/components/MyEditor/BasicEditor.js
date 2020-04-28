@@ -32,6 +32,7 @@ export default function BasicEditor({
   setEditorState,
   editorRef,
   saveHandler,
+  readOnly: readOnlyForDetailView,
   ...props
 }) {
   const dispatch = useDispatch();
@@ -122,7 +123,7 @@ export default function BasicEditor({
         blockRendererFn={mediaBlockRenderer}
         blockRenderMap={extendedBlockRenderMap}
         handlePastedFiles={handlePastedFilesFn}
-        readOnly={readOnly}
+        readOnly={readOnlyForDetailView ? readOnlyForDetailView : readOnly}
         {...props}
       />
       <SideBar />

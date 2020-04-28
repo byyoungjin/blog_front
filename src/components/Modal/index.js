@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function Modal({ modal }) {
   return (
     <Container modal={modal}>
-      <ModalComp>saved!</ModalComp>
+      <ModalComp>{modal.content}</ModalComp>
     </Container>
   );
 }
@@ -16,7 +16,7 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-center;
   transform: ${({ modal }) =>
     modal.up ? "translateY(0);" : "translateY(-100%);"}
     opacity: ${({ modal }) => (modal.up ? "1" : "0")} ; 
@@ -24,9 +24,13 @@ const Container = styled.div`
 `;
 
 const ModalComp = styled.div`
-
+display:flex;
+justify-content: center;
+align-items: flex-center;
+text-align:center;
 width: 100px;
 height: 100px
+line-height:100px;
 border: solid black;
 
 `;

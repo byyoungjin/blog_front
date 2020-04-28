@@ -5,13 +5,30 @@ import ProfilePicture from "../../ProfilePicture";
 
 import { colors } from "theme";
 
-export default function ControllerComp({ saveHandler }) {
-  const publishHandler = () => {};
+export default function ControllerComp({ handlers, readOnly, isSameUser }) {
+  const { saveHandler, publishHandler, editHandler, deleteHandler } = handlers;
+
+  const Buttons = button => (
+    <Button onClick={button.onClick} key={button.title}>
+      {button.title}
+    </Button>
+  );
+
+  const EditorButtons = () =>
+    [
+      { title: "SAVE", onClick: saveHandler },
+      { title: "PUBLISH", onClick: publishHandler }
+    ].map(Buttons);
+
+  const DetailButtons = () =>
+    [
+      { title: "EDIT", onClick: editHandler },
+      { title: "DELETE", onClick: deleteHandler }
+    ].map(Buttons);
 
   return (
     <Controller>
-      <Button onClick={saveHandler}>SAVE</Button>
-      <Button onClick={publishHandler}>PUBLISH</Button>
+      {readOnly ? isSameUser ? <DetailButtons /> : null : <EditorButtons />}
       <ProfilePicture diameter="50px" />
     </Controller>
   );

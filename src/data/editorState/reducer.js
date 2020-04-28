@@ -20,6 +20,9 @@ export default produce((draft, action) => {
       const { newEditorState } = action.data;
       draft.editorState = newEditorState;
       break;
+    case AT.GET_ONE_POST_SUCCESS:
+      draft.editorState = action.data.editorState;
+      break;
     case AT.ADD_IMAGE_LOADING:
       draft[AT.ADD_IMAGE] = Remote.Loading;
       break;

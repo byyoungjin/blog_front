@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { colors } from "theme";
-const anonymous = "icons/anonymous.svg";
+import Anonymous from "./anonymous.svg";
+const anonymous = process.env.PUBLIC_URL + "/icons/anonymous.svg";
 
 function ProfilePicture({ src, diameter }) {
   const imgSrc = src ? src : anonymous;

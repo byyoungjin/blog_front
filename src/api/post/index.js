@@ -8,16 +8,8 @@ export const api = {
   },
   getPostById: async postId => {
     const res = await socialApiClient.get(`/api/post/getPost/${postId}`);
-    const post = res.data.post;
-    const convertFromRawPost = {
-      editorContentState: EditorState.createWithContent(
-        convertFromRaw(JSON.parse(post.editorContentState))
-      ),
-      editorTitleState: EditorState.createWithContent(
-        convertFromRaw(JSON.parse(post.editorTitleState))
-      ),
-      UserId: post.UserId
-    };
+    const rawPost = res.data;
+    const convertFromRawPost = getConvertFromRawPost(rawPost);
     return convertFromRawPost;
   },
   createPost: async postContent => {
@@ -42,12 +34,16 @@ export const api = {
 
 const getConvertToRawPost = postContent => {
   return {
-    editorContentState: JSON.stringify(
-      convertToRaw(postContent.editorContentState.getCurrentContent())
-    ),
-    editorTitleState: JSON.stringify(
-      convertToRaw(postContent.editorTitleState.getCurrentContent())
+    editorState: JSON.stringify(
+      convertToRaw(postContent.editorState.getCurrentContent())
     ),
     UserId: postContent.UserId
   };
 };
+
+const getConvertFromRawPost = rawPostContent => ({
+  editorState: EditorState.createWithContent(
+    convertFromRaw(JSON.parse(rawPostContent.editorState))
+  ),
+  UserId: rawPostContent.UserId
+});

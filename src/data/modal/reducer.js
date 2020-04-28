@@ -4,18 +4,18 @@ import * as AT from "data/rootActionTypes";
 
 const INITIAL_VALUES = {
   up: false,
-  modal: null
+  content: null
 };
 
 export default produce((draft, action) => {
   switch (action.type) {
     case AT.SET_MODAL_UP:
       draft.up = true;
-      draft.modal = action.modal;
+      draft.content = action.content;
       break;
     case AT.SET_MODAL_DOWN:
       draft.up = false;
-      draft.modal = null;
+      draft.content = null;
       break;
     default:
       return;

@@ -1,4 +1,5 @@
 import { EditorState } from "draft-js";
+import produce from "immer";
 
 import Remote from "data/remote";
 import * as AT from "data/rootActionTypes";
@@ -6,39 +7,36 @@ import { actions } from "data";
 
 const INITIAL_STATE = {
   posts: [],
+  currentPost: null,
   [AT.GET_POSTS]: Remote.NotAsked,
   [AT.GET_ONE_POST]: Remote.NotAsked
 };
 
-export default function posts(state = INITIAL_STATE, action = {}) {
+const posts = produce((draft, action) => {
   switch (action.type) {
     case AT.GET_POSTS_LOADING:
-      return { ...state, [AT.GET_POSTS]: Remote.loading };
+      draft[AT.GET_POSTS] = Remote.loading;
+      break;
     case AT.GET_POSTS_SUCCESS:
-      return {
-        ...state,
-        [AT.GET_POSTS]: Remote.Success(action.data),
-        posts: action.data
-      };
+      draft[AT.GET_POSTS] = Remote.Success(action.data);
+      draft.posts = action.data;
+      break;
     case AT.GET_POSTS_FAILURE:
-      return { ...state, [AT.GET_POSTS]: Remote.Failure(action.error) };
-
+      draft[AT.GET_POSTS] = Remote.Failure(action.error);
+      break;
     case AT.GET_ONE_POST_LOADING:
-      return { ...state, [AT.GET_ONE_POST]: Remote.loading };
+      draft[AT.GET_ONE_POST] = Remote.loading;
+      break;
     case AT.GET_ONE_POST_SUCCESS:
-      const newCurrentPost = {
-        editorTitleState: action.data.editorTitleState,
-        editorContentState: action.data.editorContentState
-      };
-      return {
-        ...state,
-        [AT.GET_ONE_POST]: Remote.Success(action.data),
-        currentPost: newCurrentPost
-      };
+      draft.currentPost = action.data;
+      draft[AT.GET_ONE_POST] = Remote.Success(action.data);
+      break;
     case AT.GET_ONE_POST_FAILURE:
-      return { ...state, [AT.GET_ONE_POST]: Remote.Failure(action.error) };
-
+      draft[AT.GET_ONE_POST] = Remote.Failure(action.error);
+      break;
     default:
-      return state;
+      return;
   }
-}
+}, INITIAL_STATE);
+
+export default posts;

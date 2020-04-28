@@ -7,6 +7,7 @@ export function* createPost(action) {
   try {
     const { postStates } = action;
     const res = yield api.postApi.createPost(postStates);
+    console.log("res", res);
     const { createdPostId } = res.data;
     yield put(actions.post.getOnePost(createdPostId));
   } catch (error) {
@@ -19,6 +20,7 @@ export function* getOnePost(action) {
     const { postId } = action;
     yield put(actions.post.getOnePostLoading());
     const post = yield api.postApi.getPostById(postId);
+    console.log("post", post);
 
     yield put(actions.post.getOnePostSuccess(post));
     yield put(actions.router.push(`/postDetail/${postId}`));

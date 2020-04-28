@@ -1,8 +1,8 @@
 import * as AT from "data/rootActionTypes";
 
-export const setModalUp = modal => ({
+export const setModalUp = content => ({
   type: AT.SET_MODAL_UP,
-  modal
+  content
 });
 
 export const setModalDown = () => ({
