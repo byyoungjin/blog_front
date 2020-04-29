@@ -22,6 +22,7 @@ import Youtube from "./Blocks/YouTube";
 import Title from "./Blocks/Title";
 import SubTitle from "./Blocks/SubTitle";
 import QuoteBlock from "./Blocks/QuoteBlock";
+import Paragraph from "./Blocks/Paragraph";
 
 import log from "utils/log";
 
@@ -47,16 +48,25 @@ export default function BasicEditor({
   // }, [focusOnEditor]);
 
   const myKeybindingFn = e => {
+    console.log("e.keyCode", e.keyCode);
+    console.log("e.shiftKey", e.shiftKey);
+    console.log("e", e);
     if (e.keyCode === 83 && hasCommandModifier(e)) {
       return "myeditor-save";
+    }
+    if (e.keyCode === 13 && e.shiftKey) {
+      return "soft-new-line-add";
     }
     return getDefaultKeyBinding(e);
   };
 
   const handleKeyCommand = (command, editorState) => {
-    const newEditorState = RichUtils.handleKeyCommand(editorState, command);
+    let newEditorState = RichUtils.handleKeyCommand(editorState, command);
     if (command === "myeditor-save") {
       saveHandler();
+    }
+    if (command === "soft-new-line-add") {
+      newEditorState = RichUtils.insertSoftNewline(editorState);
     }
     if (newEditorState) {
       setEditorState({ newEditorState, from: "handleKeyCommand" });
@@ -90,6 +100,9 @@ export default function BasicEditor({
     },
     quoteBlock: {
       element: QuoteBlock
+    },
+    unstyled: {
+      element: Paragraph
     }
   });
 

@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 export default function Title({ children }) {
-  return <Containeer>{children}</Containeer>;
+  return <Container>{children}</Container>;
 }
 
-const Containeer = styled.div`
+const Container = styled.div`
   font-size: 36px;
   padding: 12px;
   color: black;
