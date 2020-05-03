@@ -15,8 +15,17 @@ export default function MyEditor({
   id
 }) {
   const postUserId = useSelector(selectors.post.getCurrentPostUserId);
+  const title = useSelector(selectors.editorState.getTitle);
+  const subTitle = useSelector(selectors.editorState.getSubTitle);
+  const titlePhoto = useSelector(selectors.editorState.getTitlePhoto);
 
-  const publish = usePublishContent({ editorState, UserId: id });
+  const publish = usePublishContent({
+    editorState,
+    UserId: id,
+    title,
+    subTitle,
+    titlePhoto
+  });
   const isSameUser = id ? id === postUserId : false;
 
   const editorRef = useRef();

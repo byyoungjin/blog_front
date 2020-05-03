@@ -170,11 +170,11 @@ export const useSideBarIsOpen = bool => {
   return [isOpen, toggleSidbarIsOpen];
 };
 
-export const usePublishContent = ({ editorState, UserId }) => {
+export const usePublishContent = postInfo => {
   const dispatch = useDispatch();
 
   const publish = () => {
-    dispatch(actions.post.createPost({ editorState, UserId }));
+    dispatch(actions.post.createPost(postInfo));
   };
   return publish;
 };

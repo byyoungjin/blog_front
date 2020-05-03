@@ -34,10 +34,10 @@ export const api = {
 
 const getConvertToRawPost = postContent => {
   return {
+    ...postContent,
     editorState: JSON.stringify(
       convertToRaw(postContent.editorState.getCurrentContent())
-    ),
-    UserId: postContent.UserId
+    )
   };
 };
 
