@@ -71,15 +71,24 @@ export const toggleLinkStyle = ({ editorState, url }) => {
   return toggledNewEditorState;
 };
 
-export const addSplashData = ({ editorState, splashInfo }) => {
+export const replaceEntityData = ({ editorState, data }) => {
   const contentState = editorState.getCurrentContent();
   const selection = editorState.getSelection();
   const selectedKey = selection.getFocusKey();
+
   const selectedBlock = contentState.getBlockForKey(selectedKey);
-  const entity = selectedBlock.getEntityAt(0);
+
+  let entity = selectedBlock.getEntityAt(0);
+
+  //youtube 링크 넣었을때, youtube block 다음 fragment 가 focus 되는 문제때문에 넣음
+  if (entity === null) {
+    const beforeSelectedKey = contentState.getKeyBefore(selectedKey);
+    const beforeSelectedBlock = contentState.getBlockForKey(beforeSelectedKey);
+    entity = beforeSelectedBlock.getEntityAt(0);
+  }
 
   const replacedContentState = contentState.replaceEntityData(entity, {
-    splashInfo
+    data
   });
   const newEditorState = EditorState.set(editorState, {
     currentContent: replacedContentState

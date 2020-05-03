@@ -7,32 +7,40 @@ import Register from "pages/Register";
 import { Home, MyPage, PostWrite, PostDetail } from "pages";
 import { DefaultRoute, UserRoute } from "routes";
 import { DefaultLayout, EditorLayout } from "layout";
+import ErrorBoundary from "pages/ErrorBoundary";
 
 function App({ history }) {
   return (
-    <ConnectedRouter history={history}>
-      <Switch>
-        <DefaultRoute exact path="/" component={Home} layout={DefaultLayout} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <DefaultRoute
-          path="/myPage"
-          component={MyPage}
-          layout={DefaultLayout}
-        />
-        <UserRoute
-          path="/postWrite"
-          component={PostWrite}
-          layout={EditorLayout}
-        />
-        <UserRoute
-          path="/postDetail/:postId"
-          component={PostDetail}
-          layout={EditorLayout}
-        />
-        {/* <Route path="/postUpdate/:postId" component={PostUpdate} /> */}
-      </Switch>
-    </ConnectedRouter>
+    <ErrorBoundary>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <DefaultRoute
+            exact
+            path="/"
+            component={Home}
+            layout={DefaultLayout}
+          />
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
+          <DefaultRoute
+            path="/myPage"
+            component={MyPage}
+            layout={DefaultLayout}
+          />
+          <UserRoute
+            path="/postWrite"
+            component={PostWrite}
+            layout={EditorLayout}
+          />
+          <UserRoute
+            path="/postDetail/:postId"
+            component={PostDetail}
+            layout={EditorLayout}
+          />
+          {/* <Route path="/postUpdate/:postId" component={PostUpdate} /> */}
+        </Switch>
+      </ConnectedRouter>
+    </ErrorBoundary>
   );
 }
 

@@ -6,15 +6,26 @@ import { actions, selectors } from "data";
 
 export default function PostDetailComp({ match }) {
   const dispatch = useDispatch();
+
   const currentPost = useSelector(selectors.post.getCurrentPost);
   const { postId } = match.params;
 
+  const userSession = useSelector(selectors.user.getUserSession);
+  const { id } = userSession;
+
   useEffect(() => {
-    console.log("currentPost", currentPost);
     if (currentPost === null) {
+      dispatch(actions.editorState.toggleEditorReadOnly(true));
       dispatch(actions.post.getOnePost(postId));
     }
   }, []);
 
-  return <MyEditor editorState={currentPost?.editorState} readOnly={true} />;
+  return currentPost ? (
+    <MyEditor
+      editorState={currentPost.editorState}
+      setEditorState={() => {}}
+      readOnly={true}
+      id={id}
+    />
+  ) : null;
 }

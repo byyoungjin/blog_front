@@ -18,6 +18,7 @@ export function* createPost(action) {
 export function* getOnePost(action) {
   try {
     const { postId } = action;
+    yield put(actions.editorState.toggleEditorReadOnly(true));
     yield put(actions.post.getOnePostLoading());
     const post = yield api.postApi.getPostById(postId);
     console.log("post", post);

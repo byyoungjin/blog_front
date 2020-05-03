@@ -6,4 +6,6 @@ export default editorState => {
   const selectionState = editorState.getSelection();
   console.log("contentState", JSON.stringify(raw, null, 2));
   console.log("selectionState", selectionState);
+  const focusKey = selectionState.getFocusKey();
+  console.log("focusKey", focusKey);
 };

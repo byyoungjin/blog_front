@@ -26,27 +26,27 @@ export default function BlockButtons({ isOpen }) {
   const buttons = [
     {
       title: "dash",
-      image: "icons/editor/block/dash.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/block/dash.svg",
       onClick: insertDashHandler
     },
     {
       title: "code",
-      image: "icons/editor/block/code.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/block/code.svg",
       onClick: insertCodeHandler
     },
     {
       title: "photo",
-      image: "icons/editor/block/photo.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/block/photo.svg",
       onClick: photoUplaodHandler
     },
     {
       title: "search",
-      image: "icons/editor/block/search.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/block/search.svg",
       onClick: insertSearchHandler
     },
     {
       title: "video",
-      image: "icons/editor/block/video.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/block/video.svg",
       onClick: insertVideoHandler
     }
   ];

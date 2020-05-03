@@ -8,7 +8,9 @@ export default function SplashSelect({ images }) {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
   const imageSelectHandler = splashInfo => {
-    dispatch(actions.editorState.addSplashImage({ splashInfo, editorState }));
+    dispatch(
+      actions.editorState.replaceEntityData({ data: splashInfo, editorState })
+    );
   };
   return (
     <Container>

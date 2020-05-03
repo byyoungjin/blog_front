@@ -1,17 +1,21 @@
-import { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { EditorState, getVisibleSelectionRect } from "draft-js";
+import { EditorState, getVisibleSelectionRect, convertFromRaw } from "draft-js";
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 
-import { populateEditorState } from "./helper";
 import { actions, selectors } from "data";
+import { loadContentFromStorage } from "./helper";
+import { useModal } from "components/Modal/hooks";
 
 export function useEditorState(id) {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
+
   const setEditorState = useCallback(({ newEditorState, from }) => {
     dispatch(actions.editorState.updateEditorState({ newEditorState, from }));
   }, []);
+
+  // log(editorState);
   useEffect(() => {
     dispatch(
       actions.editorState.updateEditorState({
@@ -19,13 +23,51 @@ export function useEditorState(id) {
         from: "useEditorState"
       })
     );
-    if (id) {
-      populateEditorState({ id, setEditorState, editorState });
-    }
-  }, [id, setEditorState]);
+  }, [editorState]);
+
+  usePopulateEditorState({ id, setEditorState, editorState });
 
   return [editorState, setEditorState];
 }
+
+export const usePopulateEditorState = ({ id, setEditorState, editorState }) => {
+  const { modal, setUpModal, setDownModal } = useModal();
+  const readOnly = useSelector(selectors.editorState.getIsReadOnly);
+
+  const yesHandler = rawEditorState => {
+    const contentState = convertFromRaw(rawEditorState);
+    const newEditorState = EditorState.set(editorState, {
+      currentContent: contentState
+    });
+    const focusedEditorState = EditorState.moveFocusToEnd(newEditorState);
+
+    setEditorState({
+      newEditorState: focusedEditorState,
+      from: "populateEditorState"
+    });
+    setDownModal();
+  };
+
+  const noHandler = () => {
+    setDownModal();
+  };
+
+  useEffect(() => {
+    if (id && !readOnly) {
+      console.log("readOnly", readOnly);
+      const rawEditorState = loadContentFromStorage(id);
+      if (rawEditorState !== null) {
+        setUpModal(
+          <>
+            <div>이전에 작성하던글을 이어서 작성하시겠습니까?</div>
+            <button onClick={yesHandler.bind(this, rawEditorState)}>네</button>
+            <button onClick={noHandler}>아니오</button>
+          </>
+        );
+      }
+    }
+  }, []);
+};
 
 //upper bar position 을 선택한 라인에 맞춰서 표시해준다.
 export const useUppperBarPosition = ({ editorRef }) => {
@@ -79,6 +121,7 @@ export const useSidebarPosition = () => {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
   const sidbarPosition = useSelector(selectors.editorState.getSideBarPosition);
+  const readOnly = useSelector(selectors.editorState.getIsReadOnly);
   const setSidebarPosition = useCallback(
     position => dispatch(actions.editorState.updateSideBarPosition(position)),
     [dispatch]
@@ -99,7 +142,7 @@ export const useSidebarPosition = () => {
 
     const isEmpty = currentBlock.getText() === "";
 
-    if (!isEmpty) {
+    if (!isEmpty || readOnly) {
       setSidebarPosition({
         transform: "scale(0)",
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
@@ -125,4 +168,13 @@ export const useSideBarIsOpen = bool => {
   const toggleSidbarIsOpen = data =>
     dispatch(actions.editorState.updateSideBarIsOpen(bool ? bool : !isOpen));
   return [isOpen, toggleSidbarIsOpen];
+};
+
+export const usePublishContent = ({ editorState, UserId }) => {
+  const dispatch = useDispatch();
+
+  const publish = () => {
+    dispatch(actions.post.createPost({ editorState, UserId }));
+  };
+  return publish;
 };

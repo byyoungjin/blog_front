@@ -1,20 +1,23 @@
 import React, { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import BasicEditor from "./BasicEditor";
 import Controller from "./Controller";
-import { selectors, actions } from "data";
-import { useEditorState } from "./hooks";
+import { selectors } from "data";
+import { useEditorState, usePublishContent } from "./hooks";
 import useModal from "hooks/useModal";
 import { saveContent } from "./helper";
 
-export default function MyEditor({ readOnly }) {
-  const dispatch = useDispatch();
-  const userSession = useSelector(selectors.user.getUserSession);
+export default function MyEditor({
+  readOnly,
+  editorState,
+  setEditorState,
+  id
+}) {
   const postUserId = useSelector(selectors.post.getCurrentPostUserId);
-  const { id } = userSession;
-  const [editorState, setEditorState] = useEditorState(id);
-  const isSameUser = userSession ? userSession.id === postUserId : false;
+
+  const publish = usePublishContent({ editorState, UserId: id });
+  const isSameUser = id ? id === postUserId : false;
 
   const editorRef = useRef();
   const { modalUpAndGo } = useModal();
@@ -24,7 +27,7 @@ export default function MyEditor({ readOnly }) {
     modalUpAndGo({ content: "saved!" });
   };
   const publishHandler = () => {
-    dispatch(actions.post.createPost({ editorState, UserId: id }));
+    publish();
     modalUpAndGo({ content: "published!" });
   };
 

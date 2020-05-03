@@ -7,7 +7,7 @@ import {
   addAtomic,
   toggleInlineStyle,
   toggleLinkStyle,
-  addSplashData
+  replaceEntityData
 } from "./helper";
 import api from "api";
 import generateUUID from "utils/generateUUID";
@@ -58,7 +58,7 @@ export function* addImage(action) {
     yield put(actions.editorState.addImageSuccess({ newEditorState }));
     yield put(actions.editorState.updateSideBarIsOpen(false));
     yield put(
-      actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
+      actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
     );
   } catch (e) {
     console.log("e.message", e.message);
@@ -66,15 +66,19 @@ export function* addImage(action) {
   }
 }
 
-export function* addSpalashImage(action) {
-  const { splashInfo, editorState } = action.data;
+export function* replaceEntity(action) {
+  const { data, editorState } = action.data;
 
-  const newEditorState = addSplashData({ editorState, splashInfo });
+  const newEditorState = replaceEntityData({ editorState, data });
   yield put(
     actions.editorState.updateEditorState({
       newEditorState,
-      from: "addSplashImage"
+      from: "replaceEntity"
     })
+  );
+  yield put(actions.editorState.updateSideBarIsOpen(false));
+  yield put(
+    actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
   );
 }
 
@@ -94,7 +98,7 @@ export function* addAtomicBlock(action) {
   );
   yield put(actions.editorState.updateSideBarIsOpen(false));
   yield put(
-    actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
+    actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
   );
   // yield put(actions.editorState.toggleEditorReadOnly());
 }
@@ -116,7 +120,7 @@ export function* toggleBlock(action) {
     );
     yield put(actions.editorState.updateSideBarIsOpen(false));
     yield put(
-      actions.editorState.updateSideBarPosition({ transfrom: "scale(0)" })
+      actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
     );
   } catch (e) {
     console.log("e", e);
@@ -139,7 +143,7 @@ export function* toggleInline(action) {
       })
     );
     yield put(
-      actions.editorState.updateUpperBarPosition({ transfrom: "scale(0)" })
+      actions.editorState.updateUpperBarPosition({ transform: "scale(0)" })
     );
   } catch (e) {
     console.log("e", e);

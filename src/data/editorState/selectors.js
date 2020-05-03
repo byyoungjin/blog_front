@@ -9,3 +9,11 @@ export const getUppperBarPosition = state =>
 export const getEditorReadOnly = state => state.editorState.readOnly;
 
 export const getIsLinkInput = state => state.editorState.isLinkInput;
+
+export const getTitle = state => state.editorState.title;
+
+export const getTitlePhoto = state => state.editorState.titlePhoto;
+
+export const getSubTitle = state => state.editorState.subTitle;
+
+export const getIsReadOnly = state => state.editorState.readOnly;

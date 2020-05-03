@@ -1,10 +1,10 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import { useField } from "formik";
 import styled from "styled-components";
 
 import { colors } from "theme";
 
-const MyUrlInput = forwardRef(props => {
+export default function MyEditorInput(props) {
   const [field, meta] = useField(props);
   return (
     <InputContainer>
@@ -12,7 +12,7 @@ const MyUrlInput = forwardRef(props => {
       {meta.touched && meta.error && <Error> {meta.error}</Error>}
     </InputContainer>
   );
-});
+}
 
 const InputContainer = styled.div`
   display: flex;
@@ -20,17 +20,16 @@ const InputContainer = styled.div`
   position: relative;
   width: 500px;
 
-  font-size: 16px;
+  font-size: 32px;
 `;
 
 const InputStyled = styled.input`
-  width: 100%;
+  width: 350px;
   outline: none;
   border: none;
-  border-bottom: 1px solid red;
+  background-color: ${colors.gray_light};
   border-radius: 10px;
   padding: 10px;
-  background-color: lightgray;
 `;
 
 const Error = styled.div`
@@ -41,4 +40,3 @@ const Error = styled.div`
   width: 300px;
   color: ${colors.yellow};
 `;
-export default MyUrlInput;

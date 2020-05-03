@@ -5,7 +5,7 @@ import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 import BlockButtons from "./BlockButtons";
 import { useSidebarPosition, useSideBarIsOpen } from "../hooks";
 
-const plus = "icons/editor/block/plus.svg";
+const plus = process.env.PUBLIC_URL + "/icons/editor/block/plus.svg";
 
 export default function SideBarComp({ children }) {
   const [isOpen, toggleSidbarIsOpen] = useSideBarIsOpen();

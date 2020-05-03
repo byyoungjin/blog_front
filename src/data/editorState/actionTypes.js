@@ -26,4 +26,10 @@ export const TOGGLE_INLINE = "TOGGLE_INLINE";
 
 export const TOGGLE_LINK = "TOGGLE_LINK";
 
-export const ADD_SPLASH_IMAGE = "ADD_SPLASH_IMAGE";
+export const REPLACE_ENTIY_DATA = "REPLACE_ENTIY_DATA";
+
+export const SET_TITLE = "SET_TITLE";
+
+export const SET_TITLE_PHOTO = "SET_TITLE_PHOTO";
+
+export const SET_SUB_TITLE = "SET_SUB_TITLE";

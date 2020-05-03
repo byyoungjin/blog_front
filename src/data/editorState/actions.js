@@ -65,7 +65,22 @@ export const toggleLink = data => ({
   data
 });
 
-export const addSplashImage = data => ({
-  type: AT.ADD_SPLASH_IMAGE,
+export const replaceEntityData = data => ({
+  type: AT.REPLACE_ENTIY_DATA,
+  data
+});
+
+export const setTitle = data => ({
+  type: AT.SET_TITLE,
+  data
+});
+
+export const setTitlePhoto = data => ({
+  type: AT.SET_TITLE_PHOTO,
+  data
+});
+
+export const setSubTitle = data => ({
+  type: AT.SET_SUB_TITLE,
   data
 });

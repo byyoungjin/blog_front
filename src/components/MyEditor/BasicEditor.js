@@ -48,9 +48,6 @@ export default function BasicEditor({
   // }, [focusOnEditor]);
 
   const myKeybindingFn = e => {
-    console.log("e.keyCode", e.keyCode);
-    console.log("e.shiftKey", e.shiftKey);
-    console.log("e", e);
     if (e.keyCode === 83 && hasCommandModifier(e)) {
       return "myeditor-save";
     }

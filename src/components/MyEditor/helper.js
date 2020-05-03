@@ -1,4 +1,4 @@
-import { convertToRaw, convertFromRaw, EditorState } from "draft-js";
+import { convertToRaw } from "draft-js";
 
 const EDITOR_STATE = "EDITOR_STATE";
 
@@ -13,25 +13,9 @@ export const saveContent = ({ editorState, id }) => {
   window.localStorage.setItem(EDITOR_STATE + id, editorstateJson);
 };
 
-const loadContentFromStorage = item => {
-  const savedData = window.localStorage.getItem(item);
+export const loadContentFromStorage = id => {
+  const savedData = window.localStorage.getItem(EDITOR_STATE + id);
   return savedData ? JSON.parse(savedData) : null;
-};
-
-export const populateEditorState = ({ id, setEditorState, editorState }) => {
-  const rawEditorState = loadContentFromStorage(EDITOR_STATE + id);
-  if (rawEditorState !== null) {
-    const contentState = convertFromRaw(rawEditorState);
-    const newEditorState = EditorState.set(editorState, {
-      currentContent: contentState
-    });
-    const focusedEditorState = EditorState.moveFocusToEnd(newEditorState);
-
-    setEditorState({
-      newEditorState: focusedEditorState,
-      from: "populateEditorState"
-    });
-  }
 };
 
 export const readFile = ({ files, onLoadHandler }) => {

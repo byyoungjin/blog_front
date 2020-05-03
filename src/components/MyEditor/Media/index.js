@@ -6,15 +6,23 @@ import Dash from "components/MyEditor/Blocks/Dash";
 import YouTube from "components/MyEditor/Blocks/YouTube";
 import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
 import SplashImage from "components/MyEditor/Blocks/SplashImage";
+import YouTubeVideo from "components/MyEditor/Blocks/YouTubeVideo";
+import PostTitle from "components/MyEditor/Blocks/PostTitle";
+import PostSubTitle from "components/MyEditor/Blocks/PostSubTitle";
+
+import { useSetPostData } from "./hooks";
 
 export default function Media({ contentState, block }) {
   const entity = contentState.getEntity(block.getEntityAt(0));
-  const { src, splashInfo } = entity.getData();
+  const { src, data } = entity.getData();
   const type = entity.getType();
+  const { setTitlePhoto, setTitle, setSubTitle } = useSetPostData();
+
   let media;
   switch (type) {
     case "image":
       media = <Image src={src} alt="inserted Image" />;
+      setTitlePhoto(src);
       break;
     case "placeholder":
       media = <Loading />;
@@ -23,14 +31,17 @@ export default function Media({ contentState, block }) {
       media = <Dash />;
       break;
     case "youtube":
-      media = <YouTube />;
+      media = data ? <YouTubeVideo src={data} /> : <YouTube />;
       break;
     case "unsplash":
-      media = splashInfo ? (
-        <SplashImage splashInfo={splashInfo} />
-      ) : (
-        <SplashSearch />
-      );
+      media = data ? <SplashImage splashInfo={data} /> : <SplashSearch />;
+      data && setTitlePhoto(data.thumbImageSrc);
+      break;
+    case "postTitle":
+      media = <PostTitle />;
+      break;
+    case "postSubTitle":
+      media = <PostSubTitle />;
       break;
     default:
       return;

@@ -4,9 +4,13 @@ import { EditorState } from "draft-js";
 import * as AT from "data/rootActionTypes";
 import Remote from "data/remote";
 import { compositeDecorator } from "./helper/decorators";
+import { content } from "./helper/content";
 
 const INITIAL_STATE = {
-  editorState: EditorState.createEmpty(compositeDecorator),
+  editorState: EditorState.createWithContent(content, compositeDecorator),
+  title: "",
+  titlePhoto: null,
+  subTitle: "",
   sideBar: { position: { transfrom: "scale(0)" }, isOpen: false },
   upperBar: { position: { transfrom: "scale(0)" } },
   readOnly: false,
@@ -46,6 +50,15 @@ export default produce((draft, action) => {
       break;
     case AT.TOGGLE_IS_LINK_INPUT:
       draft.isLinkInput = action.data;
+      break;
+    case AT.SET_TITLE:
+      draft.title = action.data;
+      break;
+    case AT.SET_TITLE_PHOTO:
+      draft.titlePhoto = action.data;
+      break;
+    case AT.SET_SUB_TITLE:
+      draft.subTitle = action.data;
       break;
     default:
       return;
