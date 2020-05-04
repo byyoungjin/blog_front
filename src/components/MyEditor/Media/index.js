@@ -35,7 +35,7 @@ export default function Media({ contentState, block }) {
       break;
     case "unsplash":
       media = data ? <SplashImage splashInfo={data} /> : <SplashSearch />;
-      data && setTitlePhoto(data.thumbImageSrc);
+      data && setTitlePhoto(data.regularImageSrc);
       break;
     case "postTitle":
       media = <PostTitle />;

@@ -4,15 +4,24 @@ import { format } from "date-fns";
 
 import colors from "theme/colors";
 
-export default function Post({ style, url, title, subTilte, contents, date }) {
-  const formatedDate = format(date, "yyyy/MM/dd");
+const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.jpg";
+
+export default function Post({
+  style,
+  titlePhoto,
+  title,
+  subTitle,
+  createdAt,
+  onClick
+}) {
+  const formatedDate = format(new Date(createdAt), "yyyy/MM/dd");
+
   return (
-    <PostContainer style={style}>
-      <ImageBox src={url} />
+    <PostContainer style={style} onClick={onClick}>
+      <ImageBox src={titlePhoto ? titlePhoto : defaultCover} />
       <TextBox>
-        <Subtitle>{subTilte}</Subtitle>
-        <Title>{title}</Title>
-        <Contents>{contents}</Contents>
+        <Title>{title === "" ? "무제" : title}</Title>
+        <Subtitle>{subTitle}</Subtitle>
       </TextBox>
       <DateOverlay>{formatedDate}</DateOverlay>
     </PostContainer>

@@ -35,7 +35,12 @@ export function* getPosts(action) {
   try {
     const { userId } = action;
     yield put(actions.post.getPostsLoading());
-    const posts = yield api.postApi.getPostsOfUser(userId);
+    let posts;
+    if (userId) {
+      posts = yield api.postApi.getPostsOfUser(userId);
+    } else {
+      posts = yield api.postApi.getAllPosts();
+    }
     yield put(actions.post.getPostsSuccess(posts));
   } catch (error) {
     yield put(actions.post.getPostsFailure(error));

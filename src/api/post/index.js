@@ -6,6 +6,10 @@ export const api = {
     const res = await socialApiClient.get(`/api/post/getPosts/${userId}`);
     return res.data.posts;
   },
+  getAllPosts: async () => {
+    const res = await socialApiClient.get(`/api/post/getAllPosts`);
+    return res.data.posts;
+  },
   getPostById: async postId => {
     const res = await socialApiClient.get(`/api/post/getPost/${postId}`);
     const rawPost = res.data;

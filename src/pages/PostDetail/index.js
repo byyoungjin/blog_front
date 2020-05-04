@@ -14,10 +14,8 @@ export default function PostDetailComp({ match }) {
   const { id } = userSession;
 
   useEffect(() => {
-    if (currentPost === null) {
-      dispatch(actions.editorState.toggleEditorReadOnly(true));
-      dispatch(actions.post.getOnePost(postId));
-    }
+    dispatch(actions.editorState.toggleEditorReadOnly(true));
+    dispatch(actions.post.getOnePost(postId));
   }, []);
 
   return currentPost ? (

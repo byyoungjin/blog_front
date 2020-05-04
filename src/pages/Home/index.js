@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
+import { actions, selectors } from "data";
 import { Post } from "components";
 import { DefaultLayout } from "layout";
-import { posts } from "models/dummyData/posts";
+// import { posts } from "models/dummyData/posts";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const posts = useSelector(selectors.post.getPosts);
+  console.log("posts", posts);
+
+  useEffect(() => {
+    dispatch(actions.post.getPosts());
+  }, []);
+
+  const postClickHandler = postId => {
+    dispatch(actions.router.push(`/postDetail/${postId}`));
+  };
+
   return (
     <PostContainer>
-      {posts.map(({ url, title, subTitle, contents, date }, index) => (
+      {posts.map(({ id, titlePhoto, title, subTitle, createdAt }, index) => (
         <Post
-          key={title + index}
-          url={url}
+          key={title + createdAt}
+          titlePhoto={titlePhoto}
           title={title}
-          subTilte={subTitle}
-          contents={contents}
-          date={date}
+          subTitle={subTitle}
+          createdAt={createdAt}
+          onClick={postClickHandler.bind(this, id)}
         />
       ))}
     </PostContainer>
