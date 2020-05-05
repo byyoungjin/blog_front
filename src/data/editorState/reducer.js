@@ -64,6 +64,12 @@ export default produce((draft, action) => {
     case AT.SET_EDITOR_TYPE:
       draft.editorType = action.data;
       break;
+    case AT.RESET_ONE_POST:
+      draft.editorState = EditorState.createWithContent(
+        content,
+        compositeDecorator
+      );
+      break;
     default:
       return;
   }

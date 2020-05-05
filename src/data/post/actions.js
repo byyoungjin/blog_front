@@ -51,3 +51,7 @@ export const deletePost = postId => ({
   type: AT.DELETE_POST,
   postId
 });
+
+export const resetOnePost = () => ({
+  type: AT.RESET_ONE_POST
+});

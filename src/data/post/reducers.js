@@ -34,6 +34,11 @@ const posts = produce((draft, action) => {
     case AT.GET_ONE_POST_FAILURE:
       draft[AT.GET_ONE_POST] = Remote.Failure(action.error);
       break;
+    case AT.RESET_ONE_POST:
+      draft.currentPost = null;
+      draft[AT.GET_ONE_POST] = Remote.NotAsked;
+      break;
+
     default:
       return;
   }
