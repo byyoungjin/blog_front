@@ -43,10 +43,8 @@ export const createPost = postStates => ({
   postStates
 });
 
-export const updatePost = ({ postId, newPost }) => ({
-  type: AT.UPDATE_POST,
-  postId,
-  newPost
+export const updatePost = () => ({
+  type: AT.UPDATE_POST
 });
 
 export const deletePost = postId => ({

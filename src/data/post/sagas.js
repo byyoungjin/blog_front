@@ -1,11 +1,28 @@
-import { put } from "redux-saga/effects";
+import { put, select } from "redux-saga/effects";
 
-import { actions } from "data";
+import { actions, selectors } from "data";
 import api from "api";
+import { getTitlePhotoFrom } from "./helper";
 
-export function* createPost(action) {
+export function* createPost() {
   try {
-    const { postStates } = action;
+    const editorState = yield select(selectors.editorState.getEditorState);
+    const UserId = yield select(selectors.user.getUserId);
+    const titlePhotoUrl = getTitlePhotoFrom(editorState);
+    yield put(actions.editorState.setTitlePhoto(titlePhotoUrl));
+
+    const title = yield select(selectors.editorState.getTitle);
+    const subTitle = yield select(selectors.editorState.getSubTitle);
+    const titlePhoto = yield select(selectors.editorState.getTitlePhoto);
+
+    const postStates = {
+      editorState,
+      UserId,
+      title,
+      subTitle,
+      titlePhoto
+    };
+    console.log("postStates", postStates);
     const res = yield api.postApi.createPost(postStates);
     console.log("res", res);
     const { createdPostId } = res.data;
@@ -47,8 +64,24 @@ export function* getPosts(action) {
   }
 }
 
-export function* updatePost(action) {
-  const { postId, newPost } = action;
+export function* updatePost() {
+  const editorState = yield select(selectors.editorState.getEditorState);
+  const titlePhotoUrl = getTitlePhotoFrom(editorState);
+  yield put(actions.editorState.setTitlePhoto(titlePhotoUrl));
+
+  const UserId = yield select(selectors.user.getUserId);
+  const title = yield select(selectors.editorState.getTitle);
+  const subTitle = yield select(selectors.editorState.getSubTitle);
+  const titlePhoto = yield select(selectors.editorState.getTitlePhoto);
+  const postId = yield select(selectors.post.getCurrentPostId);
+
+  const newPost = {
+    editorState,
+    UserId,
+    title,
+    subTitle,
+    titlePhoto
+  };
   yield api.postApi.updatePost({ postId, newPost });
   yield put(actions.post.getOnePost(postId));
 }

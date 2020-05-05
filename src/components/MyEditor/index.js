@@ -4,9 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import BasicEditor from "./BasicEditor";
 import Controller from "./Controller";
 import { selectors, actions } from "data";
-import { useEditorState, usePublishContent, useUpdateContent } from "./hooks";
 import { useModal } from "hooks/useModal";
-import { saveContent, getTitlePhotoFrom } from "./helper";
+import { saveContent } from "./helper";
 
 export default function MyEditor({
   readOnly,
@@ -15,31 +14,7 @@ export default function MyEditor({
   id
 }) {
   const dispatch = useDispatch();
-
   const postUserId = useSelector(selectors.post.getCurrentPostUserId);
-  const title = useSelector(selectors.editorState.getTitle);
-  const subTitle = useSelector(selectors.editorState.getSubTitle);
-  const titlePhoto = useSelector(selectors.editorState.getTitlePhoto);
-  const postId = useSelector(selectors.post.getCurrentPostId);
-
-  const { publish, setTitlePhoto } = usePublishContent({
-    editorState,
-    UserId: id,
-    title,
-    subTitle,
-    titlePhoto
-  });
-
-  const update = useUpdateContent({
-    postId,
-    newPost: {
-      editorState,
-      UserId: id,
-      title,
-      subTitle,
-      titlePhoto
-    }
-  });
   const isSameUser = id ? id === postUserId : false;
 
   const editorRef = useRef();
@@ -50,7 +25,7 @@ export default function MyEditor({
     modalUpAndGo({ content: "saved!" });
   };
   const publishHandler = () => {
-    publish();
+    dispatch(actions.post.createPost());
     modalUpAndGo({ content: "published!" });
   };
 
@@ -59,7 +34,7 @@ export default function MyEditor({
   };
 
   const confirmEdithandler = () => {
-    update();
+    dispatch(actions.post.updatePost());
   };
 
   const deleteHandler = postId => {
@@ -84,9 +59,6 @@ export default function MyEditor({
     deleteHandler,
     confirmEdithandler
   };
-
-  const res = getTitlePhotoFrom(editorState);
-  console.log("res", res);
 
   return (
     <>
