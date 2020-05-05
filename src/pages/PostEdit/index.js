@@ -1,23 +1,28 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { selectors, actions } from "data";
 import { MyEditor } from "components";
+import { actions, selectors } from "data";
 import { useEditorState } from "components/MyEditor/hooks";
 
-export default function PostWriteComp() {
+export default function PostEditComp({ match }) {
   const dispatch = useDispatch();
+  const [editorState, setEditorState] = useEditorState();
+
   const userSession = useSelector(selectors.user.getUserSession);
   const { id } = userSession;
-  const [editorState, setEditorState] = useEditorState(id);
 
   useEffect(() => {
-    dispatch(actions.editorState.setEditorType("write"));
+    dispatch(actions.editorState.toggleEditorReadOnly(false));
+    dispatch(actions.editorState.setEditorType("edit"));
+    // dispatch(actions.post.getOnePost(postId));
   }, []);
+
   return (
     <MyEditor
       editorState={editorState}
       setEditorState={setEditorState}
+      readOnly={false}
       id={id}
     />
   );

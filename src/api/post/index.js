@@ -46,8 +46,8 @@ const getConvertToRawPost = postContent => {
 };
 
 const getConvertFromRawPost = rawPostContent => ({
+  ...rawPostContent,
   editorState: EditorState.createWithContent(
     convertFromRaw(JSON.parse(rawPostContent.editorState))
-  ),
-  UserId: rawPostContent.UserId
+  )
 });

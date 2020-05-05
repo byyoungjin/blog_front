@@ -1,12 +1,22 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import ProfilePicture from "../../ProfilePicture";
 
 import { colors } from "theme";
+import { actions, selectors } from "data";
 
 export default function ControllerComp({ handlers, readOnly, isSameUser }) {
-  const { saveHandler, publishHandler, editHandler, deleteHandler } = handlers;
+  const {
+    saveHandler,
+    publishHandler,
+    editHandler,
+    deleteHandler,
+    confirmEdithandler
+  } = handlers;
+  const postId = useSelector(selectors.post.getCurrentPostId);
+  const editorType = useSelector(selectors.editorState.getEditorType);
 
   const Buttons = button => (
     <Button onClick={button.onClick} key={button.title}>
@@ -22,13 +32,29 @@ export default function ControllerComp({ handlers, readOnly, isSameUser }) {
 
   const DetailButtons = () =>
     [
-      { title: "EDIT", onClick: editHandler },
-      { title: "DELETE", onClick: deleteHandler }
+      { title: "EDIT", onClick: editHandler.bind(this, postId) },
+      { title: "DELETE", onClick: deleteHandler.bind(this, postId) }
     ].map(Buttons);
+
+  const EditButtons = () =>
+    [{ title: "CONFIRM EDIT", onClick: confirmEdithandler }].map(Buttons);
+
+  const getButtons = editorType => {
+    switch (editorType) {
+      case "write":
+        return <EditorButtons />;
+      case "detail":
+        return isSameUser ? <DetailButtons /> : null;
+      case "edit":
+        return <EditButtons />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <Controller>
-      {readOnly ? isSameUser ? <DetailButtons /> : null : <EditorButtons />}
+      {getButtons(editorType)}
       <ProfilePicture diameter="50px" />
     </Controller>
   );

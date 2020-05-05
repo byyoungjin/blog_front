@@ -1,10 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { selectors, actions } from "data";
+import { actions, selectors } from "data";
 
-export default function useModal() {
+export const useModal = () => {
   const dispatch = useDispatch();
   const modal = useSelector(selectors.modal.getModal);
+
+  const setUpModal = content => {
+    dispatch(actions.modal.setModalUp(content));
+  };
+  const setDownModal = () => {
+    dispatch(actions.modal.setModalDown());
+  };
+
   const modalUpAndGo = ({ content }) => {
     dispatch(actions.modal.setModalUp(content));
     setTimeout(() => {
@@ -12,5 +20,5 @@ export default function useModal() {
     }, 1000);
   };
 
-  return { modalUpAndGo, modal };
-}
+  return { modal, setUpModal, setDownModal, modalUpAndGo };
+};

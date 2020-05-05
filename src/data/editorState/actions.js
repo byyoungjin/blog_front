@@ -84,3 +84,8 @@ export const setSubTitle = data => ({
   type: AT.SET_SUB_TITLE,
   data
 });
+
+export const setEditorType = data => ({
+  type: AT.SET_EDITOR_TYPE,
+  data
+});

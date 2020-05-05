@@ -17,3 +17,5 @@ export const getTitlePhoto = state => state.editorState.titlePhoto;
 export const getSubTitle = state => state.editorState.subTitle;
 
 export const getIsReadOnly = state => state.editorState.readOnly;
+
+export const getEditorType = state => state.editorState.editorType;

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Post } from "components";
 import { DefaultLayout } from "layout";
@@ -8,10 +8,20 @@ import { posts } from "models/dummyData/posts";
 import { ProfilePicture, Button } from "components";
 import { user } from "models/dummyData/user";
 import { colors } from "theme";
-import { actions } from "data";
+import { actions, selectors } from "data";
 
 export default function Mypage() {
   const dispatch = useDispatch();
+  const posts = useSelector(selectors.post.getPosts);
+  const userId = useSelector(selectors.user.getUserId);
+
+  useEffect(() => {
+    dispatch(actions.post.getPosts(userId));
+  }, []);
+
+  const postClickHandler = postId => {
+    dispatch(actions.router.push(`/postDetail/${postId}`));
+  };
 
   const logoutHandler = () => dispatch(actions.user.logout());
   return (
@@ -24,14 +34,14 @@ export default function Mypage() {
       </MyProfile>
       <Label>내 포스트</Label>
       <PostContainer>
-        {posts.map(({ url, title, subTitle, contents, date }, index) => (
+        {posts.map(({ id, titlePhoto, title, subTitle, createdAt }, index) => (
           <Post
-            key={title + index}
-            url={url}
+            key={title + createdAt}
+            titlePhoto={titlePhoto}
             title={title}
-            subTilte={subTitle}
-            contents={contents}
-            date={date}
+            subTitle={subTitle}
+            createdAt={createdAt}
+            onClick={postClickHandler.bind(this, id)}
           />
         ))}
       </PostContainer>

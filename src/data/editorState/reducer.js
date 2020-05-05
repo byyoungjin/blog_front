@@ -14,6 +14,7 @@ const INITIAL_STATE = {
   sideBar: { position: { transfrom: "scale(0)" }, isOpen: false },
   upperBar: { position: { transfrom: "scale(0)" } },
   readOnly: false,
+  editorType: null,
   isLinkInput: false,
   [AT.ADD_IMAGE]: Remote.NotAsked
 };
@@ -59,6 +60,9 @@ export default produce((draft, action) => {
       break;
     case AT.SET_SUB_TITLE:
       draft.subTitle = action.data;
+      break;
+    case AT.SET_EDITOR_TYPE:
+      draft.editorType = action.data;
       break;
     default:
       return;

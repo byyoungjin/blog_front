@@ -4,7 +4,7 @@ import { ConnectedRouter } from "connected-react-router";
 
 import Login from "pages/Login";
 import Register from "pages/Register";
-import { Home, MyPage, PostWrite, PostDetail } from "pages";
+import { Home, MyPage, PostWrite, PostDetail, PostEdit } from "pages";
 import { DefaultRoute, UserRoute } from "routes";
 import { DefaultLayout, EditorLayout } from "layout";
 import ErrorBoundary from "pages/ErrorBoundary";
@@ -32,9 +32,14 @@ function App({ history }) {
             component={PostWrite}
             layout={EditorLayout}
           />
-          <UserRoute
+          <DefaultRoute
             path="/postDetail/:postId"
             component={PostDetail}
+            layout={EditorLayout}
+          />
+          <UserRoute
+            path="/postEdit/:postId"
+            component={PostEdit}
             layout={EditorLayout}
           />
           {/* <Route path="/postUpdate/:postId" component={PostUpdate} /> */}

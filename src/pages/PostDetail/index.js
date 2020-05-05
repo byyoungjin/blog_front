@@ -11,10 +11,11 @@ export default function PostDetailComp({ match }) {
   const { postId } = match.params;
 
   const userSession = useSelector(selectors.user.getUserSession);
-  const { id } = userSession;
+  const id = userSession?.id;
 
   useEffect(() => {
     dispatch(actions.editorState.toggleEditorReadOnly(true));
+    dispatch(actions.editorState.setEditorType("detail"));
     dispatch(actions.post.getOnePost(postId));
   }, []);
 

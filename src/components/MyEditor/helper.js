@@ -27,3 +27,19 @@ export const readFile = ({ files, onLoadHandler }) => {
   };
   reader.readAsDataURL(selectedFile);
 };
+
+export const getTitlePhotoFrom = editorState => {
+  if (!editorState) return;
+  const contentState = editorState.getCurrentContent();
+  const rawContentState = convertToRaw(contentState);
+  const { entityMap } = rawContentState;
+  Object.keys(entityMap).map(key => {
+    const entity = entityMap[key];
+    if (entity.type === "unsplash" || entity.type === "image") {
+      const titlePhotoUrl = entity.data.data.regularImageSrc;
+
+      return titlePhotoUrl;
+    }
+    return null;
+  });
+};

@@ -4,8 +4,8 @@ import { EditorState, getVisibleSelectionRect, convertFromRaw } from "draft-js";
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 
 import { actions, selectors } from "data";
-import { loadContentFromStorage } from "./helper";
-import { useModal } from "components/Modal/hooks";
+import { loadContentFromStorage, getTitlePhotoFrom } from "./helper";
+import { useModal } from "hooks/useModal";
 
 export function useEditorState(id) {
   const dispatch = useDispatch();
@@ -172,9 +172,22 @@ export const useSideBarIsOpen = bool => {
 
 export const usePublishContent = postInfo => {
   const dispatch = useDispatch();
+  const { editorState } = postInfo;
+  const setTitlePhoto = () => {
+    const titlePhotoUrl = getTitlePhotoFrom(editorState);
+    dispatch(actions.editorState.setTitlePhoto(titlePhotoUrl));
+  };
 
   const publish = () => {
     dispatch(actions.post.createPost(postInfo));
   };
-  return publish;
+  return { publish, setTitlePhoto };
+};
+
+export const useUpdateContent = updateInfo => {
+  const dispatch = useDispatch();
+  const update = () => {
+    dispatch(actions.post.updatePost(updateInfo));
+  };
+  return update;
 };

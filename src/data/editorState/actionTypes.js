@@ -33,3 +33,5 @@ export const SET_TITLE = "SET_TITLE";
 export const SET_TITLE_PHOTO = "SET_TITLE_PHOTO";
 
 export const SET_SUB_TITLE = "SET_SUB_TITLE";
+
+export const SET_EDITOR_TYPE = "SET_EDITOR_TYPE";
