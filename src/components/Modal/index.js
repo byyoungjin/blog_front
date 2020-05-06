@@ -6,11 +6,13 @@ import { selectors } from "data";
 import SimpleModal from "./SimpleModal";
 import PopulateEditorState from "./PopulateEditorState";
 import InfoModal from "./InfoModal";
+import DeletePostModal from "./DeletePost";
 
 const MODAL_COMPONENTS = {
   SIMPLE_MODAL: SimpleModal,
   POPULATE_MODAL: PopulateEditorState,
-  INFO_MODAL: InfoModal
+  INFO_MODAL: InfoModal,
+  DELETE_POST: DeletePostModal
 };
 
 export default function Modal() {

@@ -14,7 +14,10 @@ export default function Mypage() {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
   const userId = useSelector(selectors.user.getUserId);
-
+  const { firstName, lastName, emailAddress } = useSelector(
+    selectors.user.getUserSession
+  );
+  const name = firstName + " " + lastName;
   useEffect(() => {
     dispatch(actions.post.getPosts(userId));
   }, []);
@@ -28,8 +31,8 @@ export default function Mypage() {
     <ContentsContainer>
       <MyProfile>
         <ProfilePicture src={user.pictureUrl} diameter="300px" />
-        <Name>하영진</Name>
-        <MyPageUrl>hyjpost.com/@teen14y</MyPageUrl>
+        <Name>{name}</Name>
+        <MyPageUrl>hyjpost.com/{emailAddress}</MyPageUrl>
         <Button onClick={logoutHandler}>로그아웃</Button>
       </MyProfile>
       <Label>내 포스트</Label>

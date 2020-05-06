@@ -37,18 +37,7 @@ export default function MyEditor({
   };
 
   const deleteHandler = postId => {
-    setUpModal(
-      <>
-        <div>이 포스트를 삭제하시겠습니까?</div>
-        <button onClick={confirmDelete.bind(this, postId)}>네</button>
-        <button onClick={setDownModal}>아니오</button>
-      </>
-    );
-  };
-
-  const confirmDelete = postId => {
-    dispatch(actions.post.deletePost(postId));
-    setDownModal();
+    setUpModal({ modalType: "DELETE_POST", modalProps: { postId } });
   };
 
   const handlers = {

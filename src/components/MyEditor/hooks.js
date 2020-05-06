@@ -146,13 +146,13 @@ export const useSidebarPosition = () => {
       setSidebarPosition({
         transform: "scale(0)",
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
-        top: node?.offsetTop ?? 0 - 10,
+        top: node.offsetTop - 10,
         left: rootEditorNodeRect.left - 50
       });
     } else {
       setSidebarPosition({
         transform: "scale(1)",
-        top: node?.offsetTop ?? 0 - 10,
+        top: node.offsetTop - 10,
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
         left: rootEditorNodeRect.left - 50
       });
