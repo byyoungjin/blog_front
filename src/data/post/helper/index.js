@@ -7,12 +7,10 @@ export const getTitlePhotoFrom = editorState => {
   const { entityMap } = rawContentState;
   return Object.keys(entityMap).reduce((titlePhotoUrl, key) => {
     const entity = entityMap[key];
-    if (
-      (entity.type === "unsplash" || entity.type === "image") &&
-      titlePhotoUrl === null
-    ) {
-      console.log("titlePhotoUrl", titlePhotoUrl);
-      titlePhotoUrl = entity.data.data.regularImageSrc;
+    if (titlePhotoUrl === null) {
+      if (entity.type === "unsplash") {
+        titlePhotoUrl = entity.data.data.regularImageSrc;
+      } else if (entity.type === "image") titlePhotoUrl = entity.data.src;
     }
     return titlePhotoUrl;
   }, null);

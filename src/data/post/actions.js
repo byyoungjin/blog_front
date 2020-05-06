@@ -55,3 +55,13 @@ export const deletePost = postId => ({
 export const resetOnePost = () => ({
   type: AT.RESET_ONE_POST
 });
+
+export const getOnePostDetail = postId => ({
+  type: AT.GET_ONE_POST_DETAIL,
+  postId
+});
+
+export const getOnePostEdit = postId => ({
+  type: AT.GET_ONE_POST_EDIT,
+  postId
+});

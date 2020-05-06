@@ -22,11 +22,10 @@ export default function MyEditor({
 
   const saveHandler = () => {
     saveContent({ editorState, id });
-    modalUpAndGo({ content: "saved!" });
+    dispatch(actions.modal.modalUpAndGo("saved!"));
   };
   const publishHandler = () => {
     dispatch(actions.post.createPost());
-    modalUpAndGo({ content: "published!" });
   };
 
   const editHandler = postId => {

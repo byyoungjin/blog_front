@@ -22,11 +22,10 @@ export function* createPost() {
       subTitle,
       titlePhoto
     };
-    console.log("postStates", postStates);
     const res = yield api.postApi.createPost(postStates);
-    console.log("res", res);
     const { createdPostId } = res.data;
     yield put(actions.post.getOnePost(createdPostId));
+    yield put(actions.modal.modalUpAndGo("published"));
   } catch (error) {
     console.log("error", error);
   }
@@ -35,17 +34,28 @@ export function* createPost() {
 export function* getOnePost(action) {
   try {
     const { postId } = action;
-    yield put(actions.editorState.toggleEditorReadOnly(true));
     yield put(actions.post.getOnePostLoading());
     const post = yield api.postApi.getPostById(postId);
-    console.log("post", post);
-
     yield put(actions.post.getOnePostSuccess(post));
-    yield put(actions.router.push(`/postDetail/${postId}`));
   } catch (error) {
     console.log("error", error);
     yield put(actions.post.getOnePostFailure(error));
   }
+}
+
+export function* getOnePostDetail(action) {
+  const { postId } = action;
+  yield put(actions.editorState.setEditorType("detail"));
+  yield put(actions.editorState.toggleEditorReadOnly(true));
+  yield put(actions.post.getOnePost(postId));
+  yield put(actions.router.push(`/postDetail/${postId}`));
+}
+
+export function* getOnePostEdit(action) {
+  const { postId } = action;
+  yield put(actions.editorState.setEditorType("edit"));
+  yield put(actions.editorState.toggleEditorReadOnly(false));
+  yield put(actions.post.getOnePost(postId));
 }
 
 export function* getPosts(action) {
@@ -67,6 +77,7 @@ export function* getPosts(action) {
 export function* updatePost() {
   const editorState = yield select(selectors.editorState.getEditorState);
   const titlePhotoUrl = getTitlePhotoFrom(editorState);
+  console.log("titlePhotoUrl", titlePhotoUrl);
   yield put(actions.editorState.setTitlePhoto(titlePhotoUrl));
 
   const UserId = yield select(selectors.user.getUserId);
@@ -84,6 +95,8 @@ export function* updatePost() {
   };
   yield api.postApi.updatePost({ postId, newPost });
   yield put(actions.post.getOnePost(postId));
+  yield put(actions.modal.modalUpAndGo("edited"));
+  yield put(actions.router.push(`/postDetail/${postId}`));
 }
 
 export function* deletePost(action) {

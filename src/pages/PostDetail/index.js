@@ -14,9 +14,8 @@ export default function PostDetailComp({ match }) {
   const id = userSession?.id;
 
   useEffect(() => {
-    dispatch(actions.editorState.toggleEditorReadOnly(true));
-    dispatch(actions.editorState.setEditorType("detail"));
-    dispatch(actions.post.getOnePost(postId));
+    dispatch(actions.post.getOnePostDetail(postId));
+
     return () => {
       dispatch(actions.post.resetOnePost());
     };

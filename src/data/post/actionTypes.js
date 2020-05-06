@@ -10,6 +10,9 @@ export const GET_ONE_POST_SUCCESS = success(GET_ONE_POST);
 export const GET_ONE_POST_FAILURE = failure(GET_ONE_POST);
 export const GET_ONE_POST_LOADING = loading(GET_ONE_POST);
 
+export const GET_ONE_POST_DETAIL = "GET_ONE_POST_DETAIL";
+export const GET_ONE_POST_EDIT = "GET_ONE_POST_EDIT";
+
 export const CREATE_POST = "CREATE_POST";
 
 export const DELETE_POST = "DELETE_POST";

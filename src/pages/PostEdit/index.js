@@ -8,14 +8,13 @@ import { useEditorState } from "components/MyEditor/hooks";
 export default function PostEditComp({ match }) {
   const dispatch = useDispatch();
   const [editorState, setEditorState] = useEditorState();
+  const { postId } = match.params;
 
   const userSession = useSelector(selectors.user.getUserSession);
   const { id } = userSession;
 
   useEffect(() => {
-    dispatch(actions.editorState.toggleEditorReadOnly(false));
-    dispatch(actions.editorState.setEditorType("edit"));
-    // dispatch(actions.post.getOnePost(postId));
+    dispatch(actions.post.getOnePostEdit(postId));
   }, []);
 
   return (
