@@ -9,4 +9,5 @@ export default function*() {
   yield takeEvery(AT.TOGGLE_INLINE, sagas.toggleInline);
   yield takeEvery(AT.TOGGLE_LINK, sagas.toggleLink);
   yield takeEvery(AT.REPLACE_ENTIY_DATA, sagas.replaceEntity);
+  yield takeEvery(AT.POPULATE_EDITOR_STATE, sagas.populateEditorState);
 }

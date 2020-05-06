@@ -1,10 +1,27 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
-export default function Modal({ modal }) {
+import { selectors } from "data";
+import SimpleModal from "./SimpleModal";
+import PopulateEditorState from "./PopulateEditorState";
+import InfoModal from "./InfoModal";
+
+const MODAL_COMPONENTS = {
+  SIMPLE_MODAL: SimpleModal,
+  POPULATE_MODAL: PopulateEditorState,
+  INFO_MODAL: InfoModal
+};
+
+export default function Modal() {
+  const { modalType, modalProps } = useSelector(selectors.modal.getModal);
+
+  const SpecificModal = modalType
+    ? MODAL_COMPONENTS[modalType]
+    : () => <Disapear>뿅</Disapear>;
   return (
-    <Container modal={modal}>
-      <ModalComp>{modal.content}</ModalComp>
+    <Container modalType={modalType}>
+      <SpecificModal {...modalProps} />
     </Container>
   );
 }
@@ -16,21 +33,13 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-center;
-  transform: ${({ modal }) =>
-    modal.up ? "translateY(0);" : "translateY(-100%);"}
-    opacity: ${({ modal }) => (modal.up ? "1" : "0")} ; 
+  align-items: center;
+  transform: ${({ modalType }) =>
+    modalType ? "translateY(0);" : "translateY(-100%);"}
+    opacity: ${({ modalType }) => (modalType ? "1" : "0")} ;
   transition: transform .5s cubic-bezier(.5,-0.67,.42,1.34), opacity .5s cubic-bezier(.5,-0.67,.42,1.34);
 `;
 
-const ModalComp = styled.div`
-display:flex;
-justify-content: center;
-align-items: flex-center;
-text-align:center;
-width: 100px;
-height: 100px
-line-height:100px;
-border: solid black;
-
+const Disapear = styled.div`
+  font-size: 32px;
 `;

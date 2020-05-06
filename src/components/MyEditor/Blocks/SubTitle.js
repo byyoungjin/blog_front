@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
+import Colors from "theme/colors";
+
 export default function SubTitle({ children }) {
-  return <Containeer>{children}</Containeer>;
+  return <Container>{children}</Container>;
 }
 
-const Containeer = styled.div`
+const Container = styled.div`
   font-size: 24px;
-  padding: 3px 12px 12px;
-
+  margin: 10px 10px 10px 0
+  padding: 10px;
   color: gray;
+  background-color: ${Colors.blue_light};
+  border-radius: 20px;
 `;

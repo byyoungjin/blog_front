@@ -12,7 +12,7 @@ export default function PostWriteComp() {
   const [editorState, setEditorState] = useEditorState(id);
 
   useEffect(() => {
-    dispatch(actions.editorState.setEditorType("write"));
+    dispatch(actions.editorState.populateEditorState());
   }, []);
   return (
     <MyEditor

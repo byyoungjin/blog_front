@@ -7,6 +7,8 @@ import YouTube from "components/MyEditor/Blocks/YouTube";
 import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
 import SplashImage from "components/MyEditor/Blocks/SplashImage";
 import YouTubeVideo from "components/MyEditor/Blocks/YouTubeVideo";
+import PostTitleInput from "components/MyEditor/Blocks/PostTitleInput";
+import PostSubTitleInput from "components/MyEditor/Blocks/PostSubTitleInput";
 import PostTitle from "components/MyEditor/Blocks/PostTitle";
 import PostSubTitle from "components/MyEditor/Blocks/PostSubTitle";
 
@@ -38,10 +40,10 @@ export default function Media({ contentState, block }) {
       data && setTitlePhoto(data.regularImageSrc);
       break;
     case "postTitle":
-      media = <PostTitle />;
+      media = data ? <PostTitle data={data} /> : <PostTitleInput />;
       break;
     case "postSubTitle":
-      media = <PostSubTitle />;
+      media = data ? <PostSubTitle data={data} /> : <PostSubTitleInput />;
       break;
     default:
       return;

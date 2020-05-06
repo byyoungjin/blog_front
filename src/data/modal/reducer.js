@@ -3,20 +3,18 @@ import produce from "immer";
 import * as AT from "data/rootActionTypes";
 
 const INITIAL_VALUES = {
-  up: false,
-  content: null
+  modalType: null,
+  modalProps: {}
 };
 
 export default produce((draft, action) => {
   switch (action.type) {
     case AT.SET_MODAL_UP:
-      draft.up = true;
-      draft.content = action.content;
+      draft.modalType = action.modalType;
+      draft.modalProps = action.modalProps;
       break;
     case AT.SET_MODAL_DOWN:
-      draft.up = false;
-      draft.content = null;
-      break;
+      return INITIAL_VALUES;
     default:
       return;
   }

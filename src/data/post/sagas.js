@@ -2,18 +2,27 @@ import { put, select } from "redux-saga/effects";
 
 import { actions, selectors } from "data";
 import api from "api";
-import { getTitlePhotoFrom } from "./helper";
+import { getTitlePhotoFrom, getPostInfoFrom } from "./helper";
 
 export function* createPost() {
   try {
     const editorState = yield select(selectors.editorState.getEditorState);
     const UserId = yield select(selectors.user.getUserId);
     const titlePhotoUrl = getTitlePhotoFrom(editorState);
+    const { title: titleInfo, subTitle: subTitleInfo } = getPostInfoFrom(
+      editorState
+    );
+    console.log("titleInfo", titleInfo);
+    console.log("subTitleInfo", subTitleInfo);
     yield put(actions.editorState.setTitlePhoto(titlePhotoUrl));
+    yield put(actions.editorState.setTitle(titleInfo));
+    yield put(actions.editorState.setSubTitle(subTitleInfo));
 
     const title = yield select(selectors.editorState.getTitle);
     const subTitle = yield select(selectors.editorState.getSubTitle);
     const titlePhoto = yield select(selectors.editorState.getTitlePhoto);
+    console.log("title", title);
+    console.log("subTitle", subTitle);
 
     const postStates = {
       editorState,
@@ -24,7 +33,7 @@ export function* createPost() {
     };
     const res = yield api.postApi.createPost(postStates);
     const { createdPostId } = res.data;
-    yield put(actions.post.getOnePost(createdPostId));
+    yield put(actions.post.getOnePostDetail(createdPostId));
     yield put(actions.modal.modalUpAndGo("published"));
   } catch (error) {
     console.log("error", error);

@@ -3,33 +3,34 @@ import { convertFromRaw } from "draft-js";
 const rawContent = {
   blocks: [
     {
-      text: " ",
-      type: "atomic",
-      entityRanges: [{ offset: 0, length: 1, key: "first" }]
-    },
-    {
-      text: " ",
-      type: "atomic",
-      entityRanges: [{ offset: 0, length: 1, key: "second" }]
-    },
-    {
+      key: "first",
       text: "",
-      type: "unstyled"
+      type: "title",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {}
+    },
+    {
+      key: "second",
+      text: "",
+      type: "subTitle",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {}
+    },
+    {
+      key: "third",
+      text: "",
+      type: "unstyled",
+      depth: 0,
+      inlineStyleRanges: [],
+      entityRanges: [],
+      data: {}
     }
   ],
-
-  entityMap: {
-    first: {
-      type: "postTitle",
-      mutability: "IMMUTABLE",
-      data: {}
-    },
-    second: {
-      type: "postSubTitle",
-      mutability: "IMMUTABLE",
-      data: {}
-    }
-  }
+  entityMap: {}
 };
 
 export const content = convertFromRaw(rawContent);

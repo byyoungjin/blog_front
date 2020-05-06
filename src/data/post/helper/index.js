@@ -15,3 +15,23 @@ export const getTitlePhotoFrom = editorState => {
     return titlePhotoUrl;
   }, null);
 };
+
+export const getPostInfoFrom = editorState => {
+  const contentState = editorState.getCurrentContent();
+  const rawContentState = convertToRaw(contentState);
+  const { blocks } = rawContentState;
+  return blocks.reduce(
+    ({ title, subTitle }, block) => {
+      if (title === null && block.type === "title") {
+        title = block.text;
+      }
+
+      if (subTitle === null && block.type === "subTitle") {
+        subTitle = block.text;
+      }
+
+      return { title, subTitle };
+    },
+    { title: null, subTitle: null }
+  );
+};

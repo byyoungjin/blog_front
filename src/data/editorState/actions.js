@@ -89,3 +89,11 @@ export const setEditorType = data => ({
   type: AT.SET_EDITOR_TYPE,
   data
 });
+
+export const populateEditorState = () => ({
+  type: AT.POPULATE_EDITOR_STATE
+});
+
+export const loadSavedEditorState = () => ({
+  type: AT.LOAD_SAVED_EDITOR_STATE
+});

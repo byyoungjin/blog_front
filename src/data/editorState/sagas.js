@@ -1,6 +1,7 @@
-import { put } from "redux-saga/effects";
+import { put, select, race, take } from "redux-saga/effects";
 
-import { actions } from "data";
+import { actions, selectors } from "data";
+import * as AT from "data/rootActionTypes";
 import {
   addMedia,
   toggleBlockType,
@@ -9,6 +10,10 @@ import {
   toggleLinkStyle,
   replaceEntityData
 } from "./helper";
+import {
+  loadContentFromStorage,
+  getEditorStateFromRaw
+} from "./helper/storage";
 import api from "api";
 import generateUUID from "utils/generateUUID";
 
@@ -167,5 +172,36 @@ export function* toggleLink(action) {
     );
   } catch (e) {
     console.log("e", e);
+  }
+}
+
+export function* populateEditorState(action) {
+  const userId = yield select(selectors.user.getUserId);
+  const editorState = yield select(selectors.editorState.getEditorState);
+  yield put(actions.editorState.setEditorType("write"));
+  const rawEditorState = loadContentFromStorage(userId);
+  if (rawEditorState !== null) {
+    yield put(
+      actions.modal.setModalUp({ modalType: "POPULATE_MODAL", modalProps: {} })
+    );
+
+    const { populate } = yield race({
+      populate: take(AT.LOAD_SAVED_EDITOR_STATE),
+      cancel: take(AT.SET_MODAL_DOWN)
+    });
+
+    if (populate) {
+      const newEditorState = getEditorStateFromRaw({
+        rawEditorState,
+        editorState
+      });
+      yield put(
+        actions.editorState.updateEditorState({
+          newEditorState,
+          from: "populate editorState"
+        })
+      );
+      yield put(actions.modal.setModalDown());
+    }
   }
 }
