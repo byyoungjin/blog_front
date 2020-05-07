@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { MyEditor } from "components";
+import Helmet from "components/Helmet";
 import { actions, selectors } from "data";
 
 export default function PostDetailComp({ match }) {
@@ -11,6 +12,8 @@ export default function PostDetailComp({ match }) {
   const { postId } = match.params;
 
   const userSession = useSelector(selectors.user.getUserSession);
+  const title = useSelector(selectors.post.getTitle);
+  const subTitle = useSelector(selectors.post.getSubTitle);
   const id = userSession?.id;
 
   useEffect(() => {
@@ -22,11 +25,14 @@ export default function PostDetailComp({ match }) {
   }, []);
 
   return currentPost ? (
-    <MyEditor
-      editorState={currentPost.editorState}
-      setEditorState={() => {}}
-      readOnly={true}
-      id={id}
-    />
+    <>
+      <Helmet title={title} description={subTitle} />
+      <MyEditor
+        editorState={currentPost.editorState}
+        setEditorState={() => {}}
+        readOnly={true}
+        id={id}
+      />
+    </>
   ) : null;
 }
