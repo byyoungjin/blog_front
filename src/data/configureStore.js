@@ -12,12 +12,16 @@ const history = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
 const rootReducer = createRootReducer(history);
 
+const env = process.env.NODE_ENV;
+let composeFn = composeWithDevTools;
+if (env === "production") {
+  composeFn = compose;
+}
+
 export default function configureStore() {
   const store = createStore(
     rootReducer,
-    composeWithDevTools(
-      applyMiddleware(thunk, sagaMiddleware, routerMiddleware(history))
-    )
+    composeFn(applyMiddleware(thunk, sagaMiddleware, routerMiddleware(history)))
   );
 
   sagaMiddleware.run(rootSaga);
