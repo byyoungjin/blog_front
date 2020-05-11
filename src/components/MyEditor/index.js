@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import BasicEditor from "./BasicEditor";
 import Controller from "./Controller";
 import { selectors, actions } from "data";
-import { useModal } from "hooks/useModal";
 import { saveContent } from "./helper";
 
 export default function MyEditor({
@@ -18,7 +17,6 @@ export default function MyEditor({
   const isSameUser = id ? id === postUserId : false;
 
   const editorRef = useRef();
-  const { modalUpAndGo, setUpModal, setDownModal } = useModal();
 
   const saveHandler = () => {
     saveContent({ editorState, id });
@@ -26,6 +24,7 @@ export default function MyEditor({
   };
   const publishHandler = () => {
     dispatch(actions.post.createPost());
+    dispatch(actions.modal.modalUpAndGo("published!"));
   };
 
   const editHandler = postId => {
@@ -37,7 +36,12 @@ export default function MyEditor({
   };
 
   const deleteHandler = postId => {
-    setUpModal({ modalType: "DELETE_POST", modalProps: { postId } });
+    dispatch(
+      actions.modal.setModalUp({
+        modalType: "DELETE_POST",
+        modalProps: { postId }
+      })
+    );
   };
 
   const handlers = {
@@ -50,11 +54,7 @@ export default function MyEditor({
 
   return (
     <>
-      <Controller
-        handlers={handlers}
-        readOnly={readOnly}
-        isSameUser={isSameUser}
-      />
+      <Controller handlers={handlers} isSameUser={isSameUser} />
       <BasicEditor
         editorState={editorState}
         setEditorState={setEditorState}

@@ -97,3 +97,7 @@ export const populateEditorState = () => ({
 export const loadSavedEditorState = () => ({
   type: AT.LOAD_SAVED_EDITOR_STATE
 });
+
+export const resetEditorState = () => ({
+  type: AT.RESET_EDITOR_STATE
+});

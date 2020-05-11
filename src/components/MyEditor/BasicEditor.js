@@ -42,10 +42,11 @@ export default function BasicEditor({
   const focusOnEditor = useCallback(() => editorRef.current.focus(), [
     editorRef
   ]);
+  // log(editorState);
 
-  // useEffect(() => {
-  //   focusOnEditor();
-  // }, [focusOnEditor]);
+  useEffect(() => {
+    focusOnEditor();
+  }, [focusOnEditor]);
 
   const myKeybindingFn = e => {
     if (e.keyCode === 83 && hasCommandModifier(e)) {

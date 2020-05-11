@@ -12,6 +12,7 @@ const Container = styled.div`
   margin: 10px 10px 10px 0
   padding: 10px;
   color: gray;
-  background-color: ${Colors.blue_light};
-  border-radius: 20px;
+  &:hover{
+    border-bottom: 3px solid black;
+  }
 `;

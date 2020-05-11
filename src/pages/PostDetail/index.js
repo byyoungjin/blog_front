@@ -21,6 +21,7 @@ export default function PostDetailComp({ match }) {
 
     return () => {
       dispatch(actions.post.resetOnePost());
+      dispatch(actions.editorState.toggleEditorReadOnly(false));
     };
   }, []);
 

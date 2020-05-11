@@ -7,7 +7,7 @@ import ProfilePicture from "../../ProfilePicture";
 import { colors } from "theme";
 import { actions, selectors } from "data";
 
-export default function ControllerComp({ handlers, readOnly, isSameUser }) {
+export default function ControllerComp({ handlers, isSameUser }) {
   const {
     saveHandler,
     publishHandler,
@@ -19,7 +19,7 @@ export default function ControllerComp({ handlers, readOnly, isSameUser }) {
   const editorType = useSelector(selectors.editorState.getEditorType);
 
   const Buttons = button => (
-    <Button onClick={button.onClick} key={button.title}>
+    <Button onMouseDown={button.onClick} key={button.title}>
       {button.title}
     </Button>
   );

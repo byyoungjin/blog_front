@@ -13,6 +13,10 @@ export default function PostWriteComp() {
 
   useEffect(() => {
     dispatch(actions.editorState.populateEditorState());
+
+    return () => {
+      dispatch(actions.editorState.resetEditorState());
+    };
   }, []);
   return (
     <MyEditor

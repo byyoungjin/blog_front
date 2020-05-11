@@ -12,8 +12,7 @@ export function* createPost() {
     const { title: titleInfo, subTitle: subTitleInfo } = getPostInfoFrom(
       editorState
     );
-    console.log("titleInfo", titleInfo);
-    console.log("subTitleInfo", subTitleInfo);
+
     yield put(actions.editorState.setTitlePhoto(titlePhotoUrl));
     yield put(actions.editorState.setTitle(titleInfo));
     yield put(actions.editorState.setSubTitle(subTitleInfo));
@@ -21,8 +20,6 @@ export function* createPost() {
     const title = yield select(selectors.editorState.getTitle);
     const subTitle = yield select(selectors.editorState.getSubTitle);
     const titlePhoto = yield select(selectors.editorState.getTitlePhoto);
-    console.log("title", title);
-    console.log("subTitle", subTitle);
 
     const postStates = {
       editorState,
@@ -86,8 +83,12 @@ export function* getPosts(action) {
 export function* updatePost() {
   const editorState = yield select(selectors.editorState.getEditorState);
   const titlePhotoUrl = getTitlePhotoFrom(editorState);
-  console.log("titlePhotoUrl", titlePhotoUrl);
+  const { title: titleInfo, subTitle: subTitleInfo } = getPostInfoFrom(
+    editorState
+  );
   yield put(actions.editorState.setTitlePhoto(titlePhotoUrl));
+  yield put(actions.editorState.setTitle(titleInfo));
+  yield put(actions.editorState.setSubTitle(subTitleInfo));
 
   const UserId = yield select(selectors.user.getUserId);
   const title = yield select(selectors.editorState.getTitle);
@@ -102,6 +103,7 @@ export function* updatePost() {
     subTitle,
     titlePhoto
   };
+  console.log("newPost", newPost);
   yield api.postApi.updatePost({ postId, newPost });
   yield put(actions.post.getOnePost(postId));
   yield put(actions.modal.modalUpAndGo("edited"));

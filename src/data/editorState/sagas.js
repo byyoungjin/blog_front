@@ -90,33 +90,25 @@ export function* replaceEntity(action) {
 export function* addAtomicBlock(action) {
   const { editorState, type } = action.data;
   const newEditorState = addAtomic({ type, editorState });
-  yield new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("success");
-    }, 10);
-  });
+  yield new Promise(resolve => setTimeout(resolve, 10));
   yield put(
     actions.editorState.updateEditorState({
       newEditorState,
       from: "addAtomicBlockSaga"
     })
   );
+
   yield put(actions.editorState.updateSideBarIsOpen(false));
   yield put(
     actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
   );
-  // yield put(actions.editorState.toggleEditorReadOnly());
 }
 
 export function* toggleBlock(action) {
   try {
     const { editorState, type } = action.data;
     const newEditorState = toggleBlockType({ editorState, type });
-    yield new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("success");
-      }, 10);
-    });
+    yield new Promise(resolve => setTimeout(resolve, 10));
     yield put(
       actions.editorState.updateEditorState({
         newEditorState,

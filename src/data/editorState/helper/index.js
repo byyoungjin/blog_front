@@ -1,4 +1,11 @@
-import { EditorState, AtomicBlockUtils, RichUtils } from "draft-js";
+import {
+  EditorState,
+  AtomicBlockUtils,
+  RichUtils,
+  SelectionState
+} from "draft-js";
+
+import log from "utils/log";
 
 export const addMedia = ({ editorState, src, type }) => {
   if (!src && type === "image") {
@@ -29,18 +36,43 @@ export const addAtomic = ({ editorState, type }) => {
     null
   );
   const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-  console.log("entityKey", entityKey);
+  console.log("entityKey from addAtomic", entityKey);
+
+  const selection = editorState.getSelection();
+  const focusKey = selection.getFocusKey();
+  console.log("focusKey from addAtomic", focusKey);
+
   const newEditorState = EditorState.set(editorState, {
     currentContent: contentStateWithEntity
   });
+
   const newState = AtomicBlockUtils.insertAtomicBlock(
     newEditorState,
     entityKey,
     " "
   );
-  const focusedNewEditorState = EditorState.moveFocusToEnd(newState);
 
-  return focusedNewEditorState;
+  const newContentState = newState.getCurrentContent();
+  const keyAfterFocus = newContentState.getKeyAfter(focusKey);
+
+  const newSelectionState = newEditorState.getSelection();
+  console.log("newSelectionState", newSelectionState);
+  const updatedSelection = newSelectionState.merge({
+    focusKey: keyAfterFocus,
+    anchorKey: keyAfterFocus,
+    focusOffset: 0,
+    anchorOffset: 0
+  });
+
+  const forceFocusedNewEditorState = EditorState.forceSelection(
+    newState,
+    updatedSelection
+  );
+
+  const forceSelection = forceFocusedNewEditorState.getSelection();
+  console.log("forceSelection", forceSelection);
+
+  return forceFocusedNewEditorState;
 };
 
 export const toggleBlockType = ({ editorState, type }) => {
@@ -85,6 +117,7 @@ export const replaceEntityData = ({ editorState, data }) => {
     const beforeSelectedKey = contentState.getKeyBefore(selectedKey);
     const beforeSelectedBlock = contentState.getBlockForKey(beforeSelectedKey);
     entity = beforeSelectedBlock.getEntityAt(0);
+    console.log("beforeSelectedKey", beforeSelectedKey);
   }
 
   const replacedContentState = contentState.replaceEntityData(entity, {

@@ -25,9 +25,6 @@ export default produce((draft, action) => {
       const { newEditorState } = action.data;
       draft.editorState = newEditorState;
       break;
-    case AT.GET_ONE_POST_SUCCESS:
-      draft.editorState = action.data.editorState;
-      break;
     case AT.ADD_IMAGE_LOADING:
       draft[AT.ADD_IMAGE] = Remote.Loading;
       break;
@@ -37,6 +34,7 @@ export default produce((draft, action) => {
     case AT.ADD_IMAGE_FAILURE:
       draft[AT.ADD_IMAGE] = Remote.Failure(action.error);
       break;
+
     case AT.UPDATE_SIDE_BAR_ISOPEN:
       draft.sideBar.isOpen = action.data;
       break;
@@ -64,12 +62,10 @@ export default produce((draft, action) => {
     case AT.SET_EDITOR_TYPE:
       draft.editorType = action.data;
       break;
-    case AT.RESET_ONE_POST:
-      draft.editorState = EditorState.createWithContent(
-        content,
-        compositeDecorator
-      );
-      break;
+
+    //TODO reset editorState when PostWrite page will unmaount.
+    case AT.RESET_EDITOR_STATE:
+      return INITIAL_STATE;
     default:
       return;
   }

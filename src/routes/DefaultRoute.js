@@ -2,7 +2,6 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import useWhoAmI from "hooks/useWhoAmI";
-import { useModal } from "hooks/useModal";
 import Modal from "components/Modal";
 
 export default function DefaultRoute({
@@ -12,7 +11,6 @@ export default function DefaultRoute({
   ...rest
 }) {
   const whoAmIRemote = useWhoAmI();
-  // const { modal } = useModal();
 
   const route = (
     <Route

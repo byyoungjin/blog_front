@@ -1,10 +1,10 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import { useField } from "formik";
 import styled from "styled-components";
 
 import { colors } from "theme";
 
-const MyUrlInput = forwardRef(props => {
+const MyUrlInput = props => {
   const [field, meta] = useField(props);
   return (
     <InputContainer>
@@ -12,7 +12,7 @@ const MyUrlInput = forwardRef(props => {
       {meta.touched && meta.error && <Error> {meta.error}</Error>}
     </InputContainer>
   );
-});
+};
 
 const InputContainer = styled.div`
   display: flex;

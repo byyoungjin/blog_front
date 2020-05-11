@@ -14,6 +14,7 @@ export default function DeletePost({ postId }) {
         onClick={() => {
           dispatch(actions.post.deletePost(postId));
           dispatch(actions.modal.setModalDown());
+          dispatch(actions.modal.modalUpAndGo("deleted!"));
         }}
       >
         네
