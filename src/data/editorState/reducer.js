@@ -7,7 +7,7 @@ import { compositeDecorator } from "./helper/decorators";
 import { content } from "./helper/content";
 
 const INITIAL_STATE = {
-  editorState: EditorState.createWithContent(content, compositeDecorator),
+  editorState: EditorState.createWithContent(content),
   title: "",
   titlePhoto: null,
   subTitle: "",

@@ -2,13 +2,16 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
-  Editor,
   RichUtils,
   getDefaultKeyBinding,
   KeyBindingUtil,
   convertToRaw,
   DefaultDraftBlockRenderMap
 } from "draft-js";
+import Editor from "draft-js-plugins-editor";
+import createEmojiPlugin from "draft-js-emoji-plugin";
+import "draft-js-emoji-plugin/lib/plugin.css";
+
 import Immutable from "immutable";
 
 import { actions, selectors } from "data";
@@ -25,10 +28,13 @@ import QuoteBlock from "./Blocks/QuoteBlock";
 import Paragraph from "./Blocks/Paragraph";
 import YouTube from "./Blocks/YouTube";
 import SplashSearch from "./Blocks/SplashSearch";
+import { compositeDecorator } from "data/editorState/helper/decorators";
 
 import log from "utils/log";
 
 const { hasCommandModifier } = KeyBindingUtil;
+const emojiPlugin = createEmojiPlugin();
+const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
 
 export default function BasicEditor({
   editorState,
@@ -46,9 +52,9 @@ export default function BasicEditor({
   ]);
   const contentState = editorState.getCurrentContent();
 
-  useEffect(() => {
-    focusOnEditor();
-  }, [focusOnEditor]);
+  // useEffect(() => {
+  //   focusOnEditor();
+  // }, [focusOnEditor]);
 
   const myKeybindingFn = e => {
     if (e.keyCode === 83 && hasCommandModifier(e)) {
@@ -147,8 +153,12 @@ export default function BasicEditor({
         blockRenderMap={extendedBlockRenderMap}
         handlePastedFiles={handlePastedFilesFn}
         readOnly={readOnlyForDetailView ? readOnlyForDetailView : readOnly}
+        plugins={[emojiPlugin]}
+        decorators={[compositeDecorator]}
         {...props}
       />
+      <EmojiSuggestions />
+      <EmojiSelect />
       <SideBar />
       <UpperBar editorRef={editorRef} />
     </EditorWrapper>

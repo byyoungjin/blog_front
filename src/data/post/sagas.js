@@ -43,6 +43,11 @@ export function* getOnePost(action) {
     yield put(actions.post.getOnePostLoading());
     const post = yield api.postApi.getPostById(postId);
     yield put(actions.post.getOnePostSuccess(post));
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState: post.editorState
+      })
+    );
   } catch (error) {
     console.log("error", error);
     yield put(actions.post.getOnePostFailure(error));
