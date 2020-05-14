@@ -9,7 +9,7 @@ export const getTitlePhotoFrom = editorState => {
     const entity = entityMap[key];
     if (titlePhotoUrl === null) {
       if (entity.type === "unsplash") {
-        titlePhotoUrl = entity.data.data.regularImageSrc;
+        titlePhotoUrl = entity.data.src.regularImageSrc;
       } else if (entity.type === "image") titlePhotoUrl = entity.data.src;
     }
     return titlePhotoUrl;

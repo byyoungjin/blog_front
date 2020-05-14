@@ -1,5 +1,6 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { socialApiClient } from "api/client";
+import { compositeDecorator } from "data/editorState/helper/decorators";
 
 export const api = {
   getPostsOfUser: async userId => {
@@ -48,6 +49,7 @@ const getConvertToRawPost = postContent => {
 const getConvertFromRawPost = rawPostContent => ({
   ...rawPostContent,
   editorState: EditorState.createWithContent(
-    convertFromRaw(JSON.parse(rawPostContent.editorState))
+    convertFromRaw(JSON.parse(rawPostContent.editorState)),
+    compositeDecorator
   )
 });

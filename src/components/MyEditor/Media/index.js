@@ -30,6 +30,7 @@ export default function Media({ contentState, block }) {
       break;
     case "unsplash":
       media = <SplashImage splashInfo={src} />;
+      console.log("src", src);
       src && setTitlePhoto(src.regularImageSrc);
       break;
     case "placeholder":
