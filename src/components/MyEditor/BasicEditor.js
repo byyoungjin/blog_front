@@ -28,7 +28,7 @@ import QuoteBlock from "./Blocks/QuoteBlock";
 import Paragraph from "./Blocks/Paragraph";
 import YouTube from "./Blocks/YouTube";
 import SplashSearch from "./Blocks/SplashSearch";
-import { compositeDecorator } from "data/editorState/helper/decorators";
+import { compositeDecorator } from "components/MyEditor/decorators";
 
 import log from "utils/log";
 

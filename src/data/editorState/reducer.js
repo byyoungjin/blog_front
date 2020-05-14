@@ -3,7 +3,7 @@ import { EditorState } from "draft-js";
 
 import * as AT from "data/rootActionTypes";
 import Remote from "data/remote";
-import { compositeDecorator } from "./helper/decorators";
+import { compositeDecorator } from "../../components/MyEditor/decorators";
 import { content } from "./helper/content";
 
 const INITIAL_STATE = {

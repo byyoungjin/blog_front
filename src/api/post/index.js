@@ -1,6 +1,6 @@
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { socialApiClient } from "api/client";
-import { compositeDecorator } from "data/editorState/helper/decorators";
+import { compositeDecorator } from "components/MyEditor/decorators";
 
 export const api = {
   getPostsOfUser: async userId => {
