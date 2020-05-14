@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Formik, Form } from "formik";
@@ -9,6 +9,11 @@ import MyUrlInput from "components/Input/MyUrlInput";
 export default function YouTube() {
   const dispatch = useDispatch();
 
+  const container = useRef(null);
+  useEffect(() => {
+    container.current.focus();
+  }, []);
+
   const editorState = useSelector(selectors.editorState.getEditorState);
   const toggleReadOnly = bool => {
     dispatch(actions.editorState.toggleEditorReadOnly(bool));
@@ -16,7 +21,11 @@ export default function YouTube() {
 
   const submitHandler = values => {
     dispatch(
-      actions.editorState.replaceEntityData({ data: values.url, editorState })
+      actions.editorState.addOtherMedia({
+        data: values.url,
+        editorState,
+        type: "youtube"
+      })
     );
     toggleReadOnly(false);
   };
@@ -32,6 +41,7 @@ export default function YouTube() {
           onFocus={toggleReadOnly.bind(this, true)}
           onBlur={toggleReadOnly.bind(this, false)}
           placeholder="YouTube 링크를 붙여넣고 ENTER 키를 눌러주세요."
+          ref={container}
         />
       </Form>
     </Formik>

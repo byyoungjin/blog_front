@@ -7,10 +7,6 @@ import YouTube from "components/MyEditor/Blocks/YouTube";
 import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
 import SplashImage from "components/MyEditor/Blocks/SplashImage";
 import YouTubeVideo from "components/MyEditor/Blocks/YouTubeVideo";
-import PostTitleInput from "components/MyEditor/Blocks/PostTitleInput";
-import PostSubTitleInput from "components/MyEditor/Blocks/PostSubTitleInput";
-import PostTitle from "components/MyEditor/Blocks/PostTitle";
-import PostSubTitle from "components/MyEditor/Blocks/PostSubTitle";
 
 import { useSetPostData } from "./hooks";
 
@@ -26,24 +22,18 @@ export default function Media({ contentState, block }) {
       media = <Image src={src} alt="inserted Image" />;
       setTitlePhoto(src);
       break;
-    case "placeholder":
-      media = <Loading />;
-      break;
     case "dash":
       media = <Dash />;
       break;
     case "youtube":
-      media = data ? <YouTubeVideo src={data} /> : <YouTube />;
+      media = <YouTubeVideo src={src} />;
       break;
     case "unsplash":
-      media = data ? <SplashImage splashInfo={data} /> : <SplashSearch />;
-      data && setTitlePhoto(data.regularImageSrc);
+      media = <SplashImage splashInfo={src} />;
+      src && setTitlePhoto(src.regularImageSrc);
       break;
-    case "postTitle":
-      media = data ? <PostTitle data={data} /> : <PostTitleInput />;
-      break;
-    case "postSubTitle":
-      media = data ? <PostSubTitle data={data} /> : <PostSubTitleInput />;
+    case "placeholder":
+      media = <Loading />;
       break;
     default:
       return;

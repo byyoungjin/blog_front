@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -7,20 +7,28 @@ import { actions, selectors } from "data";
 export default function SplashSelect({ images }) {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
+  const container = useRef(null);
+  useEffect(() => {
+    container.current.focus();
+  }, []);
   const imageSelectHandler = splashInfo => {
     dispatch(
-      actions.editorState.replaceEntityData({ data: splashInfo, editorState })
+      actions.editorState.addOtherMedia({
+        data: splashInfo,
+        editorState,
+        type: "unsplash"
+      })
     );
   };
   return (
-    <Container>
+    <Container ref={container}>
       {images.map(image => {
         const { thumbImageSrc } = image;
         return (
           <ThumbImage
             src={thumbImageSrc}
             key={thumbImageSrc}
-            onClick={imageSelectHandler.bind(this, image)}
+            onMouseDown={imageSelectHandler.bind(this, image)}
           />
         );
       })}

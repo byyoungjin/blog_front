@@ -18,11 +18,13 @@ import UpperBar from "./UpperBar";
 import { colors } from "theme";
 import Media from "./Media";
 import Code from "./Blocks/Code";
-import Youtube from "./Blocks/YouTube";
+
 import Title from "./Blocks/Title";
 import SubTitle from "./Blocks/SubTitle";
 import QuoteBlock from "./Blocks/QuoteBlock";
 import Paragraph from "./Blocks/Paragraph";
+import YouTube from "./Blocks/YouTube";
+import SplashSearch from "./Blocks/SplashSearch";
 
 import log from "utils/log";
 
@@ -42,7 +44,7 @@ export default function BasicEditor({
   const focusOnEditor = useCallback(() => editorRef.current.focus(), [
     editorRef
   ]);
-  // log(editorState);
+  const contentState = editorState.getCurrentContent();
 
   useEffect(() => {
     focusOnEditor();
@@ -75,11 +77,13 @@ export default function BasicEditor({
 
   const mediaBlockRenderer = block => {
     const type = block.getType();
+    const entity = block.getEntityAt(0);
+
     switch (type) {
       case "atomic":
         return {
           component: Media,
-          editable: false
+          editable: entity ? false : true
         };
       default:
         return null;
@@ -98,6 +102,12 @@ export default function BasicEditor({
     },
     quoteBlock: {
       element: QuoteBlock
+    },
+    unsplashInput: {
+      element: SplashSearch
+    },
+    youtubeInput: {
+      element: YouTube
     },
     unstyled: {
       element: Paragraph

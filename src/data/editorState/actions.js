@@ -101,3 +101,8 @@ export const loadSavedEditorState = () => ({
 export const resetEditorState = () => ({
   type: AT.RESET_EDITOR_STATE
 });
+
+export const addOtherMedia = data => ({
+  type: AT.ADD_OTHER_MEDIA,
+  data
+});

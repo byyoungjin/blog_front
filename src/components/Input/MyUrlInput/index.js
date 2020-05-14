@@ -1,18 +1,18 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { useField } from "formik";
 import styled from "styled-components";
 
 import { colors } from "theme";
 
-const MyUrlInput = props => {
+const MyUrlInput = forwardRef((props, ref) => {
   const [field, meta] = useField(props);
   return (
     <InputContainer>
-      <InputStyled {...field} {...props} />
+      <InputStyled ref={ref} {...field} {...props} />
       {meta.touched && meta.error && <Error> {meta.error}</Error>}
     </InputContainer>
   );
-};
+});
 
 const InputContainer = styled.div`
   display: flex;

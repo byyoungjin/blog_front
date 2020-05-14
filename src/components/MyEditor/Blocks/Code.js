@@ -4,7 +4,7 @@ import styled from "styled-components";
 export default function CodeBlock({ contentState, block, children }) {
   const container = useRef(null);
   useEffect(() => {
-    container.current.firstChild.focus();
+    container.current.focus();
   }, []);
   return <Container ref={container}>{children}</Container>;
 }

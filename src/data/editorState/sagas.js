@@ -1,4 +1,5 @@
 import { put, select, race, take } from "redux-saga/effects";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 
 import { actions, selectors } from "data";
 import * as AT from "data/rootActionTypes";
@@ -8,7 +9,10 @@ import {
   addAtomic,
   toggleInlineStyle,
   toggleLinkStyle,
-  replaceEntityData
+  replaceEntityData,
+  addEntity,
+  applyEntityToBlock,
+  removeBlockFromBlockMap
 } from "./helper";
 import {
   loadContentFromStorage,
@@ -71,9 +75,26 @@ export function* addImage(action) {
   }
 }
 
+export function* addOtherMedia(action) {
+  const { data, editorState, type } = action.data;
+  const selection = editorState.getSelection();
+  const inputKey = selection.getFocusKey();
+  console.log("inputKey", inputKey);
+  const newEditorState = addMedia({ type, editorState, src: data });
+  const inputRemovedEditorState = removeBlockFromBlockMap({
+    editorState: newEditorState,
+    blockKey: inputKey
+  });
+  yield put(
+    actions.editorState.updateEditorState({
+      newEditorState: inputRemovedEditorState,
+      from: "addOtherMedia"
+    })
+  );
+}
+
 export function* replaceEntity(action) {
   const { data, editorState } = action.data;
-
   const newEditorState = replaceEntityData({ editorState, data });
   yield put(
     actions.editorState.updateEditorState({

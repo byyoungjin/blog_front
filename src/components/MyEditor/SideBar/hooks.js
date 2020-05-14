@@ -18,13 +18,13 @@ export const useInsertHandlers = editorState => {
 
   const insertSearchHandler = () => {
     dispatch(
-      actions.editorState.addAtomicBlock({ editorState, type: "unsplash" })
+      actions.editorState.toggleBlock({ editorState, type: "unsplashInput" })
     );
   };
 
   const insertVideoHandler = () => {
     dispatch(
-      actions.editorState.addAtomicBlock({ editorState, type: "youtube" })
+      actions.editorState.toggleBlock({ editorState, type: "youtubeInput" })
     );
   };
 
