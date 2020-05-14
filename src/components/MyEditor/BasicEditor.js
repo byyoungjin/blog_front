@@ -64,10 +64,12 @@ export default function BasicEditor({
     let newEditorState = RichUtils.handleKeyCommand(editorState, command);
     if (command === "myeditor-save") {
       saveHandler();
+      return "handled";
     }
     if (command === "soft-new-line-add") {
       newEditorState = RichUtils.insertSoftNewline(editorState);
     }
+
     if (newEditorState) {
       setEditorState({ newEditorState, from: "handleKeyCommand" });
       return "handled";
