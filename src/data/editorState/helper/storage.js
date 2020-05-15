@@ -30,9 +30,7 @@ export const readFile = ({ files, onLoadHandler }) => {
 
 export const getEditorStateFromRaw = ({ rawEditorState, editorState }) => {
   const contentState = convertFromRaw(rawEditorState);
-  const newEditorState = EditorState.set(editorState, {
-    currentContent: contentState
-  });
+  const newEditorState = EditorState.push(editorState, contentState);
   const focusedEditorState = EditorState.moveFocusToEnd(newEditorState);
 
   return focusedEditorState;
