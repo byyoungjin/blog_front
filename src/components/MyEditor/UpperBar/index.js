@@ -22,21 +22,21 @@ const UpperBarComp = ({ editorRef }) => {
   const inlineButtons = [
     {
       title: "bold",
-      image: "icons/editor/inline/bold.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/inline/bold.svg",
       onClick: () => {
         toggleInlineStyle("BOLD");
       }
     },
     {
       title: "italic",
-      image: "icons/editor/inline/italic.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/inline/italic.svg",
       onClick: () => {
         toggleInlineStyle("ITALIC");
       }
     },
     {
       title: "link",
-      image: "icons/editor/inline/link.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/inline/link.svg",
       onClick: () => {
         inputLinkHandler();
       }
@@ -46,21 +46,21 @@ const UpperBarComp = ({ editorRef }) => {
   const blockButtons = [
     {
       title: "quote",
-      image: "icons/editor/inline/quote.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/inline/quote.svg",
       onClick: () => {
         toggleBlocktype("quoteBlock");
       }
     },
     {
       title: "subTitle",
-      image: "icons/editor/inline/subTitle.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/inline/subTitle.svg",
       onClick: () => {
         toggleBlocktype("subTitle");
       }
     },
     {
       title: "title",
-      image: "icons/editor/inline/title.svg",
+      image: process.env.PUBLIC_URL + "/icons/editor/inline/title.svg",
       onClick: () => {
         toggleBlocktype("title");
       }

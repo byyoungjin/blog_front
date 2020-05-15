@@ -28,7 +28,7 @@ import QuoteBlock from "./Blocks/QuoteBlock";
 import Paragraph from "./Blocks/Paragraph";
 import YouTube from "./Blocks/YouTube";
 import SplashSearch from "./Blocks/SplashSearch";
-import { compositeDecorator } from "components/MyEditor/decorators";
+import { decorators } from "components/MyEditor/decorators";
 
 import log from "utils/log";
 
@@ -150,7 +150,7 @@ export default function BasicEditor({
         handlePastedFiles={handlePastedFilesFn}
         readOnly={readOnlyForDetailView ? readOnlyForDetailView : readOnly}
         plugins={[emojiPlugin]}
-        decorators={[compositeDecorator]}
+        decorators={decorators}
         ref={editorRef}
         {...props}
       />
