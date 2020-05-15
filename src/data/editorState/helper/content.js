@@ -1,4 +1,4 @@
-import { convertFromRaw } from "draft-js";
+import { convertFromRaw, EditorState } from "draft-js";
 
 const rawContent = {
   blocks: [
@@ -32,5 +32,15 @@ const rawContent = {
   ],
   entityMap: {}
 };
-
-export const content = convertFromRaw(rawContent);
+const content = convertFromRaw(rawContent);
+const editorState = EditorState.createWithContent(content);
+const selection = editorState.getSelection();
+const newSelection = selection.merge({
+  focusKey: "first",
+  focusOffset: 0,
+  hasFocus: true
+});
+export const forcedSelectionEditorState = EditorState.forceSelection(
+  editorState,
+  newSelection
+);

@@ -4,10 +4,10 @@ import { EditorState } from "draft-js";
 import * as AT from "data/rootActionTypes";
 import Remote from "data/remote";
 import { compositeDecorator } from "../../components/MyEditor/decorators";
-import { content } from "./helper/content";
+import { forcedSelectionEditorState } from "./helper/content";
 
 const INITIAL_STATE = {
-  editorState: EditorState.createWithContent(content),
+  editorState: forcedSelectionEditorState,
   title: "",
   titlePhoto: null,
   subTitle: "",

@@ -106,3 +106,7 @@ export const addOtherMedia = data => ({
   type: AT.ADD_OTHER_MEDIA,
   data
 });
+
+export const tester = () => ({
+  type: AT.TESTER
+});

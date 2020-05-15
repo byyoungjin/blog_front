@@ -47,14 +47,11 @@ export default function BasicEditor({
   const dispatch = useDispatch();
   const userId = useSelector(selectors.user.getUserId);
   const readOnly = useSelector(selectors.editorState.getEditorReadOnly);
-  const focusOnEditor = useCallback(() => editorRef.current.focus(), [
-    editorRef
-  ]);
-  const contentState = editorState.getCurrentContent();
+  const focusOnEditor = () => editorRef.current.focus();
 
   // useEffect(() => {
-  //   focusOnEditor();
-  // }, [focusOnEditor]);
+  //   dispatch(actions.editorState.tester());
+  // });
 
   const myKeybindingFn = e => {
     if (e.keyCode === 83 && hasCommandModifier(e)) {
@@ -148,13 +145,13 @@ export default function BasicEditor({
         }
         handleKeyCommand={handleKeyCommand}
         keyBindingFn={myKeybindingFn}
-        ref={editorRef}
         blockRendererFn={mediaBlockRenderer}
         blockRenderMap={extendedBlockRenderMap}
         handlePastedFiles={handlePastedFilesFn}
         readOnly={readOnlyForDetailView ? readOnlyForDetailView : readOnly}
         plugins={[emojiPlugin]}
         decorators={[compositeDecorator]}
+        ref={editorRef}
         {...props}
       />
       <EmojiSuggestions />
