@@ -19,6 +19,7 @@ import YouTube from "components/MyEditor/Blocks/YouTube";
 import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
 
 import { readFile } from "components/MyEditor/helper";
+import { decorators } from "components/MyEditor/decorators";
 
 const customBlockRenderMap = Immutable.Map({
   "code-block": {
@@ -94,5 +95,6 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
 
   handlePastedFiles: files => {
     readFile({ files, onLoadHandler });
-  }
+  },
+  decorators
 });

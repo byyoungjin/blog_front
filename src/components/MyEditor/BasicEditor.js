@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import {
-  RichUtils,
-  getDefaultKeyBinding,
-  KeyBindingUtil,
-  convertToRaw,
-  DefaultDraftBlockRenderMap
-} from "draft-js";
 import Editor from "draft-js-plugins-editor";
 
 import { actions, selectors } from "data";
@@ -16,8 +9,8 @@ import SideBar from "./SideBar";
 import UpperBar from "./UpperBar";
 import { colors } from "theme";
 
-import { decorators } from "components/MyEditor/decorators";
 import { emojiPlugin } from "./Plugins/emoji";
+import { blockBreakoutPlugin } from "./Plugins/blockBreakOut";
 import createBasicSettingsPlugin from "./Plugins/custom/basicSettings";
 
 import log from "utils/log";
@@ -64,8 +57,7 @@ export default function BasicEditor({
           setEditorState({ newEditorState, from: "EditorOnChange" })
         }
         readOnly={readOnlyForDetailView ? readOnlyForDetailView : readOnly}
-        plugins={[basicSettingPlugin, emojiPlugin]}
-        decorators={decorators}
+        plugins={[basicSettingPlugin, emojiPlugin, blockBreakoutPlugin]}
         ref={editorRef}
         {...props}
       />
