@@ -49,7 +49,6 @@ const getConvertToRawPost = postContent => {
 const getConvertFromRawPost = rawPostContent => ({
   ...rawPostContent,
   editorState: EditorState.createWithContent(
-    convertFromRaw(JSON.parse(rawPostContent.editorState)),
-    compositeDecorator
+    convertFromRaw(JSON.parse(rawPostContent.editorState))
   )
 });

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MyEditor } from "components";
 import Helmet from "components/Helmet";
 import { actions, selectors } from "data";
+import { useEditorState } from "components/MyEditor/hooks";
 
 export default function PostDetailComp({ match }) {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ export default function PostDetailComp({ match }) {
   const title = useSelector(selectors.post.getTitle);
   const subTitle = useSelector(selectors.post.getSubTitle);
   const id = userSession?.id;
+  const [editorState, setEditorState] = useEditorState(id);
 
   useEffect(() => {
     dispatch(actions.post.getOnePostDetail(postId));
@@ -29,8 +31,8 @@ export default function PostDetailComp({ match }) {
     <>
       <Helmet title={title} description={subTitle} />
       <MyEditor
-        editorState={currentPost.editorState}
-        setEditorState={() => {}}
+        editorState={editorState}
+        setEditorState={setEditorState}
         readOnly={true}
         id={id}
       />
