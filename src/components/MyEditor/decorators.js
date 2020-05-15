@@ -34,8 +34,10 @@ function findWithRegex(regex, contentBlock, callback) {
   }
 }
 
-export const compositeDecorator = new CompositeDecorator([
+export const decorators = [
   { strategy: handleStrategy, component: HandleSpan },
   { strategy: hashtagStrategy, component: HashTagSpan },
   { strategy: findLinkEntites, component: Link }
-]);
+];
+
+export const compositeDecorator = new CompositeDecorator(decorators);
