@@ -9,32 +9,18 @@ import {
   DefaultDraftBlockRenderMap
 } from "draft-js";
 import Editor from "draft-js-plugins-editor";
-import createEmojiPlugin from "draft-js-emoji-plugin";
-import "draft-js-emoji-plugin/lib/plugin.css";
-
-import Immutable from "immutable";
 
 import { actions, selectors } from "data";
-import { readFile } from "./helper";
+
 import SideBar from "./SideBar";
 import UpperBar from "./UpperBar";
 import { colors } from "theme";
-import Media from "./Media";
-import Code from "./Blocks/Code";
 
-import Title from "./Blocks/Title";
-import SubTitle from "./Blocks/SubTitle";
-import QuoteBlock from "./Blocks/QuoteBlock";
-import Paragraph from "./Blocks/Paragraph";
-import YouTube from "./Blocks/YouTube";
-import SplashSearch from "./Blocks/SplashSearch";
 import { decorators } from "components/MyEditor/decorators";
+import { emojiPlugin } from "./Plugins/emoji";
+import createBasicSettingsPlugin from "./Plugins/custom/basicSettings";
 
 import log from "utils/log";
-
-const { hasCommandModifier } = KeyBindingUtil;
-const emojiPlugin = createEmojiPlugin();
-const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
 
 export default function BasicEditor({
   editorState,
@@ -53,87 +39,21 @@ export default function BasicEditor({
   //   dispatch(actions.editorState.tester());
   // });
 
-  const myKeybindingFn = e => {
-    if (e.keyCode === 83 && hasCommandModifier(e)) {
-      return "myeditor-save";
-    }
-    if (e.keyCode === 13 && e.shiftKey) {
-      return "soft-new-line-add";
-    }
-    return getDefaultKeyBinding(e);
-  };
-
-  const handleKeyCommand = (command, editorState) => {
-    let newEditorState = RichUtils.handleKeyCommand(editorState, command);
-    if (command === "myeditor-save") {
-      saveHandler();
-      return "handled";
-    }
-    if (command === "soft-new-line-add") {
-      newEditorState = RichUtils.insertSoftNewline(editorState);
-    }
-
-    if (newEditorState) {
-      setEditorState({ newEditorState, from: "handleKeyCommand" });
-      return "handled";
-    }
-    return "not-handled";
-  };
-
-  const mediaBlockRenderer = block => {
-    const type = block.getType();
-    const entity = block.getEntityAt(0);
-
-    switch (type) {
-      case "atomic":
-        return {
-          component: Media,
-          editable: entity ? false : true
-        };
-      default:
-        return null;
-    }
-  };
-  const blockRenderMap = Immutable.Map({
-    "code-block": {
-      element: "div",
-      wrapper: <Code />
-    },
-    title: {
-      element: Title
-    },
-    subTitle: {
-      element: SubTitle
-    },
-    quoteBlock: {
-      element: QuoteBlock
-    },
-    unsplashInput: {
-      element: SplashSearch
-    },
-    youtubeInput: {
-      element: YouTube
-    },
-    unstyled: {
-      element: Paragraph
-    }
-  });
-
-  const extendedBlockRenderMap = DefaultDraftBlockRenderMap.merge(
-    blockRenderMap
-  );
-
-  const handlePastedFilesFn = files => {
-    const onLoadHandler = selectedFile =>
-      dispatch(
-        actions.editorState.addImage({ selectedFile, editorState, userId })
-      );
-    readFile({ files, onLoadHandler });
-  };
-
   const logCurrentBlock = () => {
     log(editorState);
   };
+
+  const onLoadHandler = selectedFile =>
+    dispatch(
+      actions.editorState.addImage({ selectedFile, editorState, userId })
+    );
+
+  const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
+  const basicSettingPlugin = createBasicSettingsPlugin({
+    saveHandler,
+    setEditorState,
+    onLoadHandler
+  });
 
   return (
     <EditorWrapper onClick={focusOnEditor}>
@@ -143,13 +63,8 @@ export default function BasicEditor({
         onChange={newEditorState =>
           setEditorState({ newEditorState, from: "EditorOnChange" })
         }
-        handleKeyCommand={handleKeyCommand}
-        keyBindingFn={myKeybindingFn}
-        blockRendererFn={mediaBlockRenderer}
-        blockRenderMap={extendedBlockRenderMap}
-        handlePastedFiles={handlePastedFilesFn}
         readOnly={readOnlyForDetailView ? readOnlyForDetailView : readOnly}
-        plugins={[emojiPlugin]}
+        plugins={[basicSettingPlugin, emojiPlugin]}
         decorators={decorators}
         ref={editorRef}
         {...props}
