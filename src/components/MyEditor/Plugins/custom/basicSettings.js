@@ -98,6 +98,14 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
   handlePastedFiles: files => {
     readFile({ files, onLoadHandler });
   },
-  handleReturn: (e, editorState, { setEditorState }) => {},
+  handleReturn: (e, editorState) => {
+    // const clearedEditorState = clearInlineStyles(editorState);
+    // log(editorState);
+    // log(clearedEditorState);
+    // setEditorState({
+    //   newEditorState: clearedEditorState,
+    //   from: "handle Return"
+    // });
+  },
   decorators
 });
