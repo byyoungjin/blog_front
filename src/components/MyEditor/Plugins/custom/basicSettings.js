@@ -8,6 +8,7 @@ import {
   DefaultDraftBlockRenderMap
 } from "draft-js";
 import Immutable from "immutable";
+import log from "utils/log";
 
 import Media from "components/MyEditor/Media";
 import Code from "components/MyEditor/Blocks/Code";
@@ -20,6 +21,7 @@ import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
 
 import { readFile } from "components/MyEditor/helper";
 import { decorators } from "components/MyEditor/decorators";
+import { clearInlineStyles } from "../helper/index";
 
 const customBlockRenderMap = Immutable.Map({
   "code-block": {
@@ -96,5 +98,6 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
   handlePastedFiles: files => {
     readFile({ files, onLoadHandler });
   },
+  handleReturn: (e, editorState, { setEditorState }) => {},
   decorators
 });
