@@ -2,7 +2,7 @@ import { put, select } from "redux-saga/effects";
 
 import { actions, selectors } from "data";
 import api from "api";
-import { getTitlePhotoFrom, getPostInfoFrom } from "./helper";
+import { getTitlePhotoFrom, getPostInfoFrom, getTagsFrom } from "./helper";
 
 export function* createPost() {
   try {
@@ -12,6 +12,9 @@ export function* createPost() {
     const { title: titleInfo, subTitle: subTitleInfo } = getPostInfoFrom(
       editorState
     );
+
+    const tagsArray = getTagsFrom(editorState);
+    console.log("tagsArray", tagsArray);
 
     yield put(actions.editorState.setTitlePhoto(titlePhotoUrl));
     yield put(actions.editorState.setTitle(titleInfo));

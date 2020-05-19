@@ -1,5 +1,7 @@
 import { convertToRaw } from "draft-js";
 
+const HASHTAG_REGEX = /#[가-힣\w\u0590-\u05ff]+/g;
+
 export const getTitlePhotoFrom = editorState => {
   if (!editorState) return;
   const contentState = editorState.getCurrentContent();
@@ -34,4 +36,21 @@ export const getPostInfoFrom = editorState => {
     },
     { title: null, subTitle: null }
   );
+};
+
+export const getTagsFrom = editorState => {
+  const contentState = editorState.getCurrentContent();
+  const rawContentState = convertToRaw(contentState);
+  const { blocks } = rawContentState;
+  return blocks.reduce((tags, block) => {
+    const text = block.text;
+    let matchArr;
+    while ((matchArr = HASHTAG_REGEX.exec(text)) !== null) {
+      const matchString = matchArr[0];
+      const sameIndex = tags.findIndex(tag => tag === matchString);
+
+      if (sameIndex === -1) tags.push(matchString);
+    }
+    return tags;
+  }, []);
 };
