@@ -8,6 +8,8 @@ import { actions } from "data";
 const INITIAL_STATE = {
   posts: [],
   currentPost: null,
+  tags: [],
+  currentTag: null,
   [AT.GET_POSTS]: Remote.NotAsked,
   [AT.GET_ONE_POST]: Remote.NotAsked
 };
@@ -34,6 +36,16 @@ const posts = produce((draft, action) => {
       break;
     case AT.GET_ONE_POST_FAILURE:
       draft[AT.GET_ONE_POST] = Remote.Failure(action.error);
+      break;
+
+    case AT.UPDATE_TAGS:
+      draft.tags = action.payload.tags;
+      break;
+    case AT.UPDATE_CURRENT_TAG:
+      draft.currentTag = action.data;
+      break;
+    case AT.RESET_CURRENT_TAG:
+      draft.currentTag = null;
       break;
 
     case AT.RESET_ONE_POST:

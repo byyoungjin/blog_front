@@ -9,3 +9,5 @@ export const getCurrentPostId = state => state.post.currentPost?.id;
 export const getTitle = state => state.post.currentPost?.title;
 export const getSubTitle = state => state.post.currentPost?.subTitle;
 export const getTitlePhoto = state => state.post.currentPost?.titlePhoto;
+
+export const getTags = state => state.post.tags;

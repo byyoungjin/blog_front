@@ -148,3 +148,10 @@ export function* deletePost(action) {
   yield api.postApi.deletePost(postId);
   yield put(actions.router.push("/"));
 }
+
+export function* getAllTags(action) {
+  const res = yield api.tagApi.getAllTags();
+  const { tags } = res.data;
+  console.log("tags", tags);
+  yield put(actions.post.updateTags({ tags }));
+}

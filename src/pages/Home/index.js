@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { actions, selectors } from "data";
 import { Post } from "components";
+import TagsBox from "components/Tags";
 import { DefaultLayout } from "layout";
 // import { posts } from "models/dummyData/posts";
 
@@ -21,20 +22,30 @@ export default function Home() {
   };
 
   return (
-    <PostContainer>
-      {posts.map(({ id, titlePhoto, title, subTitle, createdAt }, index) => (
-        <Post
-          key={title + createdAt}
-          titlePhoto={titlePhoto}
-          title={title}
-          subTitle={subTitle}
-          createdAt={createdAt}
-          onClick={postClickHandler.bind(this, id)}
-        />
-      ))}
-    </PostContainer>
+    <MainContainer>
+      <TagsBox />
+      <PostContainer>
+        {posts.map(({ id, titlePhoto, title, subTitle, createdAt }, index) => (
+          <Post
+            key={title + createdAt}
+            titlePhoto={titlePhoto}
+            title={title}
+            subTitle={subTitle}
+            createdAt={createdAt}
+            onClick={postClickHandler.bind(this, id)}
+          />
+        ))}
+      </PostContainer>
+    </MainContainer>
   );
 }
+
+const MainContainer = styled.div`
+  height: 100%;
+  grid-area: contents;
+  display: flex;
+  flex-direction: column;
+`;
 
 const PostContainer = styled.div`
   height: 100%;

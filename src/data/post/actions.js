@@ -65,3 +65,21 @@ export const getOnePostEdit = postId => ({
   type: AT.GET_ONE_POST_EDIT,
   postId
 });
+
+export const getAllTags = () => ({
+  type: AT.GET_ALL_TAGS
+});
+
+export const updateTags = payload => ({
+  type: AT.UPDATE_TAGS,
+  payload
+});
+
+export const updateCurrentTag = payload => ({
+  type: AT.UPDATE_CURRENT_TAG,
+  payload
+});
+
+export const resetCurrentTags = () => ({
+  type: AT.RESET_CURRENT_TAG
+});

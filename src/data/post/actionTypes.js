@@ -20,3 +20,11 @@ export const DELETE_POST = "DELETE_POST";
 export const UPDATE_POST = "UPDATE_POST";
 
 export const RESET_ONE_POST = "RESET_ONE_POST";
+
+export const GET_ALL_TAGS = "GET_ALL_TAGS";
+
+export const UPDATE_TAGS = "UPDATE_TAGS";
+
+export const UPDATE_CURRENT_TAG = "UPDATE_CURRENT_TAG";
+
+export const RESET_CURRENT_TAG = "RESET_CURRENT_TAG";
