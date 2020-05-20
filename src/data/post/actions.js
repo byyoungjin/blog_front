@@ -1,8 +1,8 @@
 import * as AT from "data/rootActionTypes";
 
-export const getPosts = userId => ({
+export const getPosts = payload => ({
   type: AT.GET_POSTS,
-  userId
+  payload
 });
 
 export const getPostsLoading = () => ({

@@ -11,6 +11,15 @@ export const api = {
     const res = await socialApiClient.get(`/api/post/getAllPosts`);
     return res.data.posts;
   },
+  getPostsByTagId: async tagId => {
+    const res = await socialApiClient
+      .get(`api/post/postsOfTagId/${tagId}`)
+      .catch(err => {
+        console.log("err", err);
+        throw Error(err.message);
+      });
+    return res.data.posts;
+  },
   getPostById: async postId => {
     const res = await socialApiClient.get(`/api/post/getPost/${postId}`);
     const rawPost = res.data;

@@ -19,7 +19,7 @@ export default function Mypage() {
   );
   const name = firstName + " " + lastName;
   useEffect(() => {
-    dispatch(actions.post.getPosts(userId));
+    dispatch(actions.post.getPosts({ userId }));
   }, []);
 
   const postClickHandler = postId => {
