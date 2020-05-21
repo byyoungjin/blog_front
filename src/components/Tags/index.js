@@ -16,7 +16,7 @@ export default function TagsComp() {
   return (
     <TagsContainer>
       {tags.map(tagInfo => (
-        <TagButton tagInfo={tagInfo} />
+        <TagButton tagInfo={tagInfo} key={tagInfo.id} />
       ))}
     </TagsContainer>
   );

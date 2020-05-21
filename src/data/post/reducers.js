@@ -42,7 +42,7 @@ const posts = produce((draft, action) => {
       draft.tags = action.payload.tags;
       break;
     case AT.UPDATE_CURRENT_TAG:
-      draft.currentTag = action.data;
+      draft.currentTag = action.payload;
       break;
     case AT.RESET_CURRENT_TAG:
       draft.currentTag = null;

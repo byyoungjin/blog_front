@@ -11,3 +11,5 @@ export const getSubTitle = state => state.post.currentPost?.subTitle;
 export const getTitlePhoto = state => state.post.currentPost?.titlePhoto;
 
 export const getTags = state => state.post.tags;
+export const getCurrentTag = state => state.post.currentTag;
+export const getCurrentTagName = state => state.post.currentTag?.tagName;
