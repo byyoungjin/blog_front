@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { format } from "date-fns";
 
 import colors from "theme/colors";
+import TagBox from "components/Tags";
 
 const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.jpg";
 
@@ -12,7 +13,8 @@ export default function Post({
   title,
   subTitle,
   createdAt,
-  onClick
+  onClick,
+  tagsProp
 }) {
   const formatedDate = format(new Date(createdAt), "yyyy/MM/dd");
 
@@ -23,6 +25,7 @@ export default function Post({
         <Title>{title === "" ? "무제" : title}</Title>
         <Subtitle>{subTitle}</Subtitle>
       </TextBox>
+      <TagBox tagsProp={tagsProp} />
       <DateOverlay>{formatedDate}</DateOverlay>
     </PostContainer>
   );

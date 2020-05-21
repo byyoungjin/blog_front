@@ -25,16 +25,19 @@ export default function Home() {
     <MainContainer>
       <TagsBox />
       <PostContainer>
-        {posts.map(({ id, titlePhoto, title, subTitle, createdAt }, index) => (
-          <Post
-            key={title + createdAt}
-            titlePhoto={titlePhoto}
-            title={title}
-            subTitle={subTitle}
-            createdAt={createdAt}
-            onClick={postClickHandler.bind(this, id)}
-          />
-        ))}
+        {posts.map(
+          ({ id, titlePhoto, title, subTitle, createdAt, Tags }, index) => (
+            <Post
+              key={title + createdAt}
+              titlePhoto={titlePhoto}
+              title={title}
+              subTitle={subTitle}
+              createdAt={createdAt}
+              onClick={postClickHandler.bind(this, id)}
+              tagsProp={Tags}
+            />
+          )
+        )}
       </PostContainer>
     </MainContainer>
   );

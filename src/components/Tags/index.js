@@ -6,11 +6,15 @@ import TagButton from "./TagButton";
 import api from "api";
 import { actions, selectors } from "data";
 
-export default function TagsComp() {
+export default function TagsComp({ tagsProp }) {
   const dispatch = useDispatch();
-  const tags = useSelector(selectors.post.getTags);
+  const allTags = useSelector(selectors.post.getTags);
+  const tags = tagsProp ? tagsProp : allTags;
+
   useEffect(() => {
-    dispatch(actions.post.getAllTags());
+    if (!tagsProp) {
+      dispatch(actions.post.getAllTags());
+    }
   }, []);
 
   return (
@@ -25,7 +29,7 @@ export default function TagsComp() {
 const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
+
   margin: 20px;
   border-radius: 10px;
 `;
