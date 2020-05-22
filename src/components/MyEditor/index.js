@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import styled from "styled-components";
 
 import BasicEditor from "./BasicEditor";
 import Controller from "./Controller";
@@ -10,7 +11,8 @@ export default function MyEditor({
   readOnly,
   editorState,
   setEditorState,
-  id
+  id,
+  tags
 }) {
   const dispatch = useDispatch();
   const postUserId = useSelector(selectors.post.getCurrentPostUserId);
@@ -55,6 +57,7 @@ export default function MyEditor({
   return (
     <>
       <Controller handlers={handlers} isSameUser={isSameUser} />
+      {tags && <Tags>{tags}</Tags>}
       <BasicEditor
         editorState={editorState}
         setEditorState={setEditorState}
@@ -65,3 +68,5 @@ export default function MyEditor({
     </>
   );
 }
+
+const Tags = styled.div``;

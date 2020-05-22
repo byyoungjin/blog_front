@@ -18,6 +18,14 @@ export default function PostDetailComp({ match }) {
   const id = userSession?.id;
   const [editorState, setEditorState] = useEditorState(id);
 
+  let tags = null;
+  if (currentPost) {
+    tags = currentPost.Tags.reduce((totalString, tag) => {
+      return totalString + " " + tag.tagName;
+    }, "");
+  }
+  console.log("tags", tags);
+
   useEffect(() => {
     dispatch(actions.post.getOnePostDetail(postId));
 
@@ -30,11 +38,13 @@ export default function PostDetailComp({ match }) {
   return currentPost ? (
     <>
       <Helmet title={title} description={subTitle} />
+
       <MyEditor
         editorState={editorState}
         setEditorState={setEditorState}
         readOnly={true}
         id={id}
+        tags={tags}
       />
     </>
   ) : null;
