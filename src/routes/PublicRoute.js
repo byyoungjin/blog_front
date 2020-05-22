@@ -1,10 +1,10 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import useWhoAmI from "hooks/useWhoAmI";
 import Modal from "components/Modal";
 
-export default function UserRoute({
+export default function PublciRoute({
   path,
   component: Component,
   layout: Layout,
@@ -24,10 +24,11 @@ export default function UserRoute({
       )}
     />
   );
+
   return whoAmIRemote.cata({
     NotAsked: () => "loading",
     Loading: () => "loading",
-    Failure: () => <Redirect to="/" from="" />,
+    Failure: () => route,
     Success: () => route
   });
 }

@@ -18,7 +18,7 @@ export default function Post({
   user
 }) {
   const formatedDate = format(new Date(createdAt), "yyyy/MM/dd");
-  const { firstName, lastName } = user;
+  const { firstName = "", lastName = "" } = user ? user : {};
   const userName = firstName + " " + lastName;
   return (
     <PostContainer style={style} onClick={onClick}>

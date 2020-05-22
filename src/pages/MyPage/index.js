@@ -45,6 +45,7 @@ export default function Mypage() {
             subTitle={subTitle}
             createdAt={createdAt}
             onClick={postClickHandler.bind(this, id)}
+            user={{ firstName, lastName }}
           />
         ))}
       </PostContainer>

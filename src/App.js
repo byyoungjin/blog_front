@@ -5,7 +5,7 @@ import { ConnectedRouter } from "connected-react-router";
 import Login from "pages/Login";
 import Register from "pages/Register";
 import { Home, MyPage, PostWrite, PostDetail, PostEdit } from "pages";
-import { DefaultRoute, UserRoute } from "routes";
+import { PublicRoute, PrivateRoute } from "routes";
 import { DefaultLayout, EditorLayout } from "layout";
 import ErrorBoundary from "pages/ErrorBoundary";
 
@@ -14,35 +14,32 @@ function App({ history }) {
     <ErrorBoundary>
       <ConnectedRouter history={history}>
         <Switch>
-          <DefaultRoute
-            exact
-            path="/"
-            component={Home}
-            layout={DefaultLayout}
-          />
-          <Route path="/login" component={Login} />
-          <Route path="/register" component={Register} />
-          <DefaultRoute
-            path="/myPage"
-            component={MyPage}
-            layout={DefaultLayout}
-          />
-          <UserRoute
-            path="/postWrite"
-            component={PostWrite}
-            layout={EditorLayout}
-          />
-          <DefaultRoute
+          <PublicRoute exact path="/" component={Home} layout={DefaultLayout} />
+          <PublicRoute
             path="/postDetail/:postId"
             component={PostDetail}
             layout={EditorLayout}
           />
-          <UserRoute
+          <PublicRoute
+            path="/myPage"
+            component={MyPage}
+            layout={DefaultLayout}
+          />
+
+          <PrivateRoute
+            path="/postWrite"
+            component={PostWrite}
+            layout={EditorLayout}
+          />
+
+          <PrivateRoute
             path="/postEdit/:postId"
             component={PostEdit}
             layout={EditorLayout}
           />
-          {/* <Route path="/postUpdate/:postId" component={PostUpdate} /> */}
+
+          <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
         </Switch>
       </ConnectedRouter>
     </ErrorBoundary>
