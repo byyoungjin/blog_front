@@ -12,6 +12,7 @@ import { colors } from "theme";
 import { emojiPlugin } from "./Plugins/emoji";
 import { blockBreakoutPlugin } from "./Plugins/blockBreakOut";
 import createBasicSettingsPlugin from "./Plugins/custom/basicSettings";
+import EditorDetailHeader from "./EditorDetailHeader";
 
 import log from "utils/log";
 
@@ -26,6 +27,7 @@ export default function BasicEditor({
   const dispatch = useDispatch();
   const userId = useSelector(selectors.user.getUserId);
   const readOnly = useSelector(selectors.editorState.getEditorReadOnly);
+  const editorType = useSelector(selectors.editorState.getEditorType);
   const focusOnEditor = () => editorRef.current.focus();
 
   // useEffect(() => {
@@ -50,7 +52,8 @@ export default function BasicEditor({
 
   return (
     <EditorWrapper onClick={focusOnEditor}>
-      <button onMouseDown={logCurrentBlock}>log</button>
+      {/* <button onMouseDown={logCurrentBlock}>log</button> */}
+      {editorType === "detail" && <EditorDetailHeader />}
       <Editor
         editorState={editorState}
         onChange={newEditorState =>

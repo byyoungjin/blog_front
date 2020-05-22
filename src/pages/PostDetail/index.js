@@ -9,7 +9,6 @@ import { useEditorState } from "components/MyEditor/hooks";
 export default function PostDetailComp({ match }) {
   const dispatch = useDispatch();
 
-  const currentPost = useSelector(selectors.post.getCurrentPost);
   const { postId } = match.params;
 
   const userSession = useSelector(selectors.user.getUserSession);
@@ -17,14 +16,6 @@ export default function PostDetailComp({ match }) {
   const subTitle = useSelector(selectors.post.getSubTitle);
   const id = userSession?.id;
   const [editorState, setEditorState] = useEditorState(id);
-
-  let tags = null;
-  if (currentPost) {
-    tags = currentPost.Tags.reduce((totalString, tag) => {
-      return totalString + " " + tag.tagName;
-    }, "");
-  }
-  console.log("tags", tags);
 
   useEffect(() => {
     dispatch(actions.post.getOnePostDetail(postId));
@@ -35,17 +26,15 @@ export default function PostDetailComp({ match }) {
     };
   }, []);
 
-  return currentPost ? (
+  return (
     <>
       <Helmet title={title} description={subTitle} />
-
       <MyEditor
         editorState={editorState}
         setEditorState={setEditorState}
         readOnly={true}
         id={id}
-        tags={tags}
       />
     </>
-  ) : null;
+  );
 }
