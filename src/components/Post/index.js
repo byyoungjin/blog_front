@@ -26,7 +26,9 @@ export default function Post({
       <TextBox>
         <Title>{title === "" ? "무제" : title}</Title>
         <Subtitle>{subTitle}</Subtitle>
+        <Divider />
         <UserInfo>by {userName}</UserInfo>
+        <CreatedInfo>{formatedDate}</CreatedInfo>
       </TextBox>
       <TagBox tagsProp={tagsProp} />
       <DateOverlay>{formatedDate}</DateOverlay>
@@ -36,6 +38,8 @@ export default function Post({
 
 const PostContainer = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -49,14 +53,17 @@ const PostContainer = styled.div`
 
 const ImageBox = styled.img`
   width: 100%;
-  height: 300px;
+  height: 200px;
   border: none;
   border-radius: 10px 10px 0 0;
   object-fit: cover;
 `;
 
 const TextBox = styled.div`
+  display: flex;
+  flex-direction: column;
   margin: 10px;
+  height: 100%;
 `;
 
 const Title = styled.div`
@@ -82,7 +89,7 @@ const DateOverlay = styled.div`
   top: 0;
   border-radius: 10px;
   width: 100%;
-  height: 100%;
+  height: 200px;
   justify-content: center;
   align-items: center;
   opacity: 0.5;
@@ -99,4 +106,13 @@ const DateOverlay = styled.div`
 const UserInfo = styled.div`
   color: ${colors.blue_light};
   font-size: 16px;
+`;
+
+const CreatedInfo = styled.div`
+  color: ${colors.blue_light};
+  font-size: 16px;
+`;
+
+const Divider = styled.div`
+  flex: 1;
 `;
