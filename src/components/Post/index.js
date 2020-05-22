@@ -14,16 +14,19 @@ export default function Post({
   subTitle,
   createdAt,
   onClick,
-  tagsProp
+  tagsProp,
+  user
 }) {
   const formatedDate = format(new Date(createdAt), "yyyy/MM/dd");
-
+  const { firstName, lastName } = user;
+  const userName = firstName + " " + lastName;
   return (
     <PostContainer style={style} onClick={onClick}>
       <ImageBox src={titlePhoto ? titlePhoto : defaultCover} />
       <TextBox>
         <Title>{title === "" ? "무제" : title}</Title>
         <Subtitle>{subTitle}</Subtitle>
+        <UserInfo>by {userName}</UserInfo>
       </TextBox>
       <TagBox tagsProp={tagsProp} />
       <DateOverlay>{formatedDate}</DateOverlay>
@@ -91,4 +94,9 @@ const DateOverlay = styled.div`
   ${PostContainer}:hover & {
     display: flex;
   }
+`;
+
+const UserInfo = styled.div`
+  color: ${colors.blue_light};
+  font-size: 16px;
 `;

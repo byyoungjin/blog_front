@@ -30,7 +30,10 @@ export default function Home() {
       <TagsBox />
       <PostContainer>
         {posts.map(
-          ({ id, titlePhoto, title, subTitle, createdAt, Tags }, index) => (
+          (
+            { id, titlePhoto, title, subTitle, createdAt, Tags, User },
+            index
+          ) => (
             <Post
               key={title + createdAt}
               titlePhoto={titlePhoto}
@@ -39,6 +42,7 @@ export default function Home() {
               createdAt={createdAt}
               onClick={postClickHandler.bind(this, id)}
               tagsProp={Tags}
+              user={User}
             />
           )
         )}

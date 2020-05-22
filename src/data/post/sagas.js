@@ -152,6 +152,5 @@ export function* deletePost(action) {
 export function* getAllTags(action) {
   const res = yield api.tagApi.getAllTags();
   const { tags } = res.data;
-  console.log("tags", tags);
   yield put(actions.post.updateTags({ tags }));
 }
