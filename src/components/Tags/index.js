@@ -12,6 +12,8 @@ export default function TagsComp({ tagsProp }) {
   const allTagsAndAllbutton = [{ id: 0, tagName: "ALL" }, ...allTags];
   const tags = tagsProp ? tagsProp : allTagsAndAllbutton;
 
+  const isFunctional = tagsProp ? false : true;
+
   useEffect(() => {
     if (!tagsProp) {
       dispatch(actions.post.getAllTags());
@@ -21,7 +23,11 @@ export default function TagsComp({ tagsProp }) {
   return (
     <TagsContainer>
       {tags.map(tagInfo => (
-        <TagButton tagInfo={tagInfo} key={tagInfo.id} />
+        <TagButton
+          tagInfo={tagInfo}
+          isFunctional={isFunctional}
+          key={tagInfo.id}
+        />
       ))}
     </TagsContainer>
   );
