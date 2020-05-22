@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   posts: [],
   currentPost: null,
   tags: [],
-  currentTag: null,
+  currentTag: { id: 0, tagName: "ALL" },
   [AT.GET_POSTS]: Remote.NotAsked,
   [AT.GET_ONE_POST]: Remote.NotAsked
 };

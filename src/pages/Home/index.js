@@ -11,11 +11,15 @@ import { DefaultLayout } from "layout";
 export default function Home() {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
-  console.log("posts", posts);
+  const currentTag = useSelector(selectors.post.getCurrentTag);
 
   useEffect(() => {
-    dispatch(actions.post.getPosts());
-  }, []);
+    if (currentTag) {
+      dispatch(actions.post.getPosts({ tagId: currentTag.id, useId: null }));
+    } else {
+      dispatch(actions.post.getPosts());
+    }
+  }, [currentTag]);
 
   const postClickHandler = postId => {
     dispatch(actions.router.push(`/postDetail/${postId}`));

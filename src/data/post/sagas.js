@@ -93,7 +93,7 @@ export function* getOnePostEdit(action) {
 
 export function* getPosts(action) {
   try {
-    const { userId, tagId } = action.payload ? actions.payload : {};
+    const { userId, tagId } = action.payload ? action.payload : {};
     let posts;
     yield put(actions.post.getPostsLoading());
     if (!tagId) {
@@ -104,11 +104,11 @@ export function* getPosts(action) {
       }
     } else {
       posts = yield api.postApi.getPostsByTagId(tagId);
-      console.log("posts from tagId filter", posts);
     }
 
     yield put(actions.post.getPostsSuccess(posts));
   } catch (error) {
+    console.log("error.message", error.message);
     yield put(actions.post.getPostsFailure(error));
   }
 }

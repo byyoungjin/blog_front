@@ -9,7 +9,8 @@ import { actions, selectors } from "data";
 export default function TagsComp({ tagsProp }) {
   const dispatch = useDispatch();
   const allTags = useSelector(selectors.post.getTags);
-  const tags = tagsProp ? tagsProp : allTags;
+  const allTagsAndAllbutton = [{ id: 0, tagName: "ALL" }, ...allTags];
+  const tags = tagsProp ? tagsProp : allTagsAndAllbutton;
 
   useEffect(() => {
     if (!tagsProp) {
