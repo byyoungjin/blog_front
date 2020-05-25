@@ -2,7 +2,7 @@ import { put, select } from "redux-saga/effects";
 
 import { actions, selectors } from "data";
 import api from "api";
-import { getTitlePhotoFrom, getPostInfoFrom, getTagsFrom } from "./helper";
+import { getTitlePhotoFrom, getPostInfoFrom, uploadTagsToDB } from "./helper";
 
 export function* createPost() {
   try {
@@ -31,26 +31,7 @@ export function* createPost() {
     const res = yield api.postApi.createPost(postStates);
     const { createdPostId } = res.data;
 
-    // insert tag information to database
-    const tagsArray = getTagsFrom(editorState);
-    console.log("tagsArray", tagsArray);
-
-    if (tagsArray.length !== 0) {
-      yield tagsArray.forEach(async tagName => {
-        const res = await api.tagApi.isInTags({ tagName });
-        let { tagId } = res.data;
-        if (!tagId) {
-          const res = await api.tagApi.createTag({ tagName });
-          const { createdTagId } = res.data;
-          tagId = createdTagId;
-        }
-        const mapPostTagRes = await api.postTagApi.mapPostTag({
-          PostId: createdPostId,
-          TagId: tagId
-        });
-        console.log("mapPostTagRes", mapPostTagRes);
-      });
-    }
+    yield uploadTagsToDB({ editorState, postId: createdPostId });
 
     yield put(actions.post.getOnePostDetail(createdPostId));
     yield put(actions.modal.modalUpAndGo("published"));
@@ -136,8 +117,8 @@ export function* updatePost() {
     subTitle,
     titlePhoto
   };
-  console.log("newPost", newPost);
   yield api.postApi.updatePost({ postId, newPost });
+  yield uploadTagsToDB({ editorState, postId });
   yield put(actions.post.getOnePost(postId));
   yield put(actions.modal.modalUpAndGo("edited"));
   yield put(actions.router.push(`/postDetail/${postId}`));

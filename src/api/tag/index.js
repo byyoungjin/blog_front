@@ -8,10 +8,12 @@ export const api = {
     });
   },
   createTag: async tagInfo => {
-    return await socialApiClient.post("api/tag/newTag", tagInfo).catch(err => {
-      console.log("err", err);
-      throw Error(err.message);
-    });
+    return await socialApiClient
+      .post("api/tag/findOrCreateTag", tagInfo)
+      .catch(err => {
+        console.log("err", err);
+        throw Error(err.message);
+      });
   },
   isInTags: async tagInfo => {
     return await socialApiClient

@@ -1,5 +1,7 @@
 import { convertToRaw } from "draft-js";
 
+import api from "api";
+
 const HASHTAG_REGEX = /#[가-힣\w\u0590-\u05ff]+/g;
 
 export const getTitlePhotoFrom = editorState => {
@@ -53,4 +55,21 @@ export const getTagsFrom = editorState => {
     }
     return tags;
   }, []);
+};
+
+export const uploadTagsToDB = ({ editorState, postId }) => {
+  // insert tag information to database
+  const tagsArray = getTagsFrom(editorState);
+
+  if (tagsArray.length !== 0) {
+    tagsArray.forEach(async tagName => {
+      const res = await api.tagApi.createTag({ tagName });
+      const { tagId } = res.data;
+
+      await api.postTagApi.mapPostTag({
+        PostId: postId,
+        TagId: tagId
+      });
+    });
+  }
 };
