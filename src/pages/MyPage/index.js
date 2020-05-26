@@ -37,17 +37,20 @@ export default function Mypage() {
       </MyProfile>
       <Label>내 포스트</Label>
       <PostContainer>
-        {posts.map(({ id, titlePhoto, title, subTitle, createdAt }, index) => (
-          <Post
-            key={title + createdAt}
-            titlePhoto={titlePhoto}
-            title={title}
-            subTitle={subTitle}
-            createdAt={createdAt}
-            onClick={postClickHandler.bind(this, id)}
-            user={{ firstName, lastName }}
-          />
-        ))}
+        {posts.map(
+          ({ id, titlePhoto, title, subTitle, createdAt, Tags }, index) => (
+            <Post
+              key={title + createdAt}
+              titlePhoto={titlePhoto}
+              title={title}
+              subTitle={subTitle}
+              createdAt={createdAt}
+              onClick={postClickHandler.bind(this, id)}
+              tagsProp={Tags}
+              user={{ firstName, lastName }}
+            />
+          )
+        )}
       </PostContainer>
     </ContentsContainer>
   );
