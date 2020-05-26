@@ -57,18 +57,43 @@ export const getTagsFrom = editorState => {
   }, []);
 };
 
-export const uploadTagsToDB = ({ editorState, postId }) => {
+export const uploadTagsToDB = async ({ editorState, postId }) => {
   // insert tag information to database
   const tagsArray = getTagsFrom(editorState);
 
+  const res = await api.tagApi.getTagsOfPostId({ postId });
+  const { tags: tagsDatabase } = res.data;
+
+  await tagsDatabase.forEach(async tagDatabase => {
+    const tagIdDatabase = tagDatabase.id;
+    const tagNameDatabase = tagDatabase.tagName;
+    const isInNowTags = tagsArray.find(
+      tagNowName => tagNowName === tagNameDatabase
+    );
+
+    if (!isInNowTags) {
+      await api.postTagApi.deleteMaping({
+        tagId: tagIdDatabase,
+        postId
+      });
+    }
+  });
+
   if (tagsArray.length !== 0) {
-    tagsArray.forEach(async tagName => {
+    await tagsArray.forEach(async tagName => {
+      let tagIdToMap;
+      // const isInTagsRes = await api.tagApi.isInTags({ tagName });
+      // const { tagId } = isInTagsRes.data;
+      // tagIdToMap = tagId;
+      // if (!tagId) {
       const res = await api.tagApi.createTag({ tagName });
       const { tagId } = res.data;
+      tagIdToMap = tagId;
+      // }
 
       await api.postTagApi.mapPostTag({
         PostId: postId,
-        TagId: tagId
+        TagId: tagIdToMap
       });
     });
   }

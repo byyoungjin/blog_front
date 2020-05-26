@@ -25,5 +25,8 @@ export const api = {
   },
   deleteTag: async ({ tagId }) => {
     return await socialApiClient.delete(`api/tag/deleteTag/${tagId}`);
+  },
+  getTagsOfPostId: async ({ postId }) => {
+    return await socialApiClient.get(`/api/tag/tagsOfPostId/${postId}`);
   }
 };
