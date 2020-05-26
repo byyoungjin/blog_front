@@ -83,3 +83,8 @@ export const updateCurrentTag = payload => ({
 export const resetCurrentTags = () => ({
   type: AT.RESET_CURRENT_TAG
 });
+
+export const deleteTag = payload => ({
+  type: AT.DELETE_TAG,
+  payload
+});

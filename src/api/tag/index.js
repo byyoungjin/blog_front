@@ -22,5 +22,8 @@ export const api = {
         console.log("err", err);
         throw Error(err.message);
       });
+  },
+  deleteTag: async ({ tagId }) => {
+    return await socialApiClient.delete(`api/tag/deleteTag/${tagId}`);
   }
 };

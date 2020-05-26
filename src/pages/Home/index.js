@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { actions, selectors } from "data";
 import { Post } from "components";
 import TagsBox from "components/Tags";
+import DeleteTag from "components/DeleteTag";
 import { DefaultLayout } from "layout";
 // import { posts } from "models/dummyData/posts";
 
@@ -15,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     if (currentTag) {
-      dispatch(actions.post.getPosts({ tagId: currentTag.id, useId: null }));
+      dispatch(actions.post.getPosts({ tagId: currentTag.id }));
     } else {
       dispatch(actions.post.getPosts());
     }
@@ -25,9 +26,10 @@ export default function Home() {
     dispatch(actions.router.push(`/postDetail/${postId}`));
   };
 
-  return (
-    <MainContainer>
-      <TagsBox />
+  const DisplayPosts = () =>
+    posts.length === 0 ? (
+      <DeleteTag tagId={currentTag.id} />
+    ) : (
       <PostContainer>
         {posts.map(
           (
@@ -47,6 +49,12 @@ export default function Home() {
           )
         )}
       </PostContainer>
+    );
+
+  return (
+    <MainContainer>
+      <TagsBox />
+      <DisplayPosts />
     </MainContainer>
   );
 }

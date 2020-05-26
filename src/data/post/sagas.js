@@ -135,3 +135,12 @@ export function* getAllTags(action) {
   const { tags } = res.data;
   yield put(actions.post.updateTags({ tags }));
 }
+
+export function* deleteTag(action) {
+  const { tagId } = action.payload;
+  yield api.tagApi.deleteTag({ tagId });
+
+  yield getAllTags();
+  yield getPosts();
+  yield put(actions.post.updateCurrentTag({ tagName: "ALL", id: 0 }));
+}

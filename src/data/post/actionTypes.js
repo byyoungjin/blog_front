@@ -28,3 +28,5 @@ export const UPDATE_TAGS = "UPDATE_TAGS";
 export const UPDATE_CURRENT_TAG = "UPDATE_CURRENT_TAG";
 
 export const RESET_CURRENT_TAG = "RESET_CURRENT_TAG";
+
+export const DELETE_TAG = "DELETE_TAG";
