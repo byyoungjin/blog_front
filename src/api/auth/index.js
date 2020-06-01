@@ -18,7 +18,7 @@ export const api = {
       });
   },
   whoAmI: async () => {
-    return await socialApiClient.get("api/auth/whoAmi").catch(error => {
+    return await socialApiClient.get("api/auth/whoAmI").catch(error => {
       throw Error(error.message);
     });
   }
