@@ -18,6 +18,7 @@ export const loadContentFromStorage = id => {
   return savedData ? JSON.parse(savedData) : null;
 };
 
+//file object 를 dataUrl 형태로 만들 수있다.
 export const readFile = ({ files, onLoadHandler }) => {
   const selectedFile = files[0];
   const reader = new FileReader();

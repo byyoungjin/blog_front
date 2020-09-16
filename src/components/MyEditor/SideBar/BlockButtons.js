@@ -53,11 +53,13 @@ export default function BlockButtons({ isOpen }) {
 
   const fileSelectHandler = e => {
     const files = e.target.files;
+    const selectedFile = files[0];
     const onLoadHandler = selectedFile =>
       dispatch(
         actions.editorState.addImage({ selectedFile, editorState, userId })
       );
-    readFile({ files, onLoadHandler });
+    onLoadHandler(selectedFile);
+    // readFile({ files, onLoadHandler });
     e.target.value = "";
   };
 

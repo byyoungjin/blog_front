@@ -24,6 +24,7 @@ import generateUUID from "utils/generateUUID";
 export function* addImage(action) {
   try {
     const { selectedFile, editorState, userId } = action.data;
+
     const editorStateWithPlaceholder = addMedia({
       type: "placeholder",
       editorState
@@ -44,6 +45,7 @@ export function* addImage(action) {
 
     const res = yield api.awsApi.signS3(fileInfo);
     const { signedRequest, url } = res.data.data;
+
     const options = {
       headers: {
         "Content-Type": fileInfo.fileType
@@ -54,6 +56,7 @@ export function* addImage(action) {
       file: selectedFile,
       options
     };
+
     yield api.awsApi.uploadImage(uploadInfo);
 
     const newEditorState = addMedia({ type: "image", src: url, editorState });
