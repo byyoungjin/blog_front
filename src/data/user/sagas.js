@@ -1,7 +1,7 @@
 import { put } from "redux-saga/effects";
 
 import { actions } from "data";
-import { setAuthCookie, clearAuthCookie } from "data/cookie";
+
 import api from "api";
 
 export function* login(action) {
@@ -13,7 +13,6 @@ export function* login(action) {
     const res = yield api.authApi.login(userLoginInfo);
     const userData = res.data;
     yield put(actions.user.setUserSession(userData));
-    setAuthCookie(userData.token);
 
     yield put(actions.user.loginSuccess(userData));
     yield put(actions.router.push("/"));
@@ -23,10 +22,10 @@ export function* login(action) {
 }
 
 export function* logout() {
-  yield put(actions.user.resetAuth());
-  clearAuthCookie();
+  yield api.authApi.logout();
   yield put(actions.post.getPostsSuccess([]));
   yield put(actions.router.push("/"));
+  yield put(actions.user.resetAuth());
 }
 
 export function* register(action) {
