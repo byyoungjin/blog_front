@@ -10,8 +10,9 @@ export function* login(action) {
     yield put(actions.user.loginLoading());
 
     // 1. get token and set it on store & cookie
-    const res = yield api.authApi.login(userLoginInfo);
+    const res = yield api.authApi.loginTraditional(userLoginInfo);
     const userData = res.data;
+    console.log("userData", userData);
     yield put(actions.user.setUserSession(userData));
 
     yield put(actions.user.loginSuccess(userData));
@@ -32,7 +33,7 @@ export function* register(action) {
   try {
     const { userRegisterInfo } = action;
     yield put(actions.user.registerLoading());
-    yield api.authApi.register(userRegisterInfo);
+    yield api.authApi.registerTraditional(userRegisterInfo);
 
     const userLoginInfo = {
       emailAddress: userRegisterInfo.emailAddress,
@@ -50,11 +51,16 @@ export function* whoAmI() {
   try {
     yield put(actions.user.whoAmILoading());
     const res = yield api.authApi.whoAmI();
+
     const user = res.data;
+    console.log("user", user);
     yield put(actions.user.setUserSession(user));
     yield put(actions.user.whoAmISuccess(user));
   } catch (e) {
-    console.log("error", e);
+    if (e.response.data === "TokenExpiredError") {
+      //Issue New Token with RefreshToken
+    }
+
     yield put(actions.user.whoAmIFailure(e));
   }
 }
