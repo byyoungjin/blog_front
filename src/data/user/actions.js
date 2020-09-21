@@ -1,8 +1,8 @@
 import * as AT from "data/rootActionTypes";
 
-export const setUserSession = userSession => ({
+export const setUserSession = payload => ({
   type: AT.SET_USER_SESSION,
-  userSession
+  payload
 });
 
 export const resetAuth = () => ({

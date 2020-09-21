@@ -3,9 +3,11 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import "./normalize.css";
 import "./index.css";
+import dotenv from "dotenv";
 
 import App from "./App";
 import configureStore from "data/configureStore";
+dotenv.config();
 
 const { history, store } = configureStore();
 

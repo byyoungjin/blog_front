@@ -10,6 +10,8 @@ import { MyTextInput, Button } from "components";
 import { EditorLayout } from "layout";
 import { colors } from "theme";
 
+import GoogleLogin from "./GoogleLogin";
+
 export default function Login() {
   const dispatch = useDispatch();
 
@@ -30,6 +32,7 @@ export default function Login() {
   return (
     <EditorLayout logo>
       <FormContainer>
+        <GoogleLogin />
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
@@ -37,6 +40,7 @@ export default function Login() {
         >
           <FormStyled>
             <LabelStyled>LOG IN</LabelStyled>
+
             <MyTextInput
               name="emailAddress"
               label="이메일"
