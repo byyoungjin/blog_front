@@ -1,9 +1,4 @@
-import { getAuthCookie } from "data/cookie";
-
+//TODO: 타입스크립트로 반환되는 request 형식 지정하기
 export const socialApiRequestInterceptor = request => {
-  const token = getAuthCookie();
-  if (token) {
-    request.headers["x-access-token"] = token;
-  }
   return request;
 };

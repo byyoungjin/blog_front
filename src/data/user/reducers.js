@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 export default function user(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
     case AT.SET_USER_SESSION:
-      return { ...state, userSession: action.userSession };
+      return { ...state, userSession: action.payload };
     case AT.RESET_AUTH:
       return { ...state, userSession: null, [AT.LOG_IN]: Remote.NotAsked };
     case AT.LOG_IN_LOADING:
