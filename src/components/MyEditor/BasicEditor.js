@@ -8,6 +8,7 @@ import { actions, selectors } from "data";
 import SideBar from "./SideBar";
 import UpperBar from "./UpperBar";
 import { colors } from "theme";
+import winSize from "utils/winSize";
 
 import { emojiPlugin } from "./Plugins/emoji";
 import { blockBreakoutPlugin } from "./Plugins/blockBreakOut";
@@ -73,11 +74,13 @@ export default function BasicEditor({
 }
 
 const EditorWrapper = styled.div`
-  width: 100%;
+  width: 90%;
 
   padding: 20px;
   grid-area: editor;
 
   font-size: 24px;
   color: ${colors.black_84};
+
+  ${winSize.onLarge("width:60%")}
 `;
