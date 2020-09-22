@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { MainLogo, Navigation, AddPost } from "components";
 import { Row, Col } from "components/Layout";
 import { selectors } from "data";
+import Modal from "components/Modal";
 
 export default function DefaultLayoutComp({ children }) {
   const userSession = useSelector(selectors.user.getUserSession);
@@ -15,7 +16,7 @@ export default function DefaultLayoutComp({ children }) {
         <Navigation userSession={userSession} />
       </NavBar>
       <ContentsContainer>{children}</ContentsContainer>
-
+      <Modal />
       {userSession && <AddPost />}
     </DefaultLayout>
   );
