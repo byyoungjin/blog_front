@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { actions } from "data";
 import Colors from "theme/colors";
-import { shadowClickableBox } from "theme/style";
+import { shadowClickableBox } from "theme/componentStyle";
 import DeleteTagModal from "components/Modal/DeleteTagModal";
 
 export default function DeleteTag({ tagId }) {

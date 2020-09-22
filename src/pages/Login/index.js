@@ -105,5 +105,5 @@ const LinkStyled = styled(Link)`
 `;
 
 const ErrorMesssage = styled.div`
-  color: ${({ theme }) => theme.pink};
+  color: ${({ theme }) => theme.colors.pink};
 `;

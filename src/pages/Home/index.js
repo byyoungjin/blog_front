@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { actions, selectors } from "data";
 import { Post } from "components";
+import { Row } from "components/Layout";
 import TagsBox from "components/Tags";
 import DeleteTag from "components/DeleteTag";
 import { DefaultLayout } from "layout";
@@ -20,7 +21,7 @@ export default function Home() {
     } else {
       dispatch(actions.post.getPosts());
     }
-  }, [currentTag]);
+  }, [currentTag, dispatch]);
 
   const postClickHandler = postId => {
     dispatch(actions.router.push(`/postDetail/${postId}`));
@@ -60,26 +61,14 @@ export default function Home() {
 }
 
 const MainContainer = styled.div`
-  height: 100%;
-  grid-area: contents;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
 `;
 
-const PostContainer = styled.div`
+const PostContainer = styled(Row.CenterAround)`
+  flex-wrap: wrap;
   height: 100%;
-  grid-area: contents;
-  display: grid;
-  gap: 50px 20px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 500px;
-  grid-auto-rows: 500px;
-
-  @media (max-width: 1400px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 1000px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  width: 100%;
 `;

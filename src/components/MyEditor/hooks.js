@@ -5,25 +5,6 @@ import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 
 import { actions, selectors } from "data";
 
-export function useEditorState(id) {
-  const dispatch = useDispatch();
-  const editorState = useSelector(selectors.editorState.getEditorState);
-  const setEditorState = useCallback(({ newEditorState, from }) => {
-    dispatch(actions.editorState.updateEditorState({ newEditorState, from }));
-  }, []);
-
-  // useEffect(() => {
-  //   dispatch(
-  //     actions.editorState.updateEditorState({
-  //       newEditorState: editorState,
-  //       from: "useEditorState"
-  //     })
-  //   );
-  // }, [editorState]);
-
-  return [editorState, setEditorState];
-}
-
 //upper bar position 을 선택한 라인에 맞춰서 표시해준다.
 export const useUppperBarPosition = ({ editorRef }) => {
   const dispatch = useDispatch();

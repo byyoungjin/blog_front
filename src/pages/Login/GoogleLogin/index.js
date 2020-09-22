@@ -11,7 +11,6 @@ export default function GoogleLoginComponent() {
 
   const onSuccess = googleUser => {
     const { googleId, profileObj } = googleUser;
-    console.log("googleUser", googleUser);
     dispatch(
       actions.user.loginSocial({
         providerKey: googleId,
@@ -27,7 +26,6 @@ export default function GoogleLoginComponent() {
   const onFailure = error => {
     console.log(error);
   };
-  console.log("googleKey", googleKey);
   return (
     <StyledGoogleLogin
       clientId={googleKey.googleOAuthClientId}

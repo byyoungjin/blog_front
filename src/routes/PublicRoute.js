@@ -2,7 +2,6 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 import useWhoAmI from "hooks/useWhoAmI";
-import Modal from "components/Modal";
 
 export default function PublciRoute({
   path,
@@ -19,7 +18,6 @@ export default function PublciRoute({
       render={matchProps => (
         <Layout>
           <Component {...matchProps} {...rest} />
-          <Modal />
         </Layout>
       )}
     />

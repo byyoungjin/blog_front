@@ -65,7 +65,6 @@ export function* whoAmI() {
     const res = yield api.authApi.whoAmI();
 
     const user = res.data;
-    console.log("user", user);
     yield put(actions.user.setUserSession(user));
     yield put(actions.user.whoAmISuccess(user));
   } catch (e) {
