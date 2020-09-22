@@ -1,5 +1,7 @@
 import { loading, failure, success, notAsked } from "data/utils";
 
+export const LOG_IN_TRADITIONAL = "LOG_IN_TRADITIONAL";
+export const LOG_IN_SOCIAL = "LOG_IN_SOCIAL";
 export const LOG_IN = "LOG_IN";
 export const LOG_IN_SUCCESS = success(LOG_IN);
 export const LOG_IN_FAILURE = failure(LOG_IN);
@@ -7,6 +9,8 @@ export const LOG_IN_LOADING = loading(LOG_IN);
 
 export const LOG_OUT = "LOG_OUT";
 
+export const REGISTER_TRADITIONAL = "REGISTER_TRADITIONAL";
+export const REGISTER_SOCIAL = "REGISTER_SOCIAL";
 export const REGISTER = "REGISTER";
 export const REGISTER_SUCCESS = success(REGISTER);
 export const REGISTER_FAILURE = failure(REGISTER);

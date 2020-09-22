@@ -13,6 +13,9 @@ export const api = {
       userLoginInfo
     );
   },
+  loginSocial: async userSocialInfo => {
+    return await socialApiClient.post("api/auth/loginSocial", userSocialInfo);
+  },
   logout: async () => {
     return await socialApiClient.get("api/auth/logout");
   },

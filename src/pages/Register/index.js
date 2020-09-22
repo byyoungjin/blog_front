@@ -1,24 +1,26 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
-import { actions } from "data";
+import { actions, selectors } from "data";
 import { MyTextInput, Button } from "components";
 import { EditorLayout } from "layout";
 import { colors } from "theme";
 
 export default function Register() {
   const dispatch = useDispatch();
+  const registerStatus = useSelector(selectors.user.getRegisterStatus);
   const initialValues = {
     emailAddress: "",
     password: "",
     firstName: "",
     lastName: ""
   };
-  const onSubmit = values => dispatch(actions.user.register(values));
+  const onSubmit = values => dispatch(actions.user.registerTraditional(values));
+
   const yupValidationSchema = Yup.object({
     emailAddress: Yup.string()
       .email("유효하지 않은 이메일 입니다.")
@@ -64,6 +66,9 @@ export default function Register() {
               type="lastName"
               placeholder="이름"
             />
+            {registerStatus.error && (
+              <ErrorMesssage>{registerStatus.error.message}</ErrorMesssage>
+            )}
             <Controller>
               <LinkStyled to="/login">
                 이미 가입하셨나요? 로그인하러 가기.
@@ -110,4 +115,8 @@ const LinkStyled = styled(Link)`
   margin-right: 50px;
   text-decoration: none;
   cursor: pointer;
+`;
+
+const ErrorMesssage = styled.div`
+  color: ${({ theme }) => theme.pink};
 `;

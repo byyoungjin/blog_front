@@ -10,8 +10,18 @@ export default function GoogleLoginComponent() {
   const dispatch = useDispatch();
 
   const onSuccess = googleUser => {
-    const googleToken = googleUser.getAuthResponse().id_token;
+    const { googleId, profileObj } = googleUser;
     console.log("googleUser", googleUser);
+    dispatch(
+      actions.user.loginSocial({
+        providerKey: googleId,
+        providerType: "google",
+        userLoginType: "social",
+        firstName: profileObj.givenName,
+        lastName: profileObj.familyName,
+        userSmallImageUrl: profileObj.imageUrl
+      })
+    );
   };
 
   const onFailure = error => {

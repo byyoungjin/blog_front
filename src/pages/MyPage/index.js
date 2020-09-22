@@ -14,7 +14,7 @@ export default function Mypage() {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
   const userId = useSelector(selectors.user.getUserId);
-  const { firstName, lastName, emailAddress } = useSelector(
+  const { firstName, lastName, uniqueAlias, userSmallImageUrl } = useSelector(
     selectors.user.getUserSession
   );
   const name = firstName + " " + lastName;
@@ -30,9 +30,12 @@ export default function Mypage() {
   return (
     <ContentsContainer>
       <MyProfile>
-        <ProfilePicture src={user.pictureUrl} diameter="300px" />
+        <ProfilePicture
+          src={userSmallImageUrl || user.pictureUrl}
+          diameter="300px"
+        />
         <Name>{name}</Name>
-        <MyPageUrl>hyjpost.com/{emailAddress}</MyPageUrl>
+        <MyPageUrl>hyjpost.com/{uniqueAlias}</MyPageUrl>
         <Button onClick={logoutHandler}>로그아웃</Button>
       </MyProfile>
       <Label>내 포스트</Label>

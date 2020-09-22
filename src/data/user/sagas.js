@@ -4,21 +4,33 @@ import { actions } from "data";
 
 import api from "api";
 
-export function* login(action) {
+export function* loginTraditional(action) {
   try {
-    const { userLoginInfo } = action;
+    const userLoginInfo = action.payload;
     yield put(actions.user.loginLoading());
 
-    // 1. get token and set it on store & cookie
     const res = yield api.authApi.loginTraditional(userLoginInfo);
     const userData = res.data;
-    console.log("userData", userData);
     yield put(actions.user.setUserSession(userData));
 
     yield put(actions.user.loginSuccess(userData));
     yield put(actions.router.push("/"));
   } catch (e) {
-    yield put(actions.user.loginFailure(e));
+    yield put(actions.user.loginFailure(e.response.data));
+  }
+}
+
+export function* loginSocial(action) {
+  try {
+    const userSocialInfo = action.payload;
+    yield put(actions.user.loginLoading());
+    const res = yield api.authApi.loginSocial(userSocialInfo);
+    const userData = res.data;
+    yield put(actions.user.setUserSession(userData));
+    yield put(actions.user.loginSuccess(userData));
+    yield put(actions.router.push("/"));
+  } catch (e) {
+    yield put(actions.user.loginFailure(e.response.data));
   }
 }
 
@@ -29,9 +41,9 @@ export function* logout() {
   yield put(actions.user.resetAuth());
 }
 
-export function* register(action) {
+export function* registerTraditional(action) {
   try {
-    const { userRegisterInfo } = action;
+    const userRegisterInfo = action.payload;
     yield put(actions.user.registerLoading());
     yield api.authApi.registerTraditional(userRegisterInfo);
 
@@ -39,11 +51,11 @@ export function* register(action) {
       emailAddress: userRegisterInfo.emailAddress,
       password: userRegisterInfo.password
     };
-    yield put(actions.user.login(userLoginInfo));
+    yield put(actions.user.loginTraditional(userLoginInfo));
     yield put(actions.user.registerSuccess());
   } catch (e) {
-    console.log("error", e);
-    yield put(actions.user.registerFailure(e));
+    console.error(e);
+    yield put(actions.user.registerFailure(e.response.data));
   }
 }
 

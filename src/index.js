@@ -1,19 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import "./normalize.css";
-import "./index.css";
 import dotenv from "dotenv";
+import { ThemeProvider } from "styled-components";
 
 import App from "./App";
+import "./normalize.css";
+import "./index.css";
 import configureStore from "data/configureStore";
+import { colors } from "./theme";
 dotenv.config();
 
 const { history, store } = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <App history={history} />
+    <ThemeProvider theme={colors}>
+      <App history={history} />
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,11 +1,11 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
-import { actions } from "data";
+import { actions, selectors } from "data";
 import { MyTextInput, Button } from "components";
 import { EditorLayout } from "layout";
 import { colors } from "theme";
@@ -14,12 +14,13 @@ import GoogleLogin from "./GoogleLogin";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const loginStatus = useSelector(selectors.user.getLoginStatus);
 
   const initialValues = {
     emailAddress: "",
     password: ""
   };
-  const onSubmit = values => dispatch(actions.user.login(values));
+  const onSubmit = values => dispatch(actions.user.loginTraditional(values));
   const yupValidationSchema = Yup.object({
     emailAddress: Yup.string()
       .email("유효하지 않은 이메일 입니다.")
@@ -32,7 +33,6 @@ export default function Login() {
   return (
     <EditorLayout logo>
       <FormContainer>
-        <GoogleLogin />
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
@@ -40,7 +40,7 @@ export default function Login() {
         >
           <FormStyled>
             <LabelStyled>LOG IN</LabelStyled>
-
+            <GoogleLogin />
             <MyTextInput
               name="emailAddress"
               label="이메일"
@@ -53,6 +53,9 @@ export default function Login() {
               type="password"
               placeholder="비밀번호"
             />
+            {loginStatus.error && (
+              <ErrorMesssage> {loginStatus.error.message}</ErrorMesssage>
+            )}
             <Controller>
               <LinkStyled to="/register">
                 처음이신가요? 가입하러가기.
@@ -99,4 +102,8 @@ const LinkStyled = styled(Link)`
   margin-right: 50px;
   text-decoration: none;
   cursor: pointer;
+`;
+
+const ErrorMesssage = styled.div`
+  color: ${({ theme }) => theme.pink};
 `;

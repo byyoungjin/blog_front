@@ -9,9 +9,14 @@ export const resetAuth = () => ({
   type: AT.RESET_AUTH
 });
 
-export const login = userLoginInfo => ({
-  type: AT.LOG_IN,
-  userLoginInfo
+export const loginTraditional = payload => ({
+  type: AT.LOG_IN_TRADITIONAL,
+  payload
+});
+
+export const loginSocial = payload => ({
+  type: AT.LOG_IN_SOCIAL,
+  payload
 });
 
 export const loginLoading = () => ({
@@ -32,9 +37,14 @@ export const logout = () => ({
   type: AT.LOG_OUT
 });
 
-export const register = userRegisterInfo => ({
-  type: AT.REGISTER,
-  userRegisterInfo
+export const registerTraditional = payload => ({
+  type: AT.REGISTER_TRADITIONAL,
+  payload
+});
+
+export const registerSocial = payload => ({
+  type: AT.REGISTER_SOCIAL,
+  payload
 });
 
 export const registerLoading = () => ({
