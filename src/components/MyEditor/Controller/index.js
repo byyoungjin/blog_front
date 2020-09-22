@@ -2,19 +2,44 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import ProfilePicture from "../../ProfilePicture";
-
 import { colors } from "theme";
 import { actions, selectors } from "data";
 
-export default function ControllerComp({ handlers, isSameUser }) {
-  const {
-    saveHandler,
-    publishHandler,
-    editHandler,
-    deleteHandler,
-    confirmEdithandler
-  } = handlers;
+import ProfilePicture from "../../ProfilePicture";
+import { saveContent } from "../helper";
+
+export default function ControllerComp() {
+  const dispatch = useDispatch();
+  const editorState = useSelector(selectors.editorState.getEditorState);
+  const userId = useSelector(selectors.user.getUserId);
+  const postUserId = useSelector(selectors.post.getCurrentPostUserId);
+  const isSameUser = userId ? userId === postUserId : false;
+
+  const saveHandler = (editorState, userId) => {
+    saveContent({ editorState, id: userId });
+    dispatch(actions.modal.modalUpAndGo("saved!"));
+  };
+  const publishHandler = () => {
+    dispatch(actions.post.createPost());
+    dispatch(actions.modal.modalUpAndGo("published!"));
+  };
+
+  const editHandler = postId => {
+    dispatch(actions.router.push(`/postEdit/${postId}`));
+  };
+
+  const confirmEdithandler = () => {
+    dispatch(actions.post.updatePost());
+  };
+
+  const deleteHandler = postId => {
+    dispatch(
+      actions.modal.setModalUp({
+        modalType: "DELETE_POST",
+        modalProps: { postId }
+      })
+    );
+  };
   const postId = useSelector(selectors.post.getCurrentPostId);
   const editorType = useSelector(selectors.editorState.getEditorType);
 
@@ -26,7 +51,7 @@ export default function ControllerComp({ handlers, isSameUser }) {
 
   const EditorButtons = () =>
     [
-      { title: "SAVE", onClick: saveHandler },
+      { title: "SAVE", onClick: saveHandler.bind(this, editorState, userId) },
       { title: "PUBLISH", onClick: publishHandler }
     ].map(Buttons);
 
