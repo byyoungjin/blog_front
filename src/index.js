@@ -8,14 +8,14 @@ import App from "./App";
 import "./normalize.css";
 import "./index.css";
 import configureStore from "data/configureStore";
-import { colors } from "./theme";
+import theme from "./theme";
 dotenv.config();
 
 const { history, store } = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <ThemeProvider theme={colors}>
+    <ThemeProvider theme={theme}>
       <App history={history} />
     </ThemeProvider>
   </Provider>,
