@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 import { MainLogo, Navigation, AddPost } from "components";
-import { Row } from "components/Layout";
+import { Row, Col } from "components/Layout";
 import { selectors } from "data";
 
 export default function DefaultLayoutComp({ children }) {
@@ -14,16 +14,24 @@ export default function DefaultLayoutComp({ children }) {
         <MainLogo />
         <Navigation userSession={userSession} />
       </NavBar>
-      {children}
+      <ContentsContainer>{children}</ContentsContainer>
+
       {userSession && <AddPost />}
     </DefaultLayout>
   );
 }
 
-const DefaultLayout = styled.div`
+const DefaultLayout = styled(Col.Center)`
   width: 100%;
   height: 100%;
   min-height: 100vh;
 `;
 
-const NavBar = styled(Row.CenterBetween)``;
+const NavBar = styled(Row.CenterBetween)`
+  width: 100%;
+`;
+
+const ContentsContainer = styled(Row.Default)`
+  width: 80%;
+  flex-wrap: wrap;
+`;

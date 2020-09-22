@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { actions, selectors } from "data";
 import { Post } from "components";
+import { Row } from "components/Layout";
 import TagsBox from "components/Tags";
 import DeleteTag from "components/DeleteTag";
 import { DefaultLayout } from "layout";
@@ -60,11 +61,14 @@ export default function Home() {
 }
 
 const MainContainer = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
 `;
 
-const PostContainer = styled.div`
+const PostContainer = styled(Row.CenterAround)`
+  flex-wrap: wrap;
   height: 100%;
+  width: 100%;
 `;

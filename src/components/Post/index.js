@@ -39,10 +39,13 @@ export default function Post({
 const PostContainer = styled.div`
   position: relative;
   display: flex;
+  flex: 1 0 300px;
   flex-direction: column;
+  max-width: 500px;
   width: 100%;
-  height: 100%;
+  height: 500px;
   border-radius: 10px;
+  margin: 5px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
@@ -75,13 +78,6 @@ const Title = styled.div`
 const Subtitle = styled.div`
   color: ${colors.blue_light};
   font-size: 24px;
-`;
-
-const Contents = styled.div`
-  height: 100px;
-  color: ${colors.gray_light};
-  font-size: 16px;
-  overflow: hidden;
 `;
 
 const DateOverlay = styled.div`
