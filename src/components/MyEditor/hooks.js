@@ -16,10 +16,10 @@ export const useUppperBarPosition = ({ editorRef }) => {
     dispatch(actions.editorState.updateUpperBarPosition(position));
   }, []);
 
-  useEffect(() => {
-    const currentContent = editorState.getCurrentContent();
-    const selection = editorState.getSelection();
+  const currentContent = editorState.getCurrentContent();
+  const selection = editorState.getSelection();
 
+  useEffect(() => {
     const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
     const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
     const node = document.querySelectorAll(
@@ -48,7 +48,7 @@ export const useUppperBarPosition = ({ editorRef }) => {
           selectionRect && selectionRect.left + selectionRect.width / 2 - 150
       });
     }
-  }, [editorState, editorRef, setUpperBarPosition]);
+  }, [currentContent, selection, editorRef, setUpperBarPosition]);
 
   return upperBarPosition;
 };
@@ -57,16 +57,15 @@ export const useSidebarPosition = () => {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
   const sidbarPosition = useSelector(selectors.editorState.getSideBarPosition);
-  const readOnly = useSelector(selectors.editorState.getIsReadOnly);
+  const editorType = useSelector(selectors.editorState.getEditorType);
   const setSidebarPosition = useCallback(
     position => dispatch(actions.editorState.updateSideBarPosition(position)),
     []
   );
+  const currentContent = editorState.getCurrentContent();
+  const selection = editorState.getSelection();
 
   useEffect(() => {
-    const currentContent = editorState.getCurrentContent();
-    const selection = editorState.getSelection();
-
     const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
     const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
 
@@ -78,8 +77,7 @@ export const useSidebarPosition = () => {
     const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
 
     const isEmpty = currentBlock.getText() === "";
-
-    if (!isEmpty || readOnly) {
+    if (!isEmpty || editorType === "detail") {
       setSidebarPosition({
         transform: "scale(0)",
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
@@ -95,7 +93,7 @@ export const useSidebarPosition = () => {
         left: rootEditorNodeRect.left - 50
       });
     }
-  }, [editorState, setSidebarPosition, readOnly]);
+  }, [currentContent, selection, setSidebarPosition, editorType]);
 
   return sidbarPosition;
 };

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PlugInsEditor from "draft-js-plugins-editor";
@@ -15,13 +15,11 @@ import { emojiPlugin } from "./Plugins/emoji";
 import { blockBreakoutPlugin } from "./Plugins/blockBreakOut";
 import createBasicSettingsPlugin from "./Plugins/custom/basicSettings";
 import EditorDetailHeader from "./EditorDetailHeader";
+import { decorators } from "./decorators";
 
 import { saveContent } from "./helper";
 
-export default function BasicEditor({
-  readOnly: readOnlyForDetailView,
-  ...props
-}) {
+export default function BasicEditor() {
   const dispatch = useDispatch();
   const editorRef = useRef();
 
@@ -50,7 +48,7 @@ export default function BasicEditor({
     log(editorState);
   };
 
-  const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
+  const { EmojiSuggestions } = emojiPlugin;
   const basicSettingPlugin = createBasicSettingsPlugin({
     saveHandler: saveHandler.bind(this, editorState, userId),
     setEditorState,
@@ -59,25 +57,25 @@ export default function BasicEditor({
 
   return (
     <EditorWrapper onClick={focusOnEditor}>
-      {/* <button onMouseDown={logCurrentBlock}>log</button> */}
+      <button onMouseDown={logCurrentBlock}>log</button>
       {editorType === "detail" && <EditorDetailHeader />}
       <PlugInsEditor
         editorState={editorState}
         onChange={newEditorState =>
           setEditorState({ newEditorState, from: "EditorOnChange" })
         }
-        readOnly={readOnlyForDetailView ? readOnlyForDetailView : readOnly}
         plugins={[basicSettingPlugin, emojiPlugin, blockBreakoutPlugin]}
+        decorators={decorators}
         ref={editorRef}
-        {...props}
+        readOnly={readOnly ? readOnly : false}
       />
-      {!readOnly && (
+      {
         <>
           <EmojiSuggestions />
           <SideBar />
           <UpperBar editorRef={editorRef} />
         </>
-      )}
+      }
     </EditorWrapper>
   );
 }

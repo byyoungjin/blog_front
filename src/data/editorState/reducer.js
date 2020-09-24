@@ -6,15 +6,13 @@ import Remote from "data/remote";
 import { compositeDecorator } from "../../components/MyEditor/decorators";
 import { forcedSelectionEditorState } from "./helper/content";
 
-const editorState = EditorState.createEmpty();
-
 const INITIAL_STATE = {
-  editorState: editorState,
+  editorState: EditorState.createEmpty(),
   title: "",
   titlePhoto: null,
   subTitle: "",
-  sideBar: { position: { transfrom: "scale(0)" }, isOpen: false },
-  upperBar: { position: { transfrom: "scale(0)" } },
+  sideBar: { position: { transform: "scale(0)" }, isOpen: false },
+  upperBar: { position: { transform: "scale(0)" } },
   readOnly: false,
   editorType: null,
   isLinkInput: false,

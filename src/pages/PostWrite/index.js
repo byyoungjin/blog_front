@@ -14,5 +14,5 @@ export default function PostWriteComp() {
       dispatch(actions.editorState.resetEditorState());
     };
   }, [dispatch]);
-  return <MyEditor />;
+  return <MyEditor readOnly={false} />;
 }

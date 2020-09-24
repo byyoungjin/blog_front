@@ -33,6 +33,6 @@ const NavBar = styled(Row.CenterBetween)`
 `;
 
 const ContentsContainer = styled(Row.Default)`
-  width: 80%;
+  width: 90%;
   flex-wrap: wrap;
 `;

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MyEditor } from "components";
 import Helmet from "components/Helmet";
 import { actions, selectors } from "data";
+import { truncate } from "lodash";
 
 export default function PostDetailComp({ match }) {
   const dispatch = useDispatch();
@@ -21,12 +22,12 @@ export default function PostDetailComp({ match }) {
       dispatch(actions.editorState.resetEditorState());
       dispatch(actions.editorState.toggleEditorReadOnly(false));
     };
-  }, []);
+  }, [dispatch, postId]);
 
   return (
     <>
       <Helmet title={title} description={subTitle} />
-      <MyEditor readOnly={true} />
+      <MyEditor />
     </>
   );
 }

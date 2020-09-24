@@ -106,6 +106,5 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
     //   newEditorState: clearedEditorState,
     //   from: "handle Return"
     // });
-  },
-  decorators
+  }
 });

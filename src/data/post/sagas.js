@@ -60,8 +60,10 @@ export function* getOnePost(action) {
 export function* getOnePostDetail(action) {
   const { postId } = action;
   yield put(actions.editorState.setEditorType("detail"));
-  yield put(actions.editorState.toggleEditorReadOnly(true));
+
   yield put(actions.post.getOnePost(postId));
+  yield put(actions.editorState.toggleEditorReadOnly(true));
+
   yield put(actions.router.push(`/postDetail/${postId}`));
 }
 
