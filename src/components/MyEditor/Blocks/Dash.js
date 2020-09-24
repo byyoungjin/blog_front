@@ -1,11 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Row } from "components/Layout";
+import winSize from "utils/winSize";
+
 export default function DashComp() {
-  return <Dash />;
+  return (
+    <Container>
+      <Dash />
+      <LogText>log</LogText>
+      <Dash />
+    </Container>
+  );
 }
 
-const Dash = styled.div`
+const Container = styled(Row.CenterCenter)`
   width: 100%;
-  border-bottom: 1px solid gray;
+`;
+
+const LogText = styled.div`
+  margin: 0 20px;
+  color: ${({ theme }) => theme.colors.gray_light};
+  font-family: "Pacifico", cursive;
+`;
+
+const Dash = styled.div`
+  width: 30%;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray_light};
 `;

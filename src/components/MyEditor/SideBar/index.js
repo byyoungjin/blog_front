@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 
 import BlockButtons from "./BlockButtons";
+import EmojiSideButton from "./SideEmoji";
 import { useSidebarPosition, useSideBarIsOpen } from "../hooks";
 
 const plus = process.env.PUBLIC_URL + "/icons/editor/block/plus.svg";
@@ -12,12 +13,15 @@ export default function SideBarComp({ children }) {
   const sidebarPosition = useSidebarPosition();
 
   return (
-    <SideBarContainer style={sidebarPosition}>
-      <SideBar onMouseDown={toggleSidbarIsOpen}>
-        <img src={plus} alt="plus" />
-      </SideBar>
-      <BlockButtons isOpen={isOpen} />
-    </SideBarContainer>
+    <>
+      <SideBarContainer style={sidebarPosition}>
+        <SideBar onMouseDown={toggleSidbarIsOpen}>
+          <img src={plus} alt="plus" />
+        </SideBar>
+        <BlockButtons isOpen={isOpen} />
+      </SideBarContainer>
+      <EmojiSideButton position={sidebarPosition} />
+    </>
   );
 }
 

@@ -10,6 +10,9 @@ export default function PostEditComp({ match }) {
   const { postId } = match.params;
   useEffect(() => {
     dispatch(actions.post.getOnePostEdit(postId));
+    return () => {
+      dispatch(actions.editorState.resetEditorState());
+    };
   }, [dispatch, postId]);
 
   return <MyEditor readOnly={false} />;

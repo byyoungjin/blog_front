@@ -110,4 +110,6 @@ z-index:${({ isOpen }) => (isOpen ? 0 : -1)};
   transition: transform .3s cubic-bezier(.5,-0.5,.5,1.5), opacity .3s ease-in;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 20px;
+`;

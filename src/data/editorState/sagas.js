@@ -79,7 +79,8 @@ export function* addImage(action) {
 }
 
 export function* addOtherMedia(action) {
-  const { data, editorState, type } = action.data;
+  const { data, type } = action.data;
+  const editorState = yield select(selectors.editorState.getEditorState);
   const selection = editorState.getSelection();
   const inputKey = selection.getFocusKey();
   console.log("inputKey", inputKey);
@@ -172,8 +173,9 @@ export function* toggleInline(action) {
 }
 
 export function* toggleLink(action) {
-  const { editorState, url } = action.data;
+  const { url } = action.data;
   try {
+    const editorState = yield select(selectors.editorState.getEditorState);
     const newEditorState = toggleLinkStyle({ editorState, url });
     yield new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -220,4 +222,29 @@ export function* populateEditorState(action) {
       yield put(actions.modal.setModalDown());
     }
   }
+}
+
+export function* submitLinkInput(action) {
+  const url = action.payload;
+  yield put(actions.editorState.toggleLink({ url }));
+  yield put(actions.editorState.toggleIsLinkInput(false));
+  yield put(actions.editorState.toggleEditorReadOnly(false));
+}
+export function* submitYoutubeInput(action) {
+  const url = action.payload;
+  yield put(
+    actions.editorState.addOtherMedia({
+      data: url,
+      type: "youtube"
+    })
+  );
+
+  yield put(actions.editorState.toggleEditorReadOnly(false));
+}
+export function* submitSplashInput(action) {
+  const { keyword, setImages } = action.payload;
+  const res = yield api.unSplashApi.getPhotos({ keyword });
+  const data = res.data;
+  yield setImages(data);
+  yield put(actions.editorState.toggleEditorReadOnly(false));
 }

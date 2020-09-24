@@ -15,6 +15,7 @@ import { emojiPlugin } from "./Plugins/emoji";
 import { blockBreakoutPlugin } from "./Plugins/blockBreakOut";
 import createBasicSettingsPlugin from "./Plugins/custom/basicSettings";
 import EditorDetailHeader from "./EditorDetailHeader";
+
 import { saveContent } from "./helper";
 
 export default function BasicEditor({
@@ -70,10 +71,13 @@ export default function BasicEditor({
         ref={editorRef}
         {...props}
       />
-      <EmojiSuggestions />
-      <EmojiSelect />
-      <SideBar />
-      <UpperBar editorRef={editorRef} />
+      {!readOnly && (
+        <>
+          <EmojiSuggestions />
+          <SideBar />
+          <UpperBar editorRef={editorRef} />
+        </>
+      )}
     </EditorWrapper>
   );
 }
@@ -82,7 +86,9 @@ const EditorWrapper = styled.div`
   width: 90%;
   padding: 20px;
   grid-area: editor;
-  font-size: 24px;
+  font-size: 21px;
+  font-family: "Nanum Gothic", san-serif;
+  font-weight: 400;
   color: ${colors.black_84};
 
   ${winSize.onLarge("width:60%")}

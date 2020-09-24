@@ -18,6 +18,7 @@ export default function PostDetailComp({ match }) {
 
     return () => {
       dispatch(actions.post.resetOnePost());
+      dispatch(actions.editorState.resetEditorState());
       dispatch(actions.editorState.toggleEditorReadOnly(false));
     };
   }, []);

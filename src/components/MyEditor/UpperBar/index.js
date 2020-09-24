@@ -1,10 +1,9 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 import { selectors } from "data";
 import { colors } from "theme";
-import { useRect } from "utils/Dom";
 import { useUppperBarPosition } from "../hooks";
 import { useToggleStyleHandler } from "./hooks";
 import LinkInput from "components/MyEditor/Blocks/LinkInput";
@@ -140,4 +139,9 @@ const Button = styled.div`
     border-width: 4px;
     margin-left: -4px;
   }
+`;
+
+const ImageButton = styled.img`
+  width: 20px;
+  color: white;
 `;

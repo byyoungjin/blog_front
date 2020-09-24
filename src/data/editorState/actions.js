@@ -110,3 +110,18 @@ export const addOtherMedia = data => ({
 export const tester = () => ({
   type: AT.TESTER
 });
+
+export const submitLinkInput = payload => ({
+  type: AT.SUBMIT_LINK_INPUT,
+  payload
+});
+
+export const submitYoutubeInput = payload => ({
+  type: AT.SUBMIT_YOUTUBE_INPUT,
+  payload
+});
+
+export const submitSplashInput = payload => ({
+  type: AT.SUBMIT_SPLASH_INPUT,
+  payload
+});

@@ -7,5 +7,6 @@ export default function ParagraphComp({ children }) {
 
 const Paragraph = styled.div`
   margin: 29px 0 0;
-  fontsize: 21px;
+  font-size: 16px;
+  line-height: 1.8;
 `;

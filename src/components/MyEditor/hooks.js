@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getVisibleSelectionRect } from "draft-js";
 import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
@@ -69,6 +69,7 @@ export const useSidebarPosition = () => {
 
     const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
     const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
+
     const node = document.querySelectorAll(
       `[data-offset-key="${offsetKey}"]`
     )[0];
@@ -105,4 +106,13 @@ export const useSideBarIsOpen = bool => {
   const toggleSidbarIsOpen = data =>
     dispatch(actions.editorState.updateSideBarIsOpen(bool ? bool : !isOpen));
   return [isOpen, toggleSidbarIsOpen];
+};
+
+export const useFocus = () => {
+  const container = useRef(null);
+  useEffect(() => {
+    container.current.focus();
+  }, []);
+
+  return container;
 };

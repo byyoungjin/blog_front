@@ -6,8 +6,10 @@ import Remote from "data/remote";
 import { compositeDecorator } from "../../components/MyEditor/decorators";
 import { forcedSelectionEditorState } from "./helper/content";
 
+const editorState = EditorState.createEmpty();
+
 const INITIAL_STATE = {
-  editorState: forcedSelectionEditorState,
+  editorState: editorState,
   title: "",
   titlePhoto: null,
   subTitle: "",
