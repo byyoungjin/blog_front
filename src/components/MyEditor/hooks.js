@@ -6,7 +6,7 @@ import DraftOffsetKey from "draft-js/lib/DraftOffsetKey";
 import { actions, selectors } from "data";
 
 //upper bar position 을 선택한 라인에 맞춰서 표시해준다.
-export const useUppperBarPosition = ({ editorRef }) => {
+export const useUppperBarPosition = () => {
   const dispatch = useDispatch();
   const editorState = useSelector(selectors.editorState.getEditorState);
   const upperBarPosition = useSelector(
@@ -48,7 +48,7 @@ export const useUppperBarPosition = ({ editorRef }) => {
           selectionRect && selectionRect.left + selectionRect.width / 2 - 150
       });
     }
-  }, [currentContent, selection, editorRef, setUpperBarPosition]);
+  }, [currentContent, selection, setUpperBarPosition]);
 
   return upperBarPosition;
 };
@@ -58,6 +58,7 @@ export const useSidebarPosition = () => {
   const editorState = useSelector(selectors.editorState.getEditorState);
   const sidbarPosition = useSelector(selectors.editorState.getSideBarPosition);
   const editorType = useSelector(selectors.editorState.getEditorType);
+  const readOnly = useSelector(selectors.editorState.getEditorReadOnly);
   const setSidebarPosition = useCallback(
     position => dispatch(actions.editorState.updateSideBarPosition(position)),
     []
@@ -75,9 +76,11 @@ export const useSidebarPosition = () => {
 
     const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
     const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
-
+    console.log("currentBlock.getKey()", currentBlock.getKey());
+    console.log("node", node);
+    console.log("node.offsetTop", node ? node.offsetTop : null);
     const isEmpty = currentBlock.getText() === "";
-    if (!isEmpty || editorType === "detail") {
+    if (!isEmpty || editorType === "detail" || readOnly) {
       setSidebarPosition({
         transform: "scale(0)",
         transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
@@ -93,7 +96,7 @@ export const useSidebarPosition = () => {
         left: rootEditorNodeRect.left - 50
       });
     }
-  }, [currentContent, selection, setSidebarPosition, editorType]);
+  }, [currentContent, selection, setSidebarPosition, editorType, readOnly]);
 
   return sidbarPosition;
 };

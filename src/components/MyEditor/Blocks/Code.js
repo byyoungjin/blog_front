@@ -11,7 +11,6 @@ export default function CodeBlock({ contentState, block, children }) {
 
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.gray_light};
-  width: 100%;
   padding: 20px;
   border-radius: 20px;
   margin: 20px 10px;

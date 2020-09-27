@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from "react";
+import React, { useRef, useCallback, useEffect, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PlugInsEditor from "draft-js-plugins-editor";
@@ -15,13 +15,12 @@ import { emojiPlugin } from "./Plugins/emoji";
 import { blockBreakoutPlugin } from "./Plugins/blockBreakOut";
 import createBasicSettingsPlugin from "./Plugins/custom/basicSettings";
 import EditorDetailHeader from "./EditorDetailHeader";
-import { decorators } from "./decorators";
 
 import { saveContent } from "./helper";
 
-export default function BasicEditor() {
+const BasicEditor = forwardRef((props, ref) => {
   const dispatch = useDispatch();
-  const editorRef = useRef();
+  const editorRef = ref ? ref : useRef(null);
 
   const userId = useSelector(selectors.user.getUserId);
   const readOnly = useSelector(selectors.editorState.getEditorReadOnly);
@@ -40,19 +39,17 @@ export default function BasicEditor() {
   };
 
   const onLoadHandler = selectedFile =>
-    dispatch(
-      actions.editorState.addImage({ selectedFile, editorState, userId })
-    );
+    dispatch(actions.editorState.addImage({ selectedFile, userId }));
 
   const logCurrentBlock = () => {
-    log(editorState);
+    log("", editorState);
   };
 
   const { EmojiSuggestions } = emojiPlugin;
   const basicSettingPlugin = createBasicSettingsPlugin({
     saveHandler: saveHandler.bind(this, editorState, userId),
-    setEditorState,
-    onLoadHandler
+    onLoadHandler,
+    setEditorState
   });
 
   return (
@@ -64,24 +61,23 @@ export default function BasicEditor() {
         onChange={newEditorState =>
           setEditorState({ newEditorState, from: "EditorOnChange" })
         }
-        plugins={[basicSettingPlugin, emojiPlugin, blockBreakoutPlugin]}
-        decorators={decorators}
-        ref={editorRef}
+        plugins={[emojiPlugin, blockBreakoutPlugin, basicSettingPlugin]}
         readOnly={readOnly ? readOnly : false}
+        ref={editorRef}
       />
-      {
-        <>
-          <EmojiSuggestions />
-          <SideBar />
-          <UpperBar editorRef={editorRef} />
-        </>
-      }
+
+      <EmojiSuggestions />
+      <SideBar />
+      <UpperBar />
     </EditorWrapper>
   );
-}
+});
+
+export default BasicEditor;
 
 const EditorWrapper = styled.div`
   width: 90%;
+  min-height: 100vh;
   padding: 20px;
   grid-area: editor;
   font-size: 21px;

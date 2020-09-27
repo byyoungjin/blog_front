@@ -22,13 +22,15 @@ export default function SplashImage({ splashInfo }) {
 }
 
 const Container = styled.div`
-  width: 120%;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
 `;
 
 const FullImage = styled.img`
   width: 100%;
+  height: 100%;
 `;
 
 const Attribute = styled.div`

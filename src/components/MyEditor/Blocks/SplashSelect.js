@@ -1,24 +1,17 @@
 import React, { useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { actions, selectors } from "data";
+import { actions } from "data";
 
 export default function SplashSelect({ images }) {
   const dispatch = useDispatch();
-  const editorState = useSelector(selectors.editorState.getEditorState);
   const container = useRef(null);
   useEffect(() => {
     container.current.focus();
   }, []);
   const imageSelectHandler = splashInfo => {
-    dispatch(
-      actions.editorState.addOtherMedia({
-        data: splashInfo,
-        editorState,
-        type: "unsplash"
-      })
-    );
+    dispatch(actions.editorState.selectSplashImage(splashInfo));
   };
   return (
     <Container ref={container}>

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { readFile } from "../helper";
-import { useInsertHandlers } from "./hooks";
 import { actions, selectors } from "data";
 
 export default function BlockButtons({ isOpen }) {
@@ -12,42 +11,57 @@ export default function BlockButtons({ isOpen }) {
   const dispatch = useDispatch();
   const userId = useSelector(selectors.user.getUserId);
 
-  const [
-    insertDashHandler,
-    insertCodeHandler,
-    insertSearchHandler,
-    insertVideoHandler
-  ] = useInsertHandlers(editorState);
-
-  const photoUplaodHandler = () => {
-    fileInput.current.click();
-  };
-
   const buttons = [
     {
       title: "dash",
       image: process.env.PUBLIC_URL + "/icons/editor/block/dash.svg",
-      onClick: insertDashHandler
+      onClick: () =>
+        dispatch(
+          actions.editorState.addAtomicBlock({
+            editorState,
+            entityType: "dash"
+          })
+        )
     },
     {
       title: "code",
       image: process.env.PUBLIC_URL + "/icons/editor/block/code.svg",
-      onClick: insertCodeHandler
+      onClick: () =>
+        dispatch(
+          actions.editorState.toggleBlock({
+            editorState,
+            blockType: "code-block"
+          })
+        )
     },
     {
       title: "photo",
       image: process.env.PUBLIC_URL + "/icons/editor/block/photo.svg",
-      onClick: photoUplaodHandler
+      onClick: () => fileInput.current.click()
     },
     {
       title: "search",
       image: process.env.PUBLIC_URL + "/icons/editor/block/search.svg",
-      onClick: insertSearchHandler
+      onClick: () => {
+        dispatch(
+          actions.editorState.toggleBlock({
+            editorState,
+            blockType: "unsplashInput"
+          })
+        );
+        dispatch(actions.editorState.toggleEditorReadOnly(true));
+      }
     },
     {
       title: "video",
       image: process.env.PUBLIC_URL + "/icons/editor/block/video.svg",
-      onClick: insertVideoHandler
+      onClick: () =>
+        dispatch(
+          actions.editorState.toggleBlock({
+            editorState,
+            blockType: "youtubeInput"
+          })
+        )
     }
   ];
 
@@ -70,7 +84,7 @@ export default function BlockButtons({ isOpen }) {
           isOpen={isOpen}
           i={i}
           key={button.image}
-          onClick={button.onClick}
+          onMouseDown={button.onClick}
         >
           <Image src={button.image} alt={button.image} />
           {button.title === "photo" && (

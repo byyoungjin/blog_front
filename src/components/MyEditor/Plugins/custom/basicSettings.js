@@ -50,11 +50,17 @@ const customBlockRenderMap = Immutable.Map({
 
 const { hasCommandModifier } = KeyBindingUtil;
 
-export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
+export default ({ saveHandler, onLoadHandler, setEditorState }) => ({
+  //Decorators
+  decorators,
+
+  //Key Bindings
   keyBindingFn: e => {
+    //Cmd + s
     if (e.keyCode === 83 && hasCommandModifier(e)) {
       return "myeditor-save";
     }
+    //shift + enter
     if (e.keyCode === 13 && e.shiftKey) {
       return "soft-new-line-add";
     }
@@ -78,6 +84,10 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
     return "not-handled";
   },
 
+  //Custom Block Rendering
+  blockRenderMap: DefaultDraftBlockRenderMap.merge(customBlockRenderMap),
+
+  //Custom Block Components
   blockRendererFn: block => {
     const type = block.getType();
     const entity = block.getEntityAt(0);
@@ -92,8 +102,6 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
         return null;
     }
   },
-
-  blockRenderMap: DefaultDraftBlockRenderMap.merge(customBlockRenderMap),
 
   handlePastedFiles: files => {
     readFile({ files, onLoadHandler });

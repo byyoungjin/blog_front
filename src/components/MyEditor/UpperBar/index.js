@@ -1,43 +1,44 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-import { selectors } from "data";
+import { selectors, actions } from "data";
 import { colors } from "theme";
 import { useUppperBarPosition } from "../hooks";
-import { useToggleStyleHandler } from "./hooks";
 import LinkInput from "components/MyEditor/Blocks/LinkInput";
 
 const UpperBarComp = ({ editorRef }) => {
+  const dispatch = useDispatch();
+  const editorState = useSelector(selectors.editorState.getEditorState);
   const upperBarPosition = useUppperBarPosition({ editorRef });
   const isLinkInput = useSelector(selectors.editorState.getIsLinkInput);
-  const [
-    toggleInlineStyle,
-    toggleBlocktype,
-    toggleLinkStyle,
-    inputLinkHandler
-  ] = useToggleStyleHandler();
 
   const inlineButtons = [
     {
       title: "bold",
       image: process.env.PUBLIC_URL + "/icons/editor/inline/bold.svg",
-      onClick: () => {
-        toggleInlineStyle("BOLD");
-      }
+      onClick: () =>
+        dispatch(
+          actions.editorState.toggleInline({ editorState, inlineStyle: "BOLD" })
+        )
     },
     {
       title: "italic",
       image: process.env.PUBLIC_URL + "/icons/editor/inline/italic.svg",
       onClick: () => {
-        toggleInlineStyle("ITALIC");
+        dispatch(
+          actions.editorState.toggleInline({
+            editorState,
+            inlineStyle: "ITALIC"
+          })
+        );
       }
     },
     {
       title: "link",
       image: process.env.PUBLIC_URL + "/icons/editor/inline/link.svg",
       onClick: () => {
-        inputLinkHandler();
+        dispatch(actions.editorState.toggleIsLinkInput(true));
       }
     }
   ];
@@ -46,23 +47,32 @@ const UpperBarComp = ({ editorRef }) => {
     {
       title: "quote",
       image: process.env.PUBLIC_URL + "/icons/editor/inline/quote.svg",
-      onClick: () => {
-        toggleBlocktype("quoteBlock");
-      }
+      onClick: () =>
+        dispatch(
+          actions.editorState.toggleBlock({
+            editorState,
+            blockType: "quoteBlock"
+          })
+        )
     },
     {
       title: "subTitle",
       image: process.env.PUBLIC_URL + "/icons/editor/inline/subTitle.svg",
-      onClick: () => {
-        toggleBlocktype("subTitle");
-      }
+      onClick: () =>
+        dispatch(
+          actions.editorState.toggleBlock({
+            editorState,
+            blockType: "subTitle"
+          })
+        )
     },
     {
       title: "title",
       image: process.env.PUBLIC_URL + "/icons/editor/inline/title.svg",
-      onClick: () => {
-        toggleBlocktype("title");
-      }
+      onClick: () =>
+        dispatch(
+          actions.editorState.toggleBlock({ editorState, blockType: "title" })
+        )
     }
   ];
 

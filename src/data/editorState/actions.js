@@ -90,8 +90,9 @@ export const setEditorType = data => ({
   data
 });
 
-export const populateEditorState = () => ({
-  type: AT.POPULATE_EDITOR_STATE
+export const populateEditorState = payload => ({
+  type: AT.POPULATE_EDITOR_STATE,
+  payload
 });
 
 export const loadSavedEditorState = () => ({
@@ -102,8 +103,8 @@ export const resetEditorState = () => ({
   type: AT.RESET_EDITOR_STATE
 });
 
-export const addOtherMedia = data => ({
-  type: AT.ADD_OTHER_MEDIA,
+export const addAtomicBlockAndRemoveCurrent = data => ({
+  type: AT.ADD_ATOMIC_BLOCK_AND_REMOVE_CURRENT,
   data
 });
 
@@ -123,5 +124,10 @@ export const submitYoutubeInput = payload => ({
 
 export const submitSplashInput = payload => ({
   type: AT.SUBMIT_SPLASH_INPUT,
+  payload
+});
+
+export const selectSplashImage = payload => ({
+  type: AT.SELECT_SPLASH_IMAGE,
   payload
 });

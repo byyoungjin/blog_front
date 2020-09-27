@@ -1,34 +1,5 @@
-import {
-  EditorState,
-  AtomicBlockUtils,
-  RichUtils,
-  SelectionState,
-  Modifier
-} from "draft-js";
-
+import { EditorState, AtomicBlockUtils, RichUtils, Modifier } from "draft-js";
 import log from "utils/log";
-
-export const addMedia = ({ editorState, src, type }) => {
-  if (!src && type === "image") {
-    return;
-  }
-  const contentState = editorState.getCurrentContent();
-
-  const contentStateWithEntity = contentState.createEntity(type, "IMMUTABLE", {
-    src
-  });
-  const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-  const newEditorState = EditorState.set(editorState, {
-    currentContent: contentStateWithEntity
-  });
-  const newState = AtomicBlockUtils.insertAtomicBlock(
-    newEditorState,
-    entityKey,
-    " "
-  );
-  const focusedNewEditorState = EditorState.moveFocusToEnd(newState);
-  return focusedNewEditorState;
-};
 
 export const removeBlockFromBlockMap = ({ editorState, blockKey }) => {
   const contentState = editorState.getCurrentContent();
@@ -45,12 +16,28 @@ export const removeBlockFromBlockMap = ({ editorState, blockKey }) => {
   return newEditorState;
 };
 
-export const addEntity = ({ editorState, type }) => {
+export const forceSelectionKeyAfter = ({ editorState, key }) => {
+  const contentState = editorState.getCurrentContent();
+  const keyAfter = contentState.getKeyAfter(key);
+  const selection = editorState.getSelection();
+  const newSelection = selection.merge({
+    focusKey: keyAfter,
+    focustOffset: 0,
+    hasFocus: true
+  });
+  const forcedSelectionEdtorState = EditorState.forceSelection(
+    editorState,
+    newSelection
+  );
+  return forcedSelectionEdtorState;
+};
+
+const addEntity = ({ editorState, src, entityType }) => {
   const contentState = editorState.getCurrentContent();
   const contentStateWithEntity = contentState.createEntity(
-    type,
+    entityType,
     "IMMUTABLE",
-    null
+    src ? { src } : null
   );
   const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
 
@@ -60,30 +47,16 @@ export const addEntity = ({ editorState, type }) => {
   return { newEditorState, entityKey };
 };
 
-export const applyEntityToBlock = ({ editorState, type }) => {
-  const { newEditorState, entityKey } = addEntity({ editorState, type });
-  console.log("newEditorState", newEditorState);
-  console.log("entityKey", entityKey);
-  const newContentState = newEditorState.getCurrentContent();
-  const newSelectionState = newEditorState.getSelection();
-  const entityAppliedContentState = Modifier.applyEntity(
-    newContentState,
-    newSelectionState,
-    entityKey
-  );
-  const entityAppliedEditorState = EditorState.set(newEditorState, {
-    currentContent: entityAppliedContentState
+export const addAtomic = ({ editorState, src, entityType }) => {
+  if (!src && entityType === "image") {
+    return;
+  }
+
+  const { newEditorState, entityKey } = addEntity({
+    editorState,
+    src,
+    entityType
   });
-
-  const toggledEditorState = RichUtils.toggleLink(
-    entityAppliedEditorState,
-    newSelectionState
-  );
-  return entityAppliedEditorState;
-};
-
-export const addAtomic = ({ editorState, type }) => {
-  const { newEditorState, entityKey } = addEntity({ editorState, type });
 
   const newState = AtomicBlockUtils.insertAtomicBlock(
     newEditorState,
@@ -94,8 +67,30 @@ export const addAtomic = ({ editorState, type }) => {
   return newState;
 };
 
-export const toggleBlockType = ({ editorState, type }) => {
-  const newEditorState = RichUtils.toggleBlockType(editorState, type);
+export const addAtomicAndRemoveCurrent = ({
+  editorState,
+  data,
+  entityType
+}) => {
+  const selection = editorState.getSelection();
+  log("editorState", editorState);
+  const inputKey = selection.getFocusKey();
+  const newEditorState = addAtomic({ entityType, editorState, src: data });
+  log("newEditorState", newEditorState);
+
+  const newSelection = newEditorState.getSelection();
+
+  const inputRemovedEditorState = removeBlockFromBlockMap({
+    editorState: newEditorState,
+    blockKey: inputKey
+  });
+  log("inputRemovedEditorstate", inputRemovedEditorState);
+
+  return inputRemovedEditorState;
+};
+
+export const toggleBlockType = ({ editorState, blockType }) => {
+  const newEditorState = RichUtils.toggleBlockType(editorState, blockType);
   const selectionState = newEditorState.getSelection();
   const newSelectionState = selectionState.merge({
     hasFocus: true
@@ -128,31 +123,4 @@ export const toggleLinkStyle = ({ editorState, url }) => {
   );
 
   return toggledNewEditorState;
-};
-
-export const replaceEntityData = ({ editorState, data, type }) => {
-  const contentState = editorState.getCurrentContent();
-  const selection = editorState.getSelection();
-
-  const selectedKey = selection.getFocusKey();
-
-  const selectedBlock = contentState.getBlockForKey(selectedKey);
-
-  let entity = selectedBlock.getEntityAt(0);
-
-  // //youtube 링크 넣었을때, youtube block 다음 fragment 가 focus 되는 문제때문에 넣음
-  // if (entity === null) {
-  //   const beforeSelectedKey = contentState.getKeyBefore(selectedKey);
-  //   const beforeSelectedBlock = contentState.getBlockForKey(beforeSelectedKey);
-  //   entity = beforeSelectedBlock.getEntityAt(0);
-  //   console.log("beforeSelectedKey", beforeSelectedKey);
-  // }
-
-  const replacedContentState = contentState.replaceEntityData(entity, {
-    data
-  });
-  const newEditorState = EditorState.set(editorState, {
-    currentContent: replacedContentState
-  });
-  return newEditorState;
 };
