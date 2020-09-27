@@ -1,4 +1,10 @@
-import { EditorState, AtomicBlockUtils, RichUtils, Modifier } from "draft-js";
+import {
+  EditorState,
+  AtomicBlockUtils,
+  RichUtils,
+  Modifier,
+  convertToRaw
+} from "draft-js";
 import log from "utils/log";
 
 export const removeBlockFromBlockMap = ({ editorState, blockKey }) => {
@@ -97,6 +103,34 @@ export const toggleBlockType = ({ editorState, blockType }) => {
     newSelectionState
   );
   return focusedEditorState;
+};
+
+export const toggleeBlcokTypeByKey = ({ editorState, blockType, blockKey }) => {
+  const selectionState = editorState.getSelection();
+  const contentState = editorState.getCurrentContent();
+  const newSelectionState = selectionState.merge({
+    focusKey: blockKey,
+    anchorKey: blockKey,
+    focusOffset: 0,
+    anchorOffset: 0,
+    hasFocus: true
+  });
+
+  const newContentState = Modifier.setBlockType(
+    contentState,
+    newSelectionState,
+    blockType
+  );
+
+  const newEditorState = EditorState.set(editorState, {
+    currentContent: newContentState
+  });
+
+  console.log(
+    "newEditorState.getCurrentContent()",
+    convertToRaw(newEditorState.getCurrentContent())
+  );
+  return newEditorState;
 };
 
 export const toggleInlineStyle = ({ editorState, inlineStyle }) =>

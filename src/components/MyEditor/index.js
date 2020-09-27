@@ -31,7 +31,11 @@ const BasicEditor = forwardRef((props, ref) => {
     dispatch(actions.editorState.updateEditorState({ newEditorState, from }));
   }, []);
 
-  const focusOnEditor = () => editorRef.current.focus();
+  const focusOnEditor = e => {
+    const currentTarget = e.currentTarget;
+    console.log("currentTarget", currentTarget);
+    editorRef.current.focus();
+  };
 
   const saveHandler = (editorState, userId) => {
     saveContent({ editorState, id: userId });
@@ -53,7 +57,7 @@ const BasicEditor = forwardRef((props, ref) => {
   });
 
   return (
-    <EditorWrapper onClick={focusOnEditor}>
+    <EditorWrapper>
       <button onMouseDown={logCurrentBlock}>log</button>
       {editorType === "detail" && <EditorDetailHeader />}
       <PlugInsEditor
@@ -84,6 +88,5 @@ const EditorWrapper = styled.div`
   font-family: "Nanum Gothic", san-serif;
   font-weight: 400;
   color: ${colors.black_84};
-
-  ${winSize.onLarge("width:60%")}
+  ${winSize.onLarge("width:60%")};
 `;

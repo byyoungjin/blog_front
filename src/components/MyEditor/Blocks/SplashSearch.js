@@ -17,19 +17,28 @@ export default function SplashSearch() {
   const [sumitted, setSumitted] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentKeyword, setCurrentKeyword] = useState("");
+  const [currentBlockKey, setCurrentBlockKey] = useState(null);
   const editorState = useSelector(selectors.editorState.getEditorState);
-  const contentState = editorState.getCurrentContent();
   const selectionState = editorState.getSelection();
   const focusKey = selectionState.getFocusKey();
-  const contentBlock = contentState.getBlockForKey(focusKey);
-  const blockType = contentBlock.getType();
+  console.log("currentBlockKey", currentBlockKey);
+  console.log("focusKey", focusKey);
 
   useEffect(() => {
-    console.log("blockType", blockType);
-    if (blockType !== "unsplashInput") {
-      console.log("blur");
+    if (currentBlockKey === null) {
+      setCurrentBlockKey(focusKey);
+    } else {
+      if (focusKey !== currentBlockKey) {
+        console.log("blur");
+        dispatch(
+          actions.editorState.toggleBlock({
+            blockType: "unstyled",
+            blockKey: currentBlockKey
+          })
+        );
+      }
     }
-  }, [focusKey, blockType]);
+  }, [focusKey, currentBlockKey, dispatch]);
 
   const container = useFocus();
 
@@ -70,33 +79,33 @@ export default function SplashSearch() {
     setCurrentPage(prev => prev + 1);
   };
 
-  // const onBlurHander = e => {
-  //   console.log("blur");
-  //   const currentTarget = e.currentTarget;
+  const onBlurHander = e => {
+    console.log("blur");
+    const currentTarget = e.currentTarget;
 
-  //   setTimeout(() => {
-  //     console.log(
-  //       "currentTarget.contains(document.activeElement)",
-  //       currentTarget.contains(document.activeElement)
-  //     );
-  //     console.log("currentTarget", currentTarget);
-  //     console.log("document.activeElement", document.activeElement);
-  //     if (!currentTarget.contains(document.activeElement)) {
-  //       dispatch(
-  //         actions.editorState.toggleBlock({
-  //           blockType: "unstyled"
-  //         })
-  //       );
-  //     }
-  //   }, 0);
-  // };
+    setTimeout(() => {
+      console.log(
+        "currentTarget.contains(document.activeElement)",
+        currentTarget.contains(document.activeElement)
+      );
+      console.log("currentTarget", currentTarget);
+      console.log("document.activeElement", document.activeElement);
+      if (!currentTarget.contains(document.activeElement)) {
+        dispatch(
+          actions.editorState.toggleBlock({
+            blockType: "unstyled"
+          })
+        );
+      }
+    }, 0);
+  };
 
   const initialValues = {
     keyword: ""
   };
 
   return (
-    <div>
+    <Container>
       <Formik initialValues={initialValues} onSubmit={submitHandler}>
         <Form>
           <MyUrlInput
@@ -106,26 +115,25 @@ export default function SplashSearch() {
           />
         </Form>
       </Formik>
+      <div>test</div>
       {totalImageNumber && sumitted && (
         <NavBar>
           {currentPage !== 1 && (
-            <div onMouseDown={clickPreviousHandler}>Previous</div>
+            <div onClick={clickPreviousHandler}>Previous</div>
           )}
           <TotalNumber>{totalImageNumber} totals</TotalNumber>
           {currentPage !== totalPages && (
-            <div onMouseDown={clickNextHandler}>Next</div>
+            <div onClick={clickNextHandler}>Next</div>
           )}
         </NavBar>
       )}
       {totalImageNumber && <SplashSelect images={filterdResult} />}
-    </div>
+    </Container>
   );
 }
 
 const Container = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
+  z-index: 3;
 `;
 
 const NavBar = styled(Row.CenterBetween)`

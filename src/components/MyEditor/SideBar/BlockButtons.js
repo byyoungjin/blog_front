@@ -41,8 +41,8 @@ export default function BlockButtons({ isOpen }) {
       image: process.env.PUBLIC_URL + "/icons/editor/block/search.svg",
       onClick: () => {
         dispatch(
-          actions.editorState.toggleBlock({
-            blockType: "unsplashInput"
+          actions.editorState.addAtomicBlock({
+            entityType: "unsplash"
           })
         );
         dispatch(actions.editorState.toggleEditorReadOnly(true));
@@ -97,6 +97,7 @@ export default function BlockButtons({ isOpen }) {
 const ButtonsContainer = styled.div`
   display: flex;
   align-items: center;
+  width: ${({ isOpen }) => (isOpen ? "230px" : "0px")};
 `;
 
 const Button = styled.div`

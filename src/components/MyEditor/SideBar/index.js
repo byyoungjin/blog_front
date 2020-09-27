@@ -9,7 +9,7 @@ import { useSidebarPosition, useSideBarIsOpen } from "../hooks";
 const plus = process.env.PUBLIC_URL + "/icons/editor/block/plus.svg";
 
 export default function SideBarComp({ children }) {
-  const [isOpen, toggleSidbarIsOpen] = useSideBarIsOpen();
+  const [isOpen, toggleSidbarIsOpen] = useSideBarIsOpen(false);
   const sidebarPosition = useSidebarPosition();
 
   return (

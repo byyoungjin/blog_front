@@ -29,8 +29,12 @@ export default function Media({ contentState, block }) {
       media = <YouTubeVideo src={src} />;
       break;
     case "unsplash":
-      media = <SplashImage splashInfo={src} />;
-      src && setTitlePhoto(src.regularImageSrc);
+      if (src) {
+        setTitlePhoto(src.regularImageSrc);
+        media = <SplashImage splashInfo={src} />;
+      } else {
+        media = <SplashSearch />;
+      }
       break;
     case "placeholder":
       media = <Loading />;

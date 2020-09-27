@@ -5,6 +5,7 @@ import { actions, selectors } from "data";
 import * as AT from "data/rootActionTypes";
 import {
   toggleBlockType,
+  toggleeBlcokTypeByKey,
   addAtomic,
   addAtomicAndRemoveCurrent,
   toggleInlineStyle,
@@ -23,19 +24,28 @@ import log from "utils/log";
 //Basic toggle sagas
 export function* toggleBlock(action) {
   try {
-    const { blockType } = action.data;
+    const { blockType, blockKey } = action.data;
     const editorState = yield select(selectors.editorState.getEditorState);
-    const newEditorState = toggleBlockType({ editorState, blockType });
+    let newEditorState;
+    if (blockKey) {
+      newEditorState = toggleeBlcokTypeByKey({
+        editorState,
+        blockType,
+        blockKey
+      });
+    } else {
+      newEditorState = toggleBlockType({ editorState, blockType });
+    }
     yield put(
       actions.editorState.updateEditorState({
         newEditorState,
         from: "toggleBlockSaga"
       })
     );
-    yield put(actions.editorState.updateSideBarIsOpen(false));
-    yield put(
-      actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
-    );
+    // yield put(actions.editorState.updateSideBarIsOpen(false));
+    // yield put(
+    //   actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
+    // );
   } catch (e) {
     console.log("e", e);
   }
@@ -125,9 +135,26 @@ export function* addAtomicBlock(action) {
   const { data, entityType } = action.data;
   const editorState = yield select(selectors.editorState.getEditorState);
   const newEditorState = addAtomic({ entityType, editorState, src: data });
+
+  const contentState = newEditorState.getCurrentContent();
+  const selectionState = newEditorState.getSelection();
+  const focusKey = selectionState.getFocusKey();
+  const atomicBlockKey = contentState.getKeyBefore(focusKey);
+  const newSelection = selectionState.merge({
+    anchorKey: atomicBlockKey,
+    focusKey: atomicBlockKey,
+    focusOffset: 0,
+    hasFocus: true
+  });
+
+  const selectionOnAtomicBlockEditorState = EditorState.forceSelection(
+    newEditorState,
+    newSelection
+  );
+
   yield put(
     actions.editorState.updateEditorState({
-      newEditorState,
+      newEditorState: selectionOnAtomicBlockEditorState,
       from: "addAtomicBlockSaga"
     })
   );
@@ -231,16 +258,30 @@ export function* submitYoutubeInput(action) {
 
 export function* selectSplashImage(action) {
   const splashInfo = action.payload;
-  yield put(actions.editorState.toggleEditorReadOnly(false));
+  const editorState = yield select(selectors.editorState.getEditorState);
+  const contentState = editorState.getCurrentContent();
+
+  const entityKey = contentState.getLastCreatedEntityKey();
+  const newContentState = contentState.replaceEntityData(entityKey, {
+    src: splashInfo
+  });
+  const newEditorState = EditorState.set(editorState, {
+    currentContent: newContentState
+  });
+
   yield put(
-    actions.editorState.addAtomicBlockAndRemoveCurrent({
-      data: splashInfo,
-      entityType: "unsplash"
+    actions.editorState.updateEditorState({
+      newEditorState
     })
   );
+  yield put(actions.editorState.toggleEditorReadOnly(false));
 
-  const editorState = yield select(selectors.editorState.getEditorState);
-  // log(editorState);
+  // yield put(
+  //   actions.editorState.addAtomicBlockAndRemoveCurrent({
+  //     data: splashInfo,
+  //     entityType: "unsplash"
+  //   })
+  // );
 }
 
 export function* submitSplashInput(action) {
