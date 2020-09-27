@@ -6,7 +6,6 @@ import { readFile } from "../helper";
 import { actions, selectors } from "data";
 
 export default function BlockButtons({ isOpen }) {
-  const editorState = useSelector(selectors.editorState.getEditorState);
   const fileInput = useRef(null);
   const dispatch = useDispatch();
   const userId = useSelector(selectors.user.getUserId);
@@ -18,7 +17,6 @@ export default function BlockButtons({ isOpen }) {
       onClick: () =>
         dispatch(
           actions.editorState.addAtomicBlock({
-            editorState,
             entityType: "dash"
           })
         )
@@ -29,7 +27,6 @@ export default function BlockButtons({ isOpen }) {
       onClick: () =>
         dispatch(
           actions.editorState.toggleBlock({
-            editorState,
             blockType: "code-block"
           })
         )
@@ -57,7 +54,6 @@ export default function BlockButtons({ isOpen }) {
       onClick: () =>
         dispatch(
           actions.editorState.toggleBlock({
-            editorState,
             blockType: "youtubeInput"
           })
         )
@@ -68,9 +64,7 @@ export default function BlockButtons({ isOpen }) {
     const files = e.target.files;
     const selectedFile = files[0];
     const onLoadHandler = selectedFile =>
-      dispatch(
-        actions.editorState.addImage({ selectedFile, editorState, userId })
-      );
+      dispatch(actions.editorState.addImage({ selectedFile, userId }));
     onLoadHandler(selectedFile);
     // readFile({ files, onLoadHandler });
     e.target.value = "";
