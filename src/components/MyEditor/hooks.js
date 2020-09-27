@@ -76,9 +76,6 @@ export const useSidebarPosition = () => {
 
     const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
     const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
-    console.log("currentBlock.getKey()", currentBlock.getKey());
-    console.log("node", node);
-    console.log("node.offsetTop", node ? node.offsetTop : null);
     const isEmpty = currentBlock.getText() === "";
     if (!isEmpty || editorType === "detail" || readOnly) {
       setSidebarPosition({

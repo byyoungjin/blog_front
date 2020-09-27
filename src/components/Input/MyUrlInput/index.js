@@ -9,14 +9,15 @@ import { actions } from "data";
 const MyUrlInput = forwardRef((props, ref) => {
   const dispatch = useDispatch();
   const [field, meta] = useField(props);
-  const toggleReadOnly = bool => {
-    dispatch(actions.editorState.toggleEditorReadOnly(bool));
+
+  const focusHandler = () => {
+    dispatch(actions.editorState.toggleEditorReadOnly(true));
+  };
+  const blurHandler = () => {
+    dispatch(actions.editorState.toggleEditorReadOnly(false));
   };
   return (
-    <InputContainer
-      onFocus={toggleReadOnly.bind(this, true)}
-      onBlur={toggleReadOnly.bind(this, false)}
-    >
+    <InputContainer onFocus={focusHandler} onBlur={blurHandler}>
       <InputStyled ref={ref} {...field} {...props} />
       {meta.touched && meta.error && <Error> {meta.error}</Error>}
     </InputContainer>

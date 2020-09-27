@@ -73,10 +73,8 @@ export const addAtomicAndRemoveCurrent = ({
   entityType
 }) => {
   const selection = editorState.getSelection();
-  log("editorState", editorState);
   const inputKey = selection.getFocusKey();
   const newEditorState = addAtomic({ entityType, editorState, src: data });
-  log("newEditorState", newEditorState);
 
   const newSelection = newEditorState.getSelection();
 
@@ -84,7 +82,6 @@ export const addAtomicAndRemoveCurrent = ({
     editorState: newEditorState,
     blockKey: inputKey
   });
-  log("inputRemovedEditorstate", inputRemovedEditorState);
 
   return inputRemovedEditorState;
 };

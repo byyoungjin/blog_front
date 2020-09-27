@@ -45,7 +45,6 @@ export default function BlockButtons({ isOpen }) {
       onClick: () => {
         dispatch(
           actions.editorState.toggleBlock({
-            editorState,
             blockType: "unsplashInput"
           })
         );

@@ -23,7 +23,8 @@ import log from "utils/log";
 //Basic toggle sagas
 export function* toggleBlock(action) {
   try {
-    const { editorState, blockType } = action.data;
+    const { blockType } = action.data;
+    const editorState = yield select(selectors.editorState.getEditorState);
     const newEditorState = toggleBlockType({ editorState, blockType });
     yield put(
       actions.editorState.updateEditorState({
@@ -243,9 +244,9 @@ export function* selectSplashImage(action) {
 }
 
 export function* submitSplashInput(action) {
-  const { keyword, setImages } = action.payload;
-  const res = yield api.unSplashApi.getPhotos({ keyword });
+  const { keyword, currentPage, setImagesData } = action.payload;
+  const res = yield api.unSplashApi.getPhotos({ keyword, currentPage });
   const data = res.data;
-  yield setImages(data);
-  yield put(actions.editorState.toggleEditorReadOnly(true));
+  yield setImagesData(data);
+  // yield put(actions.editorState.toggleEditorReadOnly(true));
 }
