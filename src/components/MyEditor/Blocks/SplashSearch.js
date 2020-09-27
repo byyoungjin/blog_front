@@ -20,7 +20,6 @@ export default function SplashSearch() {
   const editorState = useSelector(selectors.editorState.getEditorState);
   const contentState = editorState.getCurrentContent();
   const selectionState = editorState.getSelection();
-  console.log("selectionState", selectionState);
   const focusKey = selectionState.getFocusKey();
   const contentBlock = contentState.getBlockForKey(focusKey);
   const blockType = contentBlock.getType();
