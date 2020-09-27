@@ -6,15 +6,12 @@ import { actions } from "data";
 
 export default function SplashSelect({ images }) {
   const dispatch = useDispatch();
-  const container = useRef(null);
-  // useEffect(() => {
-  //   container.current.focus();
-  // }, []);
+
   const imageSelectHandler = splashInfo => {
     dispatch(actions.editorState.selectSplashImage(splashInfo));
   };
   return (
-    <Container ref={container}>
+    <Container>
       {images.map(image => {
         const { thumbImageSrc } = image;
         return (

@@ -275,13 +275,6 @@ export function* selectSplashImage(action) {
     })
   );
   yield put(actions.editorState.toggleEditorReadOnly(false));
-
-  // yield put(
-  //   actions.editorState.addAtomicBlockAndRemoveCurrent({
-  //     data: splashInfo,
-  //     entityType: "unsplash"
-  //   })
-  // );
 }
 
 export function* submitSplashInput(action) {

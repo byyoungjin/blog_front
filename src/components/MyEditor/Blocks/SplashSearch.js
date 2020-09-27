@@ -29,7 +29,6 @@ export default function SplashSearch() {
       setCurrentBlockKey(focusKey);
     } else {
       if (focusKey !== currentBlockKey) {
-        console.log("blur");
         dispatch(
           actions.editorState.toggleBlock({
             blockType: "unstyled",
@@ -79,27 +78,6 @@ export default function SplashSearch() {
     setCurrentPage(prev => prev + 1);
   };
 
-  const onBlurHander = e => {
-    console.log("blur");
-    const currentTarget = e.currentTarget;
-
-    setTimeout(() => {
-      console.log(
-        "currentTarget.contains(document.activeElement)",
-        currentTarget.contains(document.activeElement)
-      );
-      console.log("currentTarget", currentTarget);
-      console.log("document.activeElement", document.activeElement);
-      if (!currentTarget.contains(document.activeElement)) {
-        dispatch(
-          actions.editorState.toggleBlock({
-            blockType: "unstyled"
-          })
-        );
-      }
-    }, 0);
-  };
-
   const initialValues = {
     keyword: ""
   };
@@ -115,19 +93,27 @@ export default function SplashSearch() {
           />
         </Form>
       </Formik>
-      <div>test</div>
-      {totalImageNumber && sumitted && (
-        <NavBar>
-          {currentPage !== 1 && (
-            <div onClick={clickPreviousHandler}>Previous</div>
-          )}
-          <TotalNumber>{totalImageNumber} totals</TotalNumber>
-          {currentPage !== totalPages && (
-            <div onClick={clickNextHandler}>Next</div>
-          )}
-        </NavBar>
+      {totalImageNumber && sumitted ? (
+        <>
+          <NavBar>
+            <NavButton onClick={clickPreviousHandler}>
+              {currentPage !== 1 && "Previous"}
+            </NavButton>
+
+            <TotalNumber>{totalImageNumber} totals</TotalNumber>
+
+            <NavButton onClick={clickNextHandler}>
+              {currentPage !== totalPages && "Next"}
+            </NavButton>
+          </NavBar>
+          <SplashSelect images={filterdResult} />
+        </>
+      ) : (
+        sumitted &&
+        totalImageNumber === 0 && (
+          <Row.CenterCenter>검색결과가 없습니다.</Row.CenterCenter>
+        )
       )}
-      {totalImageNumber && <SplashSelect images={filterdResult} />}
     </Container>
   );
 }
@@ -138,6 +124,11 @@ const Container = styled.div`
 
 const NavBar = styled(Row.CenterBetween)`
   z-index: 10;
+  flex: 1;
+`;
+
+const NavButton = styled.div`
+  width: 100px;
 `;
 
 const TotalNumber = styled.div``;
