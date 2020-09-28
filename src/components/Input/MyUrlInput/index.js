@@ -36,7 +36,7 @@ const InputStyled = styled.input`
   width: 100%;
   outline: none;
   border: none;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gray_1};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray_light};
   padding: 10px;
 `;
 

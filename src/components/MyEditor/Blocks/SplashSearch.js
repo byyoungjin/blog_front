@@ -116,6 +116,14 @@ const NavBar = styled(Row.CenterBetween)`
 
 const NavButton = styled.div`
   width: 100px;
+  text-align: center;
+  font-size: 16px;
+  margin: 10px 0;
+  color: ${({ theme }) => theme.colors.gray_light};
 `;
 
-const TotalNumber = styled.div``;
+const TotalNumber = styled.div`
+  font-size: 16px;
+  margin: 10px 0;
+  color: ${({ theme }) => theme.colors.gray_light};
+`;
