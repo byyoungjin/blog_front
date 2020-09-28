@@ -7,11 +7,8 @@ import {
   toggleBlockType,
   toggleeBlcokTypeByKey,
   addAtomic,
-  addAtomicAndRemoveCurrent,
   toggleInlineStyle,
   toggleLinkStyle,
-  removeBlockFromBlockMap,
-  forceSelectionKeyAfter,
   focusOnLastLine
 } from "./helper";
 import {
@@ -162,23 +159,6 @@ export function* addAtomicBlock(action) {
   );
 }
 
-export function* addAtomicBlockAndRemoveCurrent(action) {
-  const { data, entityType } = action.data;
-  const editorState = yield select(selectors.editorState.getEditorState);
-  const inputRemovedEditorState = addAtomicAndRemoveCurrent({
-    editorState,
-    data,
-    entityType
-  });
-
-  yield put(
-    actions.editorState.updateEditorState({
-      newEditorState: inputRemovedEditorState,
-      from: "addAtomicBlockAndRemoveCurrent"
-    })
-  );
-}
-
 export function* populateEditorState(action) {
   const userId = yield select(selectors.user.getUserId);
   const editorState = yield select(selectors.editorState.getEditorState);
@@ -217,11 +197,6 @@ export function* toggleLink(action) {
   try {
     const editorState = yield select(selectors.editorState.getEditorState);
     const newEditorState = toggleLinkStyle({ editorState, url });
-    yield new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("success");
-      }, 10);
-    });
     yield put(
       actions.editorState.updateEditorState({
         newEditorState,
@@ -240,36 +215,33 @@ export function* submitLinkInput(action) {
   yield put(actions.editorState.toggleEditorReadOnly(false));
 }
 
-export function* submitYoutubeInput(action) {
-  const url = action.payload;
-  yield put(
-    actions.editorState.addAtomicBlockAndRemoveCurrent({
-      data: url,
-      entityType: "youtube"
-    })
-  );
-
-  yield put(actions.editorState.toggleEditorReadOnly(false));
-}
-
-export function* selectSplashImage(action) {
-  const splashInfo = action.payload;
+function* replaceRecentEntity(action) {
+  const src = action.payload;
   const editorState = yield select(selectors.editorState.getEditorState);
   const contentState = editorState.getCurrentContent();
-
   const entityKey = contentState.getLastCreatedEntityKey();
   const newContentState = contentState.replaceEntityData(entityKey, {
-    src: splashInfo
+    src
   });
   const newEditorState = EditorState.set(editorState, {
     currentContent: newContentState
   });
-
   yield put(
     actions.editorState.updateEditorState({
       newEditorState
     })
   );
+}
+
+export function* submitYoutubeInput(action) {
+  const url = action.payload;
+  yield replaceRecentEntity({ payload: url });
+  yield put(actions.editorState.toggleEditorReadOnly(false));
+}
+
+export function* selectSplashImage(action) {
+  const splashInfo = action.payload;
+  yield replaceRecentEntity({ payload: splashInfo });
   yield put(actions.editorState.toggleEditorReadOnly(false));
 }
 
@@ -278,5 +250,4 @@ export function* submitSplashInput(action) {
   const res = yield api.unSplashApi.getPhotos({ keyword, currentPage });
   const data = res.data;
   yield setImagesData(data);
-  // yield put(actions.editorState.toggleEditorReadOnly(true));
 }

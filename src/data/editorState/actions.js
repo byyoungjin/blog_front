@@ -103,15 +103,6 @@ export const resetEditorState = () => ({
   type: AT.RESET_EDITOR_STATE
 });
 
-export const addAtomicBlockAndRemoveCurrent = data => ({
-  type: AT.ADD_ATOMIC_BLOCK_AND_REMOVE_CURRENT,
-  data
-});
-
-export const tester = () => ({
-  type: AT.TESTER
-});
-
 export const submitLinkInput = payload => ({
   type: AT.SUBMIT_LINK_INPUT,
   payload

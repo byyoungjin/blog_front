@@ -9,10 +9,6 @@ export default function*() {
   yield takeEvery(AT.TOGGLE_INLINE, sagas.toggleInline);
   yield takeEvery(AT.TOGGLE_LINK, sagas.toggleLink);
   yield takeEvery(AT.POPULATE_EDITOR_STATE, sagas.populateEditorState);
-  yield takeEvery(
-    AT.ADD_ATOMIC_BLOCK_AND_REMOVE_CURRENT,
-    sagas.addAtomicBlockAndRemoveCurrent
-  );
   yield takeEvery(AT.SUBMIT_LINK_INPUT, sagas.submitLinkInput);
   yield takeEvery(AT.SUBMIT_YOUTUBE_INPUT, sagas.submitYoutubeInput);
   yield takeEvery(AT.SUBMIT_SPLASH_INPUT, sagas.submitSplashInput);
