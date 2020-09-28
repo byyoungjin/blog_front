@@ -20,7 +20,6 @@ import { saveContent } from "./helper";
 
 const BasicEditor = forwardRef((props, ref) => {
   const dispatch = useDispatch();
-  const editorRef = ref ? ref : useRef(null);
 
   const userId = useSelector(selectors.user.getUserId);
   const readOnly = useSelector(selectors.editorState.getEditorReadOnly);
@@ -30,12 +29,6 @@ const BasicEditor = forwardRef((props, ref) => {
   const setEditorState = useCallback(({ newEditorState, from }) => {
     dispatch(actions.editorState.updateEditorState({ newEditorState, from }));
   }, []);
-
-  const focusOnEditor = e => {
-    const currentTarget = e.currentTarget;
-    console.log("currentTarget", currentTarget);
-    editorRef.current.focus();
-  };
 
   const saveHandler = (editorState, userId) => {
     saveContent({ editorState, id: userId });
@@ -67,7 +60,7 @@ const BasicEditor = forwardRef((props, ref) => {
         }
         plugins={[emojiPlugin, blockBreakoutPlugin, basicSettingPlugin]}
         readOnly={readOnly ? readOnly : false}
-        ref={editorRef}
+        ref={ref}
       />
 
       <EmojiSuggestions />

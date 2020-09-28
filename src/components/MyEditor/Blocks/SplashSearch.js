@@ -21,8 +21,6 @@ export default function SplashSearch() {
   const editorState = useSelector(selectors.editorState.getEditorState);
   const selectionState = editorState.getSelection();
   const focusKey = selectionState.getFocusKey();
-  console.log("currentBlockKey", currentBlockKey);
-  console.log("focusKey", focusKey);
 
   useEffect(() => {
     if (currentBlockKey === null) {
@@ -56,26 +54,15 @@ export default function SplashSearch() {
     setCurrentKeyword(keyword);
   };
 
-  const clickPreviousHandler = () => {
+  const clickNavHandler = ({ tick }) => {
     dispatch(
       actions.editorState.submitSplashInput({
         keyword: currentKeyword,
-        currentPage: currentPage - 1,
+        currentPage: currentPage + tick,
         setImagesData
       })
     );
-    setCurrentPage(prev => prev - 1);
-  };
-
-  const clickNextHandler = () => {
-    dispatch(
-      actions.editorState.submitSplashInput({
-        keyword: currentKeyword,
-        currentPage: currentPage + 1,
-        setImagesData
-      })
-    );
-    setCurrentPage(prev => prev + 1);
+    setCurrentPage(prev => prev + tick);
   };
 
   const initialValues = {
@@ -96,13 +83,13 @@ export default function SplashSearch() {
       {totalImageNumber && sumitted ? (
         <>
           <NavBar>
-            <NavButton onClick={clickPreviousHandler}>
+            <NavButton onClick={() => clickNavHandler({ tick: -1 })}>
               {currentPage !== 1 && "Previous"}
             </NavButton>
 
             <TotalNumber>{totalImageNumber} totals</TotalNumber>
 
-            <NavButton onClick={clickNextHandler}>
+            <NavButton onClick={() => clickNavHandler({ tick: +1 })}>
               {currentPage !== totalPages && "Next"}
             </NavButton>
           </NavBar>

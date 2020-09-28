@@ -16,12 +16,9 @@ import Title from "components/MyEditor/Blocks/Title";
 import SubTitle from "components/MyEditor/Blocks/SubTitle";
 import QuoteBlock from "components/MyEditor/Blocks/QuoteBlock";
 import Paragraph from "components/MyEditor/Blocks/Paragraph";
-import YouTube from "components/MyEditor/Blocks/YouTube";
-import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
 
 import { readFile } from "components/MyEditor/helper";
 import { decorators } from "components/MyEditor/decorators";
-import { clearInlineStyles } from "../helper/index";
 
 const customBlockRenderMap = Immutable.Map({
   "code-block": {
@@ -36,12 +33,6 @@ const customBlockRenderMap = Immutable.Map({
   },
   quoteBlock: {
     element: QuoteBlock
-  },
-  unsplashInput: {
-    element: SplashSearch
-  },
-  youtubeInput: {
-    element: YouTube
   },
   unstyled: {
     element: Paragraph

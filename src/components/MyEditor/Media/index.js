@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { EditorState } from "draft-js";
 
 import { actions, selectors } from "data";
 
@@ -21,12 +22,6 @@ export default function Media({ contentState, block }) {
   const type = entity.getType();
   const { setTitlePhoto, setTitle, setSubTitle } = useSetPostData();
 
-  useEffect(() => {
-    dispatch(
-      actions.editorState.updateEditorState({ newEditorState: editorState })
-    );
-  }, [src, editorState, dispatch]);
-
   let media;
   switch (type) {
     case "image":
@@ -37,7 +32,12 @@ export default function Media({ contentState, block }) {
       media = <Dash />;
       break;
     case "youtube":
-      media = <YouTubeVideo src={src} />;
+      if (src) {
+        media = <YouTubeVideo src={src} />;
+      } else {
+        media = <YouTube />;
+      }
+
       break;
     case "unsplash":
       if (src) {

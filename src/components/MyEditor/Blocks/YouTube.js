@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Formik, Form } from "formik";
@@ -10,6 +10,26 @@ import { useFocus } from "../hooks";
 
 export default function YouTube() {
   const dispatch = useDispatch();
+  const [currentBlockKey, setCurrentBlockKey] = useState(null);
+  const editorState = useSelector(selectors.editorState.getEditorState);
+  const selectionState = editorState.getSelection();
+  const focusKey = selectionState.getFocusKey();
+
+  useEffect(() => {
+    if (currentBlockKey === null) {
+      setCurrentBlockKey(focusKey);
+    } else {
+      if (focusKey !== currentBlockKey) {
+        dispatch(
+          actions.editorState.toggleBlock({
+            blockType: "unstyled",
+            blockKey: currentBlockKey
+          })
+        );
+      }
+    }
+  }, [focusKey, currentBlockKey, dispatch]);
+
   const container = useFocus();
 
   const submitHandler = values => {

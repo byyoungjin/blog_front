@@ -155,3 +155,8 @@ export const toggleLinkStyle = ({ editorState, url }) => {
 
   return toggledNewEditorState;
 };
+
+export const focusOnLastLine = ({ editorState }) => {
+  const newEditorState = EditorState.moveFocusToEnd(editorState);
+  return newEditorState;
+};

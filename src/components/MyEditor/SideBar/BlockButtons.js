@@ -53,8 +53,8 @@ export default function BlockButtons({ isOpen }) {
       image: process.env.PUBLIC_URL + "/icons/editor/block/video.svg",
       onClick: () =>
         dispatch(
-          actions.editorState.toggleBlock({
-            blockType: "youtubeInput"
+          actions.editorState.addAtomicBlock({
+            entityType: "youtube"
           })
         )
     }

@@ -11,7 +11,8 @@ import {
   toggleInlineStyle,
   toggleLinkStyle,
   removeBlockFromBlockMap,
-  forceSelectionKeyAfter
+  forceSelectionKeyAfter,
+  focusOnLastLine
 } from "./helper";
 import {
   loadContentFromStorage,
@@ -42,10 +43,6 @@ export function* toggleBlock(action) {
         from: "toggleBlockSaga"
       })
     );
-    // yield put(actions.editorState.updateSideBarIsOpen(false));
-    // yield put(
-    //   actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
-    // );
   } catch (e) {
     console.log("e", e);
   }
@@ -183,7 +180,6 @@ export function* addAtomicBlockAndRemoveCurrent(action) {
 }
 
 export function* populateEditorState(action) {
-  const { focusOnEditor } = action.payload;
   const userId = yield select(selectors.user.getUserId);
   const editorState = yield select(selectors.editorState.getEditorState);
   yield put(actions.editorState.setEditorType("write"));
@@ -197,22 +193,22 @@ export function* populateEditorState(action) {
       populate: take(AT.LOAD_SAVED_EDITOR_STATE),
       cancel: take(AT.SET_MODAL_DOWN)
     });
-
+    let newEditorState;
     if (populate) {
-      const newEditorState = getEditorStateFromRaw({
+      newEditorState = getEditorStateFromRaw({
         rawEditorState,
         editorState
       });
-      yield put(
-        actions.editorState.updateEditorState({
-          newEditorState,
-          from: "populate editorState"
-        })
-      );
       yield put(actions.modal.setModalDown());
     } else {
-      yield focusOnEditor();
+      newEditorState = focusOnLastLine({ editorState });
     }
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "populate editorState"
+      })
+    );
   }
 }
 
