@@ -140,6 +140,13 @@ export function* getAllTags(action) {
   yield put(actions.post.updateTags({ tags }));
 }
 
+export function* getTagsByUserId(action) {
+  const userId = action.payload;
+  const res = yield api.tagApi.getTagsByUserId(userId);
+  const { tags } = res.data;
+  yield put(actions.post.updateTags({ tags }));
+}
+
 export function* deleteTag(action) {
   const { tagId } = action.payload;
   yield api.tagApi.deleteTag({ tagId });

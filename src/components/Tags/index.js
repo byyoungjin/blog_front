@@ -9,6 +9,7 @@ import { actions, selectors } from "data";
 export default function TagsComp({ tagsProp }) {
   const dispatch = useDispatch();
   const allTags = useSelector(selectors.post.getTags);
+  const userId = useSelector(selectors.user.getUserId);
   const allTagsAndAllbutton = [{ id: 0, tagName: "ALL" }, ...allTags];
   const tags = tagsProp ? tagsProp : allTagsAndAllbutton;
 
@@ -16,7 +17,11 @@ export default function TagsComp({ tagsProp }) {
 
   useEffect(() => {
     if (!tagsProp) {
-      dispatch(actions.post.getAllTags());
+      if (userId) {
+        dispatch(actions.post.getTagsByUserId(userId));
+      } else {
+        dispatch(actions.post.getTagsByUserId(1));
+      }
     }
   }, []);
 

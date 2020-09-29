@@ -7,6 +7,12 @@ export const api = {
       throw Error(err.message);
     });
   },
+  getTagsByUserId: async userId => {
+    return await socialApiClient.get(`api/tag/userId/${userId}`).catch(err => {
+      console.log("err", err);
+      throw Error(err.message);
+    });
+  },
   createTag: async tagInfo => {
     return await socialApiClient
       .post("api/tag/findOrCreate", tagInfo)

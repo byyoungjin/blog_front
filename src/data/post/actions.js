@@ -88,3 +88,8 @@ export const deleteTag = payload => ({
   type: AT.DELETE_TAG,
   payload
 });
+
+export const getTagsByUserId = payload => ({
+  type: AT.GET_TAGS_BY_UER_ID,
+  payload
+});

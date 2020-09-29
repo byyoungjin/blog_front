@@ -12,4 +12,5 @@ export default function*() {
   yield takeEvery(AT.GET_ONE_POST_EDIT, sagas.getOnePostEdit);
   yield takeEvery(AT.GET_ALL_TAGS, sagas.getAllTags);
   yield takeEvery(AT.DELETE_TAG, sagas.deleteTag);
+  yield takeEvery(AT.GET_TAGS_BY_UER_ID, sagas.getTagsByUserId);
 }
