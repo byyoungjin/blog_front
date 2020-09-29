@@ -60,8 +60,10 @@ export function* getOnePost(action) {
 export function* getOnePostDetail(action) {
   const { postId } = action;
   yield put(actions.editorState.setEditorType("detail"));
-  yield put(actions.editorState.toggleEditorReadOnly(true));
+
   yield put(actions.post.getOnePost(postId));
+  yield put(actions.editorState.toggleEditorReadOnly(true));
+
   yield put(actions.router.push(`/postDetail/${postId}`));
 }
 
@@ -74,14 +76,16 @@ export function* getOnePostEdit(action) {
 
 export function* getPosts(action) {
   try {
-    const { userId, tagId } = action.payload ? action.payload : {};
+    const { tagId } = action.payload ? action.payload : {};
+    const userId = yield select(selectors.user.getUserId);
     let posts;
     yield put(actions.post.getPostsLoading());
-    if (!tagId) {
+    if (tagId === 0) {
       if (userId) {
         posts = yield api.postApi.getPostsOfUser(userId);
       } else {
-        posts = yield api.postApi.getAllPosts();
+        //only shows Admin users post
+        posts = yield api.postApi.getPostsOfUser(1);
       }
     } else {
       posts = yield api.postApi.getPostsByTagId(tagId);

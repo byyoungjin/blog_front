@@ -16,12 +16,10 @@ import Title from "components/MyEditor/Blocks/Title";
 import SubTitle from "components/MyEditor/Blocks/SubTitle";
 import QuoteBlock from "components/MyEditor/Blocks/QuoteBlock";
 import Paragraph from "components/MyEditor/Blocks/Paragraph";
-import YouTube from "components/MyEditor/Blocks/YouTube";
-import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
+import Subject from "components/MyEditor/Blocks/Subject";
 
 import { readFile } from "components/MyEditor/helper";
 import { decorators } from "components/MyEditor/decorators";
-import { clearInlineStyles } from "../helper/index";
 
 const customBlockRenderMap = Immutable.Map({
   "code-block": {
@@ -37,11 +35,8 @@ const customBlockRenderMap = Immutable.Map({
   quoteBlock: {
     element: QuoteBlock
   },
-  unsplashInput: {
-    element: SplashSearch
-  },
-  youtubeInput: {
-    element: YouTube
+  subject: {
+    element: Subject
   },
   unstyled: {
     element: Paragraph
@@ -50,11 +45,17 @@ const customBlockRenderMap = Immutable.Map({
 
 const { hasCommandModifier } = KeyBindingUtil;
 
-export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
+export default ({ saveHandler, onLoadHandler, setEditorState }) => ({
+  //Decorators
+  decorators,
+
+  //Key Bindings
   keyBindingFn: e => {
+    //Cmd + s
     if (e.keyCode === 83 && hasCommandModifier(e)) {
       return "myeditor-save";
     }
+    //shift + enter
     if (e.keyCode === 13 && e.shiftKey) {
       return "soft-new-line-add";
     }
@@ -78,6 +79,10 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
     return "not-handled";
   },
 
+  //Custom Block Rendering
+  blockRenderMap: DefaultDraftBlockRenderMap.merge(customBlockRenderMap),
+
+  //Custom Block Components
   blockRendererFn: block => {
     const type = block.getType();
     const entity = block.getEntityAt(0);
@@ -93,8 +98,6 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
     }
   },
 
-  blockRenderMap: DefaultDraftBlockRenderMap.merge(customBlockRenderMap),
-
   handlePastedFiles: files => {
     readFile({ files, onLoadHandler });
   },
@@ -106,6 +109,5 @@ export default ({ saveHandler, setEditorState, onLoadHandler }) => ({
     //   newEditorState: clearedEditorState,
     //   from: "handle Return"
     // });
-  },
-  decorators
+  }
 });

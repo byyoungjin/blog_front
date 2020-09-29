@@ -17,4 +17,5 @@ const MainLogo = styled(Link)`
 
   text-decoration: none;
   cursor: pointer;
+  margin-left: 10px;
 `;

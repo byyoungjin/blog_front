@@ -3,18 +3,15 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Post } from "components";
-import { DefaultLayout } from "layout";
-import { posts } from "models/dummyData/posts";
+
 import { ProfilePicture, Button } from "components";
-import { user } from "models/dummyData/user";
-import { colors } from "theme";
 import { actions, selectors } from "data";
 
 export default function Mypage() {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
   const userId = useSelector(selectors.user.getUserId);
-  const { firstName, lastName, uniqueAlias, userSmallImageUrl } = useSelector(
+  const { firstName, lastName, uniqueAlias } = useSelector(
     selectors.user.getUserSession
   );
   const name = firstName + " " + lastName;
@@ -30,10 +27,7 @@ export default function Mypage() {
   return (
     <ContentsContainer>
       <MyProfile>
-        <ProfilePicture
-          src={userSmallImageUrl || user.pictureUrl}
-          diameter="300px"
-        />
+        <ProfilePicture diameter="300px" />
         <Name>{name}</Name>
         <MyPageUrl>hyjpost.com/{uniqueAlias}</MyPageUrl>
         <Button onClick={logoutHandler}>로그아웃</Button>
@@ -79,7 +73,7 @@ const Name = styled.div`
 
 const MyPageUrl = styled.div`
   font-size: 40px;
-  color: ${colors.blueGray};
+  color: ${({ theme }) => theme.colors.blueGray};
   margin-bottom: 50px;
 `;
 

@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-import Colors from "theme/colors";
+import { Row } from "components/Layout";
 
 export default function Title({ children }) {
-  return <Container>{children}</Container>;
+  const [isHovering, setIsHovering] = useState(false);
+  return (
+    <TitleContent
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {children}
+      {isHovering && <TitleMarker>제목</TitleMarker>}
+    </TitleContent>
+  );
 }
 
-const Container = styled.div`
+const TitleContent = styled.div`
   font-size: 40px;
-  margin: 10px 10px 10px 0
-  padding: 10px;
   color: black;
-  &:hover{
-    border-bottom: 3px solid black;
-  }
-  
+  font-family: "Noto Serif KR", serif;
+  font-weight: 800;
+  width: 100%;
+  height: 50px;
+  position: relative;
+`;
+
+const TitleMarker = styled.div`
+  position: absolute;
+  bottom: 15px;
+  left: -80px;
+  font-size: 16px;
+  color:${({ theme }) => theme.colors.gray_light}
+  padding-right: 5px;
+  width: 50px;
+  border-right: 3px solid ${({ theme }) => theme.colors.gray_light};
 `;

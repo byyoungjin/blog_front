@@ -7,12 +7,12 @@ import { compositeDecorator } from "../../components/MyEditor/decorators";
 import { forcedSelectionEditorState } from "./helper/content";
 
 const INITIAL_STATE = {
-  editorState: forcedSelectionEditorState,
+  editorState: EditorState.createEmpty(),
   title: "",
   titlePhoto: null,
   subTitle: "",
-  sideBar: { position: { transfrom: "scale(0)" }, isOpen: false },
-  upperBar: { position: { transfrom: "scale(0)" } },
+  sideBar: { position: { transform: "scale(0)" }, isOpen: false },
+  upperBar: { position: { transform: "scale(0)" } },
   readOnly: false,
   editorType: null,
   isLinkInput: false,

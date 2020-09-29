@@ -6,9 +6,9 @@ export default function QuoteBlock({ children }) {
 }
 
 const Container = styled.div`
-  font-size: 36px;
+  font-size: 24px;
   padding: 12px;
-  color: black;
-  border-left: 10px solid gray;
+  color: ${({ theme }) => theme.colors.gray_light};
+  border-left: 10px solid ${({ theme }) => theme.colors.gray_light};
   margin: 10px;
 `;

@@ -13,6 +13,9 @@ export default function ControllerComp() {
   const editorState = useSelector(selectors.editorState.getEditorState);
   const userId = useSelector(selectors.user.getUserId);
   const postUserId = useSelector(selectors.post.getCurrentPostUserId);
+  const postId = useSelector(selectors.post.getCurrentPostId);
+  const editorType = useSelector(selectors.editorState.getEditorType);
+
   const isSameUser = userId ? userId === postUserId : false;
 
   const saveHandler = (editorState, userId) => {
@@ -40,8 +43,10 @@ export default function ControllerComp() {
       })
     );
   };
-  const postId = useSelector(selectors.post.getCurrentPostId);
-  const editorType = useSelector(selectors.editorState.getEditorType);
+
+  const toggleReadOnlyHandler = readOnly => {
+    dispatch(actions.editorState.toggleEditorReadOnly(readOnly));
+  };
 
   const Buttons = button => (
     <Button onMouseDown={button.onClick} key={button.title}>
@@ -64,6 +69,18 @@ export default function ControllerComp() {
   const EditButtons = () =>
     [{ title: "CONFIRM EDIT", onClick: confirmEdithandler }].map(Buttons);
 
+  const EditorTryButton = () => {
+    const readOnly = useSelector(selectors.editorState.getIsReadOnly);
+    return (
+      <Button
+        style={{ marginTop: "5px" }}
+        onMouseDown={() => toggleReadOnlyHandler(!readOnly)}
+      >
+        {readOnly ? "EDIT MODE" : "PREVIEW"}
+      </Button>
+    );
+  };
+
   const getButtons = editorType => {
     switch (editorType) {
       case "write":
@@ -72,6 +89,8 @@ export default function ControllerComp() {
         return isSameUser ? <DetailButtons /> : null;
       case "edit":
         return <EditButtons />;
+      case "writeTry":
+        return <EditorTryButton />;
       default:
         return null;
     }
@@ -80,7 +99,7 @@ export default function ControllerComp() {
   return (
     <Controller>
       {getButtons(editorType)}
-      <ProfilePicture diameter="50px" />
+      {userId && <ProfilePicture diameter="50px" />}
     </Controller>
   );
 }

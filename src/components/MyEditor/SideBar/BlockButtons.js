@@ -3,51 +3,60 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { readFile } from "../helper";
-import { useInsertHandlers } from "./hooks";
 import { actions, selectors } from "data";
 
 export default function BlockButtons({ isOpen }) {
-  const editorState = useSelector(selectors.editorState.getEditorState);
   const fileInput = useRef(null);
   const dispatch = useDispatch();
   const userId = useSelector(selectors.user.getUserId);
-
-  const [
-    insertDashHandler,
-    insertCodeHandler,
-    insertSearchHandler,
-    insertVideoHandler
-  ] = useInsertHandlers(editorState);
-
-  const photoUplaodHandler = () => {
-    fileInput.current.click();
-  };
 
   const buttons = [
     {
       title: "dash",
       image: process.env.PUBLIC_URL + "/icons/editor/block/dash.svg",
-      onClick: insertDashHandler
+      onClick: () =>
+        dispatch(
+          actions.editorState.addAtomicBlock({
+            entityType: "dash"
+          })
+        )
     },
     {
       title: "code",
       image: process.env.PUBLIC_URL + "/icons/editor/block/code.svg",
-      onClick: insertCodeHandler
+      onClick: () =>
+        dispatch(
+          actions.editorState.toggleBlock({
+            blockType: "code-block"
+          })
+        )
     },
     {
       title: "photo",
       image: process.env.PUBLIC_URL + "/icons/editor/block/photo.svg",
-      onClick: photoUplaodHandler
+      onClick: () => fileInput.current.click()
     },
     {
       title: "search",
       image: process.env.PUBLIC_URL + "/icons/editor/block/search.svg",
-      onClick: insertSearchHandler
+      onClick: () => {
+        dispatch(
+          actions.editorState.addAtomicBlock({
+            entityType: "unsplash"
+          })
+        );
+        dispatch(actions.editorState.toggleEditorReadOnly(true));
+      }
     },
     {
       title: "video",
       image: process.env.PUBLIC_URL + "/icons/editor/block/video.svg",
-      onClick: insertVideoHandler
+      onClick: () =>
+        dispatch(
+          actions.editorState.addAtomicBlock({
+            entityType: "youtube"
+          })
+        )
     }
   ];
 
@@ -55,9 +64,7 @@ export default function BlockButtons({ isOpen }) {
     const files = e.target.files;
     const selectedFile = files[0];
     const onLoadHandler = selectedFile =>
-      dispatch(
-        actions.editorState.addImage({ selectedFile, editorState, userId })
-      );
+      dispatch(actions.editorState.addImage({ selectedFile, userId }));
     onLoadHandler(selectedFile);
     // readFile({ files, onLoadHandler });
     e.target.value = "";
@@ -70,7 +77,7 @@ export default function BlockButtons({ isOpen }) {
           isOpen={isOpen}
           i={i}
           key={button.image}
-          onClick={button.onClick}
+          onMouseDown={button.onClick}
         >
           <Image src={button.image} alt={button.image} />
           {button.title === "photo" && (
@@ -90,6 +97,7 @@ export default function BlockButtons({ isOpen }) {
 const ButtonsContainer = styled.div`
   display: flex;
   align-items: center;
+  width: ${({ isOpen }) => (isOpen ? "230px" : "0px")};
 `;
 
 const Button = styled.div`
@@ -110,4 +118,6 @@ z-index:${({ isOpen }) => (isOpen ? 0 : -1)};
   transition: transform .3s cubic-bezier(.5,-0.5,.5,1.5), opacity .3s ease-in;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 20px;
+`;

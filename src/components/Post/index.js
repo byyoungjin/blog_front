@@ -4,8 +4,9 @@ import { format } from "date-fns";
 
 import colors from "theme/colors";
 import TagBox from "components/Tags";
+import winSize from "utils/winSize";
 
-const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.jpg";
+const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.svg";
 
 export default function Post({
   style,
@@ -42,6 +43,7 @@ const PostContainer = styled.div`
   flex: 1 0 300px;
   flex-direction: column;
   max-width: 500px;
+  min-width: 300px;
   width: 100%;
   height: 500px;
   border-radius: 10px;
@@ -52,6 +54,8 @@ const PostContainer = styled.div`
   &:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   }
+
+  ${winSize.onLarge("min-width: 400px;")}
 `;
 
 const ImageBox = styled.img`

@@ -4,15 +4,13 @@ import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import { actions, selectors } from "data";
 import * as AT from "data/rootActionTypes";
 import {
-  addMedia,
   toggleBlockType,
+  toggleBlcokTypeByKey,
   addAtomic,
   toggleInlineStyle,
   toggleLinkStyle,
-  replaceEntityData,
-  addEntity,
-  applyEntityToBlock,
-  removeBlockFromBlockMap
+  focusOnLastLine,
+  replaceTextByKey
 } from "./helper";
 import {
   loadContentFromStorage,
@@ -20,13 +18,64 @@ import {
 } from "./helper/storage";
 import api from "api";
 import generateUUID from "utils/generateUUID";
+import log from "utils/log";
 
+//Basic toggle sagas
+export function* toggleBlock(action) {
+  try {
+    const { blockType, blockKey } = action.data;
+    const editorState = yield select(selectors.editorState.getEditorState);
+    let newEditorState;
+    if (blockKey) {
+      const blockToggledEditorState = toggleBlcokTypeByKey({
+        editorState,
+        blockType,
+        blockKey
+      });
+      newEditorState = replaceTextByKey({
+        editorState: blockToggledEditorState,
+        blockKey,
+        text: null
+      });
+    } else {
+      newEditorState = toggleBlockType({ editorState, blockType });
+    }
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "toggleBlockSaga"
+      })
+    );
+  } catch (e) {
+    console.log("e", e);
+  }
+}
+
+export function* toggleInline(action) {
+  try {
+    const { editorState, inlineStyle } = action.data;
+    const newEditorState = toggleInlineStyle({ editorState, inlineStyle });
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "toggleInlineSaga"
+      })
+    );
+    yield put(
+      actions.editorState.updateUpperBarPosition({ transform: "scale(0)" })
+    );
+  } catch (e) {
+    console.log("e", e);
+  }
+}
+
+//Add image saga
 export function* addImage(action) {
   try {
-    const { selectedFile, editorState, userId } = action.data;
-
-    const editorStateWithPlaceholder = addMedia({
-      type: "placeholder",
+    const { selectedFile, userId } = action.data;
+    const editorState = yield select(selectors.editorState.getEditorState);
+    const editorStateWithPlaceholder = addAtomic({
+      entityType: "placeholder",
       editorState
     });
     yield put(
@@ -59,7 +108,11 @@ export function* addImage(action) {
 
     yield api.awsApi.uploadImage(uploadInfo);
 
-    const newEditorState = addMedia({ type: "image", src: url, editorState });
+    const newEditorState = addAtomic({
+      entityType: "image",
+      src: url,
+      editorState
+    });
 
     yield put(
       actions.editorState.updateEditorState({
@@ -78,46 +131,30 @@ export function* addImage(action) {
   }
 }
 
-export function* addOtherMedia(action) {
-  const { data, editorState, type } = action.data;
-  const selection = editorState.getSelection();
-  const inputKey = selection.getFocusKey();
-  console.log("inputKey", inputKey);
-  const newEditorState = addMedia({ type, editorState, src: data });
-  const inputRemovedEditorState = removeBlockFromBlockMap({
-    editorState: newEditorState,
-    blockKey: inputKey
-  });
-  yield put(
-    actions.editorState.updateEditorState({
-      newEditorState: inputRemovedEditorState,
-      from: "addOtherMedia"
-    })
-  );
-}
-
-export function* replaceEntity(action) {
-  const { data, editorState } = action.data;
-  const newEditorState = replaceEntityData({ editorState, data });
-  yield put(
-    actions.editorState.updateEditorState({
-      newEditorState,
-      from: "replaceEntity"
-    })
-  );
-  yield put(actions.editorState.updateSideBarIsOpen(false));
-  yield put(
-    actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
-  );
-}
-
 export function* addAtomicBlock(action) {
-  const { editorState, type } = action.data;
-  const newEditorState = addAtomic({ type, editorState });
-  yield new Promise(resolve => setTimeout(resolve, 10));
+  const { data, entityType } = action.data;
+  const editorState = yield select(selectors.editorState.getEditorState);
+  const newEditorState = addAtomic({ entityType, editorState, src: data });
+
+  const contentState = newEditorState.getCurrentContent();
+  const selectionState = newEditorState.getSelection();
+  const focusKey = selectionState.getFocusKey();
+  const atomicBlockKey = contentState.getKeyBefore(focusKey);
+  const newSelection = selectionState.merge({
+    anchorKey: atomicBlockKey,
+    focusKey: atomicBlockKey,
+    focusOffset: 0,
+    hasFocus: true
+  });
+
+  const selectionOnAtomicBlockEditorState = EditorState.forceSelection(
+    newEditorState,
+    newSelection
+  );
+
   yield put(
     actions.editorState.updateEditorState({
-      newEditorState,
+      newEditorState: selectionOnAtomicBlockEditorState,
       from: "addAtomicBlockSaga"
     })
   );
@@ -126,69 +163,6 @@ export function* addAtomicBlock(action) {
   yield put(
     actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
   );
-}
-
-export function* toggleBlock(action) {
-  try {
-    const { editorState, type } = action.data;
-    const newEditorState = toggleBlockType({ editorState, type });
-    yield new Promise(resolve => setTimeout(resolve, 10));
-    yield put(
-      actions.editorState.updateEditorState({
-        newEditorState,
-        from: "toggleBlockSaga"
-      })
-    );
-    yield put(actions.editorState.updateSideBarIsOpen(false));
-    yield put(
-      actions.editorState.updateSideBarPosition({ transform: "scale(0)" })
-    );
-  } catch (e) {
-    console.log("e", e);
-  }
-}
-
-export function* toggleInline(action) {
-  try {
-    const { editorState, inlineStyle } = action.data;
-    const newEditorState = toggleInlineStyle({ editorState, inlineStyle });
-    yield new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("success");
-      }, 10);
-    });
-    yield put(
-      actions.editorState.updateEditorState({
-        newEditorState,
-        from: "toggleInlineSaga"
-      })
-    );
-    yield put(
-      actions.editorState.updateUpperBarPosition({ transform: "scale(0)" })
-    );
-  } catch (e) {
-    console.log("e", e);
-  }
-}
-
-export function* toggleLink(action) {
-  const { editorState, url } = action.data;
-  try {
-    const newEditorState = toggleLinkStyle({ editorState, url });
-    yield new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("success");
-      }, 10);
-    });
-    yield put(
-      actions.editorState.updateEditorState({
-        newEditorState,
-        from: "toggleLinkSaga"
-      })
-    );
-  } catch (e) {
-    console.log("e", e);
-  }
 }
 
 export function* populateEditorState(action) {
@@ -205,19 +179,81 @@ export function* populateEditorState(action) {
       populate: take(AT.LOAD_SAVED_EDITOR_STATE),
       cancel: take(AT.SET_MODAL_DOWN)
     });
-
+    let newEditorState;
     if (populate) {
-      const newEditorState = getEditorStateFromRaw({
+      newEditorState = getEditorStateFromRaw({
         rawEditorState,
         editorState
       });
-      yield put(
-        actions.editorState.updateEditorState({
-          newEditorState,
-          from: "populate editorState"
-        })
-      );
       yield put(actions.modal.setModalDown());
+    } else {
+      newEditorState = focusOnLastLine({ editorState });
     }
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "populate editorState"
+      })
+    );
   }
+}
+
+export function* toggleLink(action) {
+  const { url } = action.data;
+  try {
+    const editorState = yield select(selectors.editorState.getEditorState);
+    const newEditorState = toggleLinkStyle({ editorState, url });
+    yield put(
+      actions.editorState.updateEditorState({
+        newEditorState,
+        from: "toggleLinkSaga"
+      })
+    );
+  } catch (e) {
+    console.log("e", e);
+  }
+}
+
+export function* submitLinkInput(action) {
+  const url = action.payload;
+  yield put(actions.editorState.toggleLink({ url }));
+  yield put(actions.editorState.toggleIsLinkInput(false));
+  yield put(actions.editorState.toggleEditorReadOnly(false));
+}
+
+function* replaceRecentEntity(action) {
+  const src = action.payload;
+  const editorState = yield select(selectors.editorState.getEditorState);
+  const contentState = editorState.getCurrentContent();
+  const entityKey = contentState.getLastCreatedEntityKey();
+  const newContentState = contentState.replaceEntityData(entityKey, {
+    src
+  });
+  const newEditorState = EditorState.set(editorState, {
+    currentContent: newContentState
+  });
+  yield put(
+    actions.editorState.updateEditorState({
+      newEditorState
+    })
+  );
+}
+
+export function* submitYoutubeInput(action) {
+  const url = action.payload;
+  yield replaceRecentEntity({ payload: url });
+  yield put(actions.editorState.toggleEditorReadOnly(false));
+}
+
+export function* selectSplashImage(action) {
+  const splashInfo = action.payload;
+  yield replaceRecentEntity({ payload: splashInfo });
+  yield put(actions.editorState.toggleEditorReadOnly(false));
+}
+
+export function* submitSplashInput(action) {
+  const { keyword, currentPage, setImagesData } = action.payload;
+  const res = yield api.unSplashApi.getPhotos({ keyword, currentPage });
+  const data = res.data;
+  yield setImagesData(data);
 }

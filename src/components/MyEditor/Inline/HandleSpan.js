@@ -6,6 +6,8 @@ export default function HandleSpan({ children }) {
 }
 
 const Span = styled.span`
+  border-radius: 5px;
+  padding: 2px;
   background-color: red;
   color: white;
 `;

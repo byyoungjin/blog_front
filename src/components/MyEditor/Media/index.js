@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { EditorState } from "draft-js";
 
-import Loading from "components/Placeholder/Loading";
+import { actions, selectors } from "data";
+
+import PulseLoading from "components/Placeholder/PulseLoading";
 import Dash from "components/MyEditor/Blocks/Dash";
 import YouTube from "components/MyEditor/Blocks/YouTube";
 import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
@@ -11,6 +15,8 @@ import YouTubeVideo from "components/MyEditor/Blocks/YouTubeVideo";
 import { useSetPostData } from "./hooks";
 
 export default function Media({ contentState, block }) {
+  const dispatch = useDispatch();
+  const editorState = useSelector(selectors.editorState.getEditorState);
   const entity = contentState.getEntity(block.getEntityAt(0));
   const { src, data } = entity.getData();
   const type = entity.getType();
@@ -26,14 +32,23 @@ export default function Media({ contentState, block }) {
       media = <Dash />;
       break;
     case "youtube":
-      media = <YouTubeVideo src={src} />;
+      if (src) {
+        media = <YouTubeVideo src={src} />;
+      } else {
+        media = <YouTube />;
+      }
+
       break;
     case "unsplash":
-      media = <SplashImage splashInfo={src} />;
-      src && setTitlePhoto(src.regularImageSrc);
+      if (src) {
+        setTitlePhoto(src.regularImageSrc);
+        media = <SplashImage splashInfo={src} />;
+      } else {
+        media = <SplashSearch />;
+      }
       break;
     case "placeholder":
-      media = <Loading />;
+      media = <PulseLoading />;
       break;
     default:
       return;
