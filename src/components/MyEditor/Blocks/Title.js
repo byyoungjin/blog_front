@@ -6,30 +6,24 @@ import { Row } from "components/Layout";
 export default function Title({ children }) {
   const [isHovering, setIsHovering] = useState(false);
   return (
-    <Container>
-      <TitleContent
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
-        {children}
-      </TitleContent>
+    <TitleContent
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {children}
       {isHovering && <TitleMarker>제목</TitleMarker>}
-    </Container>
+    </TitleContent>
   );
 }
 
-const Container = styled(Row.Center)`
+const TitleContent = styled.div`
+  font-size: 40px;
   color: black;
+  font-family: "Noto Serif KR", serif;
+  font-weight: 800;
   width: 100%;
   height: 50px;
   position: relative;
-`;
-
-const TitleContent = styled.div`
-  font-size: 40px;
-
-  font-family: "Noto Serif KR", serif;
-  font-weight: 800;
 `;
 
 const TitleMarker = styled.div`

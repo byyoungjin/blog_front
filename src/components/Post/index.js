@@ -6,7 +6,7 @@ import colors from "theme/colors";
 import TagBox from "components/Tags";
 import winSize from "utils/winSize";
 
-const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.jpg";
+const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.svg";
 
 export default function Post({
   style,

@@ -5,7 +5,7 @@ import { EditorState } from "draft-js";
 
 import { actions, selectors } from "data";
 
-import Loading from "components/Placeholder/Loading";
+import PulseLoading from "components/Placeholder/PulseLoading";
 import Dash from "components/MyEditor/Blocks/Dash";
 import YouTube from "components/MyEditor/Blocks/YouTube";
 import SplashSearch from "components/MyEditor/Blocks/SplashSearch";
@@ -48,7 +48,7 @@ export default function Media({ contentState, block }) {
       }
       break;
     case "placeholder":
-      media = <Loading />;
+      media = <PulseLoading />;
       break;
     default:
       return;

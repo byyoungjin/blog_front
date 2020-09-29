@@ -17,7 +17,7 @@ const INITIAL_STATE = {
 const posts = produce((draft, action) => {
   switch (action.type) {
     case AT.GET_POSTS_LOADING:
-      draft[AT.GET_POSTS] = Remote.loading;
+      draft[AT.GET_POSTS] = Remote.Loading;
       break;
     case AT.GET_POSTS_SUCCESS:
       draft[AT.GET_POSTS] = Remote.Success(action.data);
@@ -28,7 +28,7 @@ const posts = produce((draft, action) => {
       break;
 
     case AT.GET_ONE_POST_LOADING:
-      draft[AT.GET_ONE_POST] = Remote.loading;
+      draft[AT.GET_ONE_POST] = Remote.Loading;
       break;
     case AT.GET_ONE_POST_SUCCESS:
       draft.currentPost = action.data;

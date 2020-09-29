@@ -54,7 +54,7 @@ export const toggleBlockType = ({ editorState, blockType }) => {
   return focusedEditorState;
 };
 
-export const toggleeBlcokTypeByKey = ({ editorState, blockType, blockKey }) => {
+export const toggleBlcokTypeByKey = ({ editorState, blockType, blockKey }) => {
   const selectionState = editorState.getSelection();
   const contentState = editorState.getCurrentContent();
   const newSelectionState = selectionState.merge({
@@ -75,6 +75,26 @@ export const toggleeBlcokTypeByKey = ({ editorState, blockType, blockKey }) => {
     currentContent: newContentState
   });
 
+  return newEditorState;
+};
+
+export const replaceTextByKey = ({ editorState, blockKey, text }) => {
+  const contentState = editorState.getCurrentContent();
+  const selectionState = editorState.getSelection();
+  const newSelectionState = selectionState.merge({
+    focusKey: blockKey,
+    anchorKey: blockKey,
+    focusOffset: 1,
+    anchorOffset: 0
+  });
+  const newContentState = Modifier.replaceText(
+    contentState,
+    newSelectionState,
+    ""
+  );
+  const newEditorState = EditorState.set(editorState, {
+    currentContent: newContentState
+  });
   return newEditorState;
 };
 

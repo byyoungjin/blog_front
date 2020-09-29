@@ -5,11 +5,12 @@ import { actions, selectors } from "data";
 import * as AT from "data/rootActionTypes";
 import {
   toggleBlockType,
-  toggleeBlcokTypeByKey,
+  toggleBlcokTypeByKey,
   addAtomic,
   toggleInlineStyle,
   toggleLinkStyle,
-  focusOnLastLine
+  focusOnLastLine,
+  replaceTextByKey
 } from "./helper";
 import {
   loadContentFromStorage,
@@ -26,10 +27,15 @@ export function* toggleBlock(action) {
     const editorState = yield select(selectors.editorState.getEditorState);
     let newEditorState;
     if (blockKey) {
-      newEditorState = toggleeBlcokTypeByKey({
+      const blockToggledEditorState = toggleBlcokTypeByKey({
         editorState,
         blockType,
         blockKey
+      });
+      newEditorState = replaceTextByKey({
+        editorState: blockToggledEditorState,
+        blockKey,
+        text: null
       });
     } else {
       newEditorState = toggleBlockType({ editorState, blockType });

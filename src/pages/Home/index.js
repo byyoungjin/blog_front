@@ -7,13 +7,16 @@ import { Post } from "components";
 import { Row } from "components/Layout";
 import TagsBox from "components/Tags";
 import DeleteTag from "components/DeleteTag";
-import { DefaultLayout } from "layout";
+import Helmet from "components/Helmet";
+import LoadingPage from "pages/LoadingPage";
+
 // import { posts } from "models/dummyData/posts";
 
 export default function Home() {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
   const currentTag = useSelector(selectors.post.getCurrentTag);
+  const getPostsStatusRemote = useSelector(selectors.post.getPostsStatusRemote);
 
   useEffect(() => {
     if (currentTag) {
@@ -54,14 +57,21 @@ export default function Home() {
 
   return (
     <MainContainer>
+      <Helmet title="log" description="blog main page" />
       <TagsBox />
-      <DisplayPosts />
+      {getPostsStatusRemote.cata({
+        NotAsked: () => <LoadingPage>loading 중입니다.</LoadingPage>,
+        Loading: () => <LoadingPage>loading 중입니다.</LoadingPage>,
+        Success: () => <DisplayPosts />,
+        Failure: () => <div>서버상에 오류가 발생했습니다.</div>
+      })}
     </MainContainer>
   );
 }
 
 const MainContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   height: 100%;
   width: 100%;

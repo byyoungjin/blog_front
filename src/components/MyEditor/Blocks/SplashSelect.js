@@ -23,8 +23,8 @@ export default function SplashSelect({ images }) {
 
   return (
     <Container>
-      {imagesRows.map(RowImages => (
-        <ImageRow>
+      {imagesRows.map((RowImages, index) => (
+        <ImageRow key={index}>
           {RowImages.map(image => {
             const { thumbImageSrc, imageHeight, imageWidth } = image;
             const flexValue = imageWidth / imageHeight;

@@ -16,6 +16,7 @@ import Title from "components/MyEditor/Blocks/Title";
 import SubTitle from "components/MyEditor/Blocks/SubTitle";
 import QuoteBlock from "components/MyEditor/Blocks/QuoteBlock";
 import Paragraph from "components/MyEditor/Blocks/Paragraph";
+import Subject from "components/MyEditor/Blocks/Subject";
 
 import { readFile } from "components/MyEditor/helper";
 import { decorators } from "components/MyEditor/decorators";
@@ -33,6 +34,9 @@ const customBlockRenderMap = Immutable.Map({
   },
   quoteBlock: {
     element: QuoteBlock
+  },
+  subject: {
+    element: Subject
   },
   unstyled: {
     element: Paragraph

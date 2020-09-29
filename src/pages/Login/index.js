@@ -9,6 +9,7 @@ import { actions, selectors } from "data";
 import { MyTextInput, Button } from "components";
 import { EditorLayout } from "layout";
 import { colors } from "theme";
+import { Row } from "components/Layout";
 
 import GoogleLogin from "./GoogleLogin";
 
@@ -41,6 +42,7 @@ export default function Login() {
           <FormStyled>
             <LabelStyled>LOG IN</LabelStyled>
             <GoogleLogin />
+            <Seperator>or</Seperator>
             <MyTextInput
               name="emailAddress"
               label="이메일"
@@ -102,6 +104,10 @@ const LinkStyled = styled(Link)`
   margin-right: 50px;
   text-decoration: none;
   cursor: pointer;
+`;
+
+const Seperator = styled(Row.CenterCenter)`
+  font-size: 24px;
 `;
 
 const ErrorMesssage = styled.div`

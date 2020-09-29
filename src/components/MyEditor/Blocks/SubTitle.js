@@ -6,26 +6,20 @@ import { Row } from "components/Layout";
 export default function SubTitle({ children }) {
   const [isHovering, setIsHovering] = useState(false);
   return (
-    <Container>
-      <SubTitleContent
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
-        {children}
-      </SubTitleContent>
+    <SubTitleContent
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
+      {children}
       {isHovering && <SubTitleMarker>부제목</SubTitleMarker>}
-    </Container>
+    </SubTitleContent>
   );
 }
 
-const Container = styled(Row.Center)`
-  color: black;
+const SubTitleContent = styled.div`
   width: 100%;
   height: 50px;
   position: relative;
-`;
-
-const SubTitleContent = styled.div`
   font-size: 24px;
   font-family: "Noto Serif KR", serif;
   font-weight: 800;
@@ -34,7 +28,7 @@ const SubTitleContent = styled.div`
 
 const SubTitleMarker = styled.div`
   position: absolute;
-  bottom: 15px;
+  bottom: 23px;
   left: -80px;
   font-size: 16px;
   color:${({ theme }) => theme.colors.gray_light}

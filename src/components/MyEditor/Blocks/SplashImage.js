@@ -4,7 +4,10 @@ import styled from "styled-components";
 export default function SplashImage({ splashInfo }) {
   return (
     <Container>
-      <FullImage src={splashInfo.regularImageSrc} />
+      <FullImage
+        src={splashInfo.regularImageSrc}
+        onClick={() => console.log("clicked")}
+      />
       <Attribute>
         Photo by{" "}
         <A
@@ -31,10 +34,14 @@ const Container = styled.div`
 const FullImage = styled.img`
   width: 100%;
   height: 100%;
+  border: 3px solid white;
+  // &:hover {
+  //   border: 3px solid ${({ theme }) => theme.colors.yellow};
+  // }
 `;
 
 const Attribute = styled.div`
-  font-size: 24px;
+  font-size: 14px;
   display: flex;
   justify-content: center;
   align-items: center;

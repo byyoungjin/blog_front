@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
+import { ProfilePicture } from "components";
+
 import NavItem from "./NavItem";
 
 export default function NavigationComp({ userSession }) {
   return (
     <Navigation>
-      <NavItem text="MYLOG" to="/myPage" show={userSession} />
+      {userSession && <ProfilePicture diameter="50px" />}
       <NavItem text="LOGIN" to="/login" show={!userSession} />
       <NavItem text="SIGN IN" to="/register" show={!userSession} />
     </Navigation>

@@ -45,6 +45,14 @@ const UpperBarComp = ({ editorRef }) => {
 
   const blockButtons = [
     {
+      title: "subject",
+      image: process.env.PUBLIC_URL + "/icons/editor/inline/subject.svg",
+      onClick: () =>
+        dispatch(
+          actions.editorState.toggleBlock({ editorState, blockType: "subject" })
+        )
+    },
+    {
       title: "quote",
       image: process.env.PUBLIC_URL + "/icons/editor/inline/quote.svg",
       onClick: () =>

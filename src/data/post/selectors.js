@@ -1,6 +1,10 @@
+import * as AT from "data/rootActionTypes";
+
 export const getCurrentPost = state => state.post.currentPost;
 
 export const getPosts = state => state.post.posts;
+export const getPostsStatusRemote = state => state.post[AT.GET_POSTS];
+export const getOnePostStatusRemote = state => state.post[AT.GET_ONE_POST];
 
 export const getCurrentPostUserId = state => state.post.currentPost?.UserId;
 
