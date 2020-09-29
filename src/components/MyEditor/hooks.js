@@ -22,12 +22,10 @@ export const useUppperBarPosition = () => {
   useEffect(() => {
     const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
     const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
-    console.log("offsetKey", offsetKey);
     const node = document.querySelectorAll(
       `[data-offset-key="${offsetKey}"]`
     )[0];
-    console.log("node", node);
-    console.log("node.offsetTop", node.offsetTop);
+
     const selectionRect = getVisibleSelectionRect(window);
 
     // const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];

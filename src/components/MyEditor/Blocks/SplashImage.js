@@ -4,10 +4,7 @@ import styled from "styled-components";
 export default function SplashImage({ splashInfo }) {
   return (
     <Container>
-      <FullImage
-        src={splashInfo.regularImageSrc}
-        onClick={() => console.log("clicked")}
-      />
+      <FullImage src={splashInfo.regularImageSrc} />
       <Attribute>
         Photo by{" "}
         <A
