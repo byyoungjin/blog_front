@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import colors from "theme/colors";
-import toggle from "hocs/toggle";
+import { WithToggle } from "hocs";
 
 function NavItemComp({ text, to }) {
   return <NavItem to={to}>{text}</NavItem>;
@@ -20,4 +20,4 @@ const NavItem = styled(StyledLink)`
   margin: 0 10px;
 `;
 
-export default toggle(NavItemComp);
+export default WithToggle(NavItemComp);

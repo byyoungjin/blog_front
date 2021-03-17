@@ -8,7 +8,7 @@ import App from "./App";
 import "./normalize.css";
 import "./index.css";
 import configureStore from "data/configureStore";
-import theme from "./theme";
+import * as theme from "./theme";
 dotenv.config();
 
 const { history, store } = configureStore();

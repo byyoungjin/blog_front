@@ -7,6 +7,11 @@ import ProfilePicture from "./ProfilePicture";
 import Button from "./Button";
 import Controller from "./MyEditor/Controller";
 import MyEditor from "./MyEditor";
+import Card from "./Card";
+import Text from "./Text";
+import Tag from "./Tags";
+
+export { default as SideBar } from "./SideBar";
 
 export {
   Post,
@@ -17,5 +22,8 @@ export {
   ProfilePicture,
   Button,
   Controller,
-  MyEditor
+  MyEditor,
+  Card,
+  Text,
+  Tag
 };
