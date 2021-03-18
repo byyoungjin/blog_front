@@ -13,7 +13,10 @@ export function useMeasure() {
     () => new ResizeObserver(([entry]) => setBounds(entry.contentRect))
   );
 
-  useEffect(() => (ro.observe(ref.current), ro.disconnect), []);
+  useEffect(() => {
+    ro.observe(ref.current);
+    return () => ro.disconnect;
+  }, []);
 
   return [{ ref }, bounds];
 }

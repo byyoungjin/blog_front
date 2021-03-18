@@ -64,7 +64,7 @@ const BasicEditor = forwardRef((props, ref) => {
       />
 
       <EmojiSuggestions />
-      <SideBar />
+      <SideBar readOnly={readOnly} />
       <UpperBar />
     </EditorWrapper>
   );

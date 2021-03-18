@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import dotenv from "dotenv";
 import { ThemeProvider } from "styled-components";
+import { ConnectedRouter } from "connected-react-router";
 
+import ErrorBoundary from "pages/ErrorBoundary";
 import App from "./App";
 import "./normalize.css";
 import "./index.css";
@@ -16,7 +18,11 @@ const { history, store } = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <App history={history} />
+      <ErrorBoundary>
+        <ConnectedRouter history={history}>
+          <App />
+        </ConnectedRouter>
+      </ErrorBoundary>
     </ThemeProvider>
   </Provider>,
   document.getElementById("root")

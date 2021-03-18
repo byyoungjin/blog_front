@@ -5,7 +5,7 @@ import post from "data/post/reducers";
 import user from "data/user/reducers";
 import modal from "data/modal/reducer";
 import editorState from "data/editorState/reducer";
-
+import routing from "data/routing/reducers";
 const createRootReducer = history =>
   combineReducers({
     // loading,
@@ -13,7 +13,8 @@ const createRootReducer = history =>
     user,
     router: connectRouter(history),
     modal,
-    editorState
+    editorState,
+    routing
   });
 
 export { createRootReducer };

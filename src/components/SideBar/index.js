@@ -36,6 +36,7 @@ export default function SideBar() {
 
 const Container = styled(Col.Default)`
   background-color: ${theme["color-basic-200"]};
+  margin-left: 10px;
   width: 80%;
   height: 80vh;
   border-radius: 8px;

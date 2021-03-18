@@ -23,8 +23,11 @@ export default function Home() {
     }
   }, [currentTag, dispatch]);
 
+  useEffect(() => (console.log(), console.log()), []);
+
   const postClickHandler = postId => {
-    dispatch(actions.router.push(`/postDetail/${postId}`));
+    // dispatch(actions.router.push(`/postDetail/${postId}`));
+    dispatch(actions.routing.routeWithAnimation(`/postDetail/${postId}`));
   };
 
   const DisplayPosts = () =>
@@ -33,10 +36,7 @@ export default function Home() {
     ) : (
       <>
         {posts.map(
-          (
-            { id, titlePhoto, title, subTitle, createdAt, Tags, User },
-            index
-          ) => (
+          ({ id, titlePhoto, title, subTitle, createdAt, Tags, User }) => (
             <Card.PostCard
               key={title + createdAt}
               titlePhoto={titlePhoto}

@@ -9,9 +9,9 @@ export default function NavigationComp({ userSession }) {
   return (
     <Navigation>
       {userSession && <ProfilePicture diameter="50px" />}
-      <NavItem text="LOGIN" to="/login" show={!userSession} />
-      <NavItem text="SIGN IN" to="/register" show={!userSession} />
+      <NavItem text="BLOG" to="/blog" show />
       <NavItem text="ABOUT ME" to="/about" show />
+      <NavItem text="WHO ARE YOU" to="/login" show={!userSession} />
     </Navigation>
   );
 }
@@ -21,4 +21,5 @@ const Navigation = styled.div`
   justify-content: flex-end;
   align-items: center;
   grid-area: nav;
+  flex: 1;
 `;

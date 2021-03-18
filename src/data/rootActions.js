@@ -3,5 +3,6 @@ import * as user from "./user/actions";
 import * as post from "./post/actions";
 import * as modal from "./modal/actions";
 import * as editorState from "./editorState/actions";
+import * as routing from "./routing/actions";
 
-export { user, post, router, modal, editorState };
+export { user, post, router, modal, editorState, routing };

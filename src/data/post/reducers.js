@@ -1,9 +1,7 @@
-import { EditorState } from "draft-js";
 import produce from "immer";
 
 import Remote from "data/remote";
 import * as AT from "data/rootActionTypes";
-import { actions } from "data";
 
 const INITIAL_STATE = {
   posts: [],
