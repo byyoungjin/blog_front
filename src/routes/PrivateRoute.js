@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import useWhoAmI from "hooks/useWhoAmI";
-import Modal from "components/Modal";
 
 export default function UserRoute({
   path,
@@ -19,7 +18,6 @@ export default function UserRoute({
       render={matchProps => (
         <Layout>
           <Component {...matchProps} {...rest} />
-          <Modal />
         </Layout>
       )}
     />

@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { colors } from "theme";
+import { LinkTransition } from "components";
 const plus = "icons/plus.svg";
 
 export default function AddPostComp() {
   return (
-    <Link to="/postWrite">
+    <LinkTransition to="/postWrite">
       <AddPostImage src={plus} />{" "}
-    </Link>
+    </LinkTransition>
   );
 }
 

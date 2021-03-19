@@ -1,22 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { isAfter, isBefore } from "date-fns";
+import { isBefore } from "date-fns";
 
 import { actions, selectors } from "data";
 import DeleteTag from "components/DeleteTag";
 import Helmet from "components/Helmet";
 import LoadingPage from "pages/LoadingPage";
 import { Card } from "components";
-import { useTransitionTranslates } from "hooks";
-
-// import { posts } from "models/dummyData/posts";
 
 export default function Home() {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
   const currentTag = useSelector(selectors.post.getCurrentTag);
   const getPostsStatusRemote = useSelector(selectors.post.getPostsStatusRemote);
-
+  console.log("render home");
   useEffect(() => {
     if (currentTag) {
       dispatch(actions.post.getPosts({ tagId: currentTag.id }));
@@ -43,7 +40,6 @@ export default function Home() {
               : -1
           )
           .map(({ id, titlePhoto, title, subTitle, createdAt, Tags, User }) => (
-            // <TransitionDownWrapper>
             <Card.PostCard
               key={title + createdAt}
               titlePhoto={titlePhoto}
@@ -54,7 +50,6 @@ export default function Home() {
               tagsProp={Tags}
               user={User}
             />
-            // </TransitionDownWrapper>
           ))}
       </>
     );

@@ -32,6 +32,7 @@ export default function Modal() {
 
 const Container = styled.div`
   position: absolute;
+  top:0;
   z-index: 200;
   width: 100%;
   height: 100vh;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTransition, animated } from "react-spring";
 
@@ -55,7 +55,7 @@ export const useTransitionTranslates = props => {
     TransitionUpWrapper,
     TransitionDownWrapper
   ] = [transitionLeft, transitionRight, transitionUp, transitionDown].map(
-    transition => ({ children }) =>
+    (transition, index) => ({ children }) =>
       transition.map(({ item: isMounted, props, key }) =>
         isMounted ? (
           <animated.div key={key} style={{ ...props, ...containerStyle }}>

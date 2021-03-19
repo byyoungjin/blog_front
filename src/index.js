@@ -6,6 +6,8 @@ import { ThemeProvider } from "styled-components";
 import { ConnectedRouter } from "connected-react-router";
 
 import ErrorBoundary from "pages/ErrorBoundary";
+
+import Modal from "components/Modal";
 import App from "./App";
 import "./normalize.css";
 import "./index.css";
@@ -21,6 +23,7 @@ ReactDOM.render(
       <ErrorBoundary>
         <ConnectedRouter history={history}>
           <App />
+          <Modal />
         </ConnectedRouter>
       </ErrorBoundary>
     </ThemeProvider>

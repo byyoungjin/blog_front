@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 import { Col, Row } from "components/Layout";
-import Modal from "components/Modal";
 
 import { MainLogo, Controller } from "components";
 import { useTransitionTranslates } from "hooks";
@@ -29,7 +28,6 @@ export default function EditorLayoutComp({ children }) {
         </NavBar>
       </TransitionUpWrapper>
       <TransitionDownWrapper>{children}</TransitionDownWrapper>
-      <Modal />
     </EditorLayout>
   );
 }

@@ -6,7 +6,6 @@ import { Navigation, AddPost, MainLogo } from "components";
 import AddPostTry from "components/AddPost/AddPostTry";
 import { Row, Col } from "components/Layout";
 import { selectors } from "data";
-import Modal from "components/Modal";
 import { SideBar } from "components";
 import { useTransitionTranslates } from "hooks";
 
@@ -24,7 +23,7 @@ export default function DefaultLayoutComp({ children }) {
     <Col.Default>
       <TransitionUpWrapper>
         <NavBar>
-          <MainLogo />
+          <MainLogo disabled />
           <Navigation userSession={userSession} />
         </NavBar>
       </TransitionUpWrapper>
@@ -37,7 +36,6 @@ export default function DefaultLayoutComp({ children }) {
         <ContentLayout>
           <TransitionRightWrapper>
             <Col.Default>{children}</Col.Default>
-            {/* <Modal /> */}
           </TransitionRightWrapper>
         </ContentLayout>
         {userSession ? <AddPost /> : <AddPostTry />}
@@ -65,6 +63,5 @@ const SideBarContainer = styled(Col.Default)`
 
 const NavBar = styled(Row.CenterBetween)`
   width: 100%;
-  height: 50px;
-  margin: 10px 0;
+  margin: 10px;
 `;

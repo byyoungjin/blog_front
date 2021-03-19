@@ -13,7 +13,7 @@ export default function MainLogoComp({ disabled, style }) {
       <LogoImage src={logo} alt="logo-image" />
     </DisabledMainLogo>
   ) : (
-    <ClickableMainLogo style={style} to="">
+    <ClickableMainLogo style={style} to="/">
       <LogoImage src={logo} alt="logo-image" />
     </ClickableMainLogo>
   );

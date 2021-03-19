@@ -68,29 +68,33 @@ export const useSidebarPosition = () => {
   const selection = editorState.getSelection();
 
   useEffect(() => {
-    const currentBlock = currentContent.getBlockForKey(selection.getStartKey());
-    const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
-    const node = document.querySelectorAll(
-      `[data-offset-key="${offsetKey}"]`
-    )[0];
-    const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
-    const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
-    const isEmpty = currentBlock.getText() === "";
-    if (!isEmpty || editorType === "detail" || readOnly || !node) {
-      setSidebarPosition({
-        transform: "scale(0)",
-        transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
-        top: node ? node.offsetTop - 10 : 0,
+    if (editorType !== null) {
+      const currentBlock = currentContent.getBlockForKey(
+        selection.getStartKey()
+      );
+      const offsetKey = DraftOffsetKey.encode(currentBlock.getKey(), 0, 0);
+      const node = document.querySelectorAll(
+        `[data-offset-key="${offsetKey}"]`
+      )[0];
+      const rootEditorNode = document.querySelectorAll(".DraftEditor-root")[0];
+      const rootEditorNodeRect = rootEditorNode.getBoundingClientRect();
+      const isEmpty = currentBlock.getText() === "";
+      if (!isEmpty || editorType === "detail" || readOnly || !node) {
+        setSidebarPosition({
+          transform: "scale(0)",
+          transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
+          top: node ? node.offsetTop - 10 : 0,
 
-        left: rootEditorNodeRect.left - 50
-      });
-    } else {
-      setSidebarPosition({
-        transform: "scale(1)",
-        top: node ? node.offsetTop - 10 : 0,
-        transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
-        left: rootEditorNodeRect.left - 50
-      });
+          left: rootEditorNodeRect.left - 50
+        });
+      } else {
+        setSidebarPosition({
+          transform: "scale(1)",
+          top: node ? node.offsetTop - 10 : 0,
+          transition: "transform 0.15s cubic-bezier(.3,1.2,.2,1)",
+          left: rootEditorNodeRect.left - 50
+        });
+      }
     }
   }, [currentContent, selection, setSidebarPosition, editorType, readOnly]);
 
