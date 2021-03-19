@@ -3,9 +3,12 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 
 import { colors } from "theme";
+import { useTransitionTranslates } from "hooks";
 const plus = "icons/plus.svg";
 
 export default function AddPostComp() {
+  // const { TransitionDownWrapper } = useTransitionTranslates();
+
   return (
     <>
       <Link to="/postWriteTry">

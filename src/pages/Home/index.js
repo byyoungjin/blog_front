@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isAfter, isBefore } from "date-fns";
 
 import { actions, selectors } from "data";
 import DeleteTag from "components/DeleteTag";
 import Helmet from "components/Helmet";
 import LoadingPage from "pages/LoadingPage";
 import { Card } from "components";
+import { useTransitionTranslates } from "hooks";
 
 // import { posts } from "models/dummyData/posts";
 
@@ -26,7 +28,6 @@ export default function Home() {
   useEffect(() => (console.log(), console.log()), []);
 
   const postClickHandler = postId => {
-    // dispatch(actions.router.push(`/postDetail/${postId}`));
     dispatch(actions.routing.routeWithAnimation(`/postDetail/${postId}`));
   };
 
@@ -35,8 +36,14 @@ export default function Home() {
       <DeleteTag tagId={currentTag.id} />
     ) : (
       <>
-        {posts.map(
-          ({ id, titlePhoto, title, subTitle, createdAt, Tags, User }) => (
+        {posts
+          .sort((a, b) =>
+            isBefore(new Date(a.createdAt), new Date(b.createdAt)) === true
+              ? 1
+              : -1
+          )
+          .map(({ id, titlePhoto, title, subTitle, createdAt, Tags, User }) => (
+            // <TransitionDownWrapper>
             <Card.PostCard
               key={title + createdAt}
               titlePhoto={titlePhoto}
@@ -47,14 +54,14 @@ export default function Home() {
               tagsProp={Tags}
               user={User}
             />
-          )
-        )}
+            // </TransitionDownWrapper>
+          ))}
       </>
     );
 
   return (
     <>
-      <Helmet title="log" description="blog main page" />
+      <Helmet title="LOG" description="blog main page" />
 
       {getPostsStatusRemote.cata({
         NotAsked: () => <LoadingPage>loading 중입니다.</LoadingPage>,

@@ -10,6 +10,7 @@ import MyEditor from "./MyEditor";
 import Card from "./Card";
 import Text from "./Text";
 import Tag from "./Tags";
+import LinkTransition from "./LinkTransition";
 
 export { default as SideBar } from "./SideBar";
 
@@ -25,5 +26,6 @@ export {
   MyEditor,
   Card,
   Text,
-  Tag
+  Tag,
+  LinkTransition
 };

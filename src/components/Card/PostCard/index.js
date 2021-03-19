@@ -6,6 +6,8 @@ import colors from "theme/colors";
 import { Tag } from "components";
 import winSize from "utils/winSize";
 import { Row, Col } from "components/Layout";
+import { theme } from "theme";
+import { useFade } from "hooks";
 
 const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.svg";
 
@@ -23,30 +25,35 @@ export default function Post({
   const { firstName = "", lastName = "" } = user ? user : {};
   const userName = firstName + " " + lastName;
 
-  return (
-    <Col.Default style={{ marginBottom: 30 }}>
-      <Row.Default>
-        <CreatedInfo>{formatedDate}</CreatedInfo>
-        <UserInfo>, by {userName}</UserInfo>
-        <Tag.Group tags={tagsProp} direction="row" />
-      </Row.Default>
-      <PostContainer style={style} onClick={onClick}>
-        <ImageBox src={titlePhoto ? titlePhoto : defaultCover} />
-        <TextBox>
-          <Title>{title === "" ? "무제" : title}</Title>
-          <Subtitle>{subTitle}</Subtitle>
-          <Divider />
-        </TextBox>
+  const { FadeWrapper } = useFade();
 
-        <DateOverlay>{formatedDate}</DateOverlay>
-      </PostContainer>
-    </Col.Default>
+  return (
+    <FadeWrapper>
+      <Col.Default
+        style={{ marginBottom: 30, positino: "relative", width: "100%" }}
+      >
+        <Row.Default>
+          <CreatedInfo>{formatedDate}</CreatedInfo>
+          <UserInfo>, by {userName}</UserInfo>
+          <Tag.Group tags={tagsProp} direction="row" />
+        </Row.Default>
+        <PostContainer style={style} onClick={onClick}>
+          <ImageBox src={titlePhoto ? titlePhoto : defaultCover} />
+          <TextBox>
+            <Title>{title === "" ? "무제" : title}</Title>
+            <Subtitle>{subTitle}</Subtitle>
+            <Divider />
+          </TextBox>
+          <DateOverlay>{formatedDate}</DateOverlay>
+        </PostContainer>
+      </Col.Default>
+    </FadeWrapper>
   );
 }
 
 const PostContainer = styled(Row.Default)`
   border-radius: 8px;
-
+  position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
@@ -92,6 +99,7 @@ const DateOverlay = styled.div`
   justify-content: center;
   align-items: center;
   opacity: 0.5;
+  background-color: ${theme["color-basic-500"]};
   z-index: 1;
   color: white;
   font-size: 40px;

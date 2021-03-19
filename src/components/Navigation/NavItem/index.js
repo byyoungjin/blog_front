@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import colors from "theme/colors";
 import { WithToggle } from "hocs";
 
+import LinkTransition from "../../LinkTransition";
+
 function NavItemComp({ text, to }) {
   return <NavItem to={to}>{text}</NavItem>;
 }
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(LinkTransition)`
   text-decoration: none;
   cursor: pointer;
 `;

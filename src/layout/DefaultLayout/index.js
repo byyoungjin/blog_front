@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Navigation, AddPost } from "components";
+import { Navigation, AddPost, MainLogo } from "components";
 import AddPostTry from "components/AddPost/AddPostTry";
 import { Row, Col } from "components/Layout";
 import { selectors } from "data";
@@ -16,21 +16,18 @@ export default function DefaultLayoutComp({ children }) {
 
   const {
     TransitionLeftWrapper,
-    TransitionRightWrapper
+    TransitionRightWrapper,
+    TransitionUpWrapper
   } = useTransitionTranslates();
 
   return (
     <Col.Default>
-      {/* <div
-        onClick={() => {
-          setIsLoaded(status => !status);
-        }}
-      >
-        unmount
-      </div> */}
-      <NavBar>
-        <Navigation userSession={userSession} />
-      </NavBar>
+      <TransitionUpWrapper>
+        <NavBar>
+          <MainLogo />
+          <Navigation userSession={userSession} />
+        </NavBar>
+      </TransitionUpWrapper>
       <LayoutContainer>
         <SideBarContainer>
           <TransitionLeftWrapper>

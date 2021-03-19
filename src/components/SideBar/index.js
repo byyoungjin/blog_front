@@ -14,16 +14,7 @@ export default function SideBar() {
 
   return (
     <Container>
-      <FiMenu
-        style={{
-          width: 30,
-          height: 30,
-          color: theme["color-basic-900"],
-          cursor: "pointer"
-        }}
-      />
-
-      <MainLogo />
+      <div style={{ marginBottom: 20, fontSize: 24 }}>Tags</div>
       <Tag.Group
         tags={tags}
         direction="column"
