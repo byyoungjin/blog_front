@@ -22,10 +22,10 @@ import { readFile } from "components/MyEditor/helper";
 import { decorators } from "components/MyEditor/decorators";
 
 const customBlockRenderMap = Immutable.Map({
-  "code-block": {
-    element: "div",
-    wrapper: <Code />
-  },
+  // "code-block": {
+  //   element: "code",
+  //   wrapper: "pre"
+  // },
   title: {
     element: Title
   },
@@ -46,7 +46,7 @@ const customBlockRenderMap = Immutable.Map({
 const { hasCommandModifier } = KeyBindingUtil;
 
 export default ({ saveHandler, onLoadHandler, setEditorState }) => ({
-  //Decorators
+  // Decorators
   decorators,
 
   //Key Bindings
@@ -109,5 +109,14 @@ export default ({ saveHandler, onLoadHandler, setEditorState }) => ({
     //   newEditorState: clearedEditorState,
     //   from: "handle Return"
     // });
+  },
+
+  blockStyleFn: block => {
+    switch (block.getType()) {
+      case "code-block":
+        return "language-javascript";
+      default:
+        return null;
+    }
   }
 });

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Row } from "components/Layout";
+import { theme } from "theme";
 
 export default function Title({ children }) {
   const [isHovering, setIsHovering] = useState(false);
@@ -18,12 +19,13 @@ export default function Title({ children }) {
 
 const TitleContent = styled.div`
   font-size: 40px;
-  color: black;
+  color: ${theme["color-basic-900"]};
   font-family: "Noto Serif KR", serif;
   font-weight: 800;
   width: 100%;
   height: 50px;
   position: relative;
+  margin: 20px 0 10px;
 `;
 
 const TitleMarker = styled.div`

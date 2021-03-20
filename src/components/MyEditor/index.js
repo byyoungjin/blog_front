@@ -2,6 +2,9 @@ import React, { useRef, useCallback, useEffect, forwardRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PlugInsEditor from "draft-js-plugins-editor";
+import { EditorState } from "draft-js";
+import "prismjs/themes/prism.css";
+import "./style.css";
 
 import { actions, selectors } from "data";
 
@@ -15,6 +18,7 @@ import { emojiPlugin } from "./Plugins/emoji";
 import { blockBreakoutPlugin } from "./Plugins/blockBreakOut";
 import createBasicSettingsPlugin from "./Plugins/custom/basicSettings";
 import EditorDetailHeader from "./EditorDetailHeader";
+import { prismPlugin } from "./Plugins/prism";
 
 import { saveContent } from "./helper";
 
@@ -26,8 +30,47 @@ const BasicEditor = forwardRef((props, ref) => {
   const editorType = useSelector(selectors.editorState.getEditorType);
   const editorState = useSelector(selectors.editorState.getEditorState);
 
+  const getCodeHighlitedEditorState = ({
+    block,
+    newEditorState,
+    selection
+  }) => {
+    const data = block.getData().merge({ language: "javascript" });
+    const newBlock = block.merge({ data });
+    const newContentState = newEditorState.getCurrentContent().merge({
+      blockMap: newEditorState
+        .getCurrentContent()
+        .getBlockMap()
+        .set(selection.getStartKey(), newBlock),
+      selectionAfter: selection
+    });
+    const codeHighlitedEditorState = EditorState.push(
+      newEditorState,
+      newContentState,
+      "change-block-data"
+    );
+    return codeHighlitedEditorState;
+  };
+
   const setEditorState = useCallback(({ newEditorState, from }) => {
-    dispatch(actions.editorState.updateEditorState({ newEditorState, from }));
+    let finalEditorState = newEditorState;
+    const selection = newEditorState.getSelection();
+    const block = newEditorState
+      .getCurrentContent()
+      .getBlockForKey(selection.getStartKey());
+    if (block.getType() === "code-block") {
+      finalEditorState = getCodeHighlitedEditorState({
+        block,
+        newEditorState,
+        selection
+      });
+    }
+    dispatch(
+      actions.editorState.updateEditorState({
+        newEditorState: finalEditorState,
+        from
+      })
+    );
   }, []);
 
   const saveHandler = (editorState, userId) => {
@@ -58,7 +101,12 @@ const BasicEditor = forwardRef((props, ref) => {
         onChange={newEditorState =>
           setEditorState({ newEditorState, from: "EditorOnChange" })
         }
-        plugins={[emojiPlugin, blockBreakoutPlugin, basicSettingPlugin]}
+        plugins={[
+          emojiPlugin,
+          blockBreakoutPlugin,
+          basicSettingPlugin,
+          prismPlugin
+        ]}
         readOnly={readOnly ? readOnly : false}
         ref={ref}
       />

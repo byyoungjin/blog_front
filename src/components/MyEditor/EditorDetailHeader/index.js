@@ -24,7 +24,7 @@ export default function EditorDetialHeader() {
   }
 
   return (
-    <Col.Start>
+    <Col.Start style={{ marginBottom: 20 }}>
       <Tags>{tags}</Tags>
       <Row.Center>
         <HandWriting>by</HandWriting>
@@ -58,5 +58,5 @@ const CreatedAt = styled.div`
 const Tags = styled.div`
   color: ${Colors.blue_light};
   font-size: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 `;

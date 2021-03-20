@@ -1,4 +1,7 @@
 import { CompositeDecorator } from "draft-js";
+import PrismDecorator from "draft-js-prism";
+import Prism from "prismjs";
+import MultiDecorator from "draft-js-multidecorators";
 
 import Link from "components/MyEditor/Inline/Link";
 import HandleSpan from "components/MyEditor/Inline/HandleSpan";
@@ -25,6 +28,10 @@ export function findLinkEntites(contentBlock, callback, contentState) {
   }, callback);
 }
 
+export const prismDecorator = new PrismDecorator({
+  prism: Prism
+});
+
 function findWithRegex(regex, contentBlock, callback) {
   const text = contentBlock.getText();
   let matchArr, start;
@@ -35,9 +42,15 @@ function findWithRegex(regex, contentBlock, callback) {
 }
 
 export const decorators = [
-  { strategy: handleStrategy, component: HandleSpan },
+  // { strategy: handleStrategy, component: HandleSpan },
   { strategy: hashtagStrategy, component: HashTagSpan },
   { strategy: findLinkEntites, component: Link }
 ];
 
 export const compositeDecorator = new CompositeDecorator(decorators);
+console.log(`compositeDecorator`, compositeDecorator);
+
+export const multiDecorator = new MultiDecorator([
+  prismDecorator,
+  compositeDecorator
+]);

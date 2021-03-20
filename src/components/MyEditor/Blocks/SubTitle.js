@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { Row } from "components/Layout";
+import { theme } from "theme";
 
 export default function SubTitle({ children }) {
   const [isHovering, setIsHovering] = useState(false);
@@ -18,17 +19,17 @@ export default function SubTitle({ children }) {
 
 const SubTitleContent = styled.div`
   width: 100%;
-  height: 50px;
   position: relative;
   font-size: 24px;
   font-family: "Noto Serif KR", serif;
   font-weight: 800;
-  color: gray;
+  color: ${theme["color-basic-500"]};
+  margin: 5px 0 3px;
 `;
 
 const SubTitleMarker = styled.div`
   position: absolute;
-  bottom: 23px;
+  bottom: 5px;
   left: -80px;
   font-size: 16px;
   color:${({ theme }) => theme.colors.gray_light}

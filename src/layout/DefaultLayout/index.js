@@ -62,6 +62,6 @@ const SideBarContainer = styled(Col.Default)`
 `;
 
 const NavBar = styled(Row.CenterBetween)`
-  width: 100%;
+  flex:1
   margin: 10px;
 `;

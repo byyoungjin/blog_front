@@ -3,9 +3,16 @@ import { EditorState } from "draft-js";
 
 import * as AT from "data/rootActionTypes";
 import Remote from "data/remote";
-import { compositeDecorator } from "../../components/MyEditor/decorators";
+import {
+  multiDecorator,
+  prismDecorator,
+  compositeDecorator,
+  decorators
+} from "../../components/MyEditor/decorators";
 import { forcedSelectionEditorState } from "./helper/content";
 
+console.log(`multiDecorator`, multiDecorator);
+console.log(`prismDecorator`, prismDecorator);
 const INITIAL_STATE = {
   editorState: EditorState.createEmpty(),
   title: "",
