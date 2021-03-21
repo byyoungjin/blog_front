@@ -41,11 +41,8 @@ export const useTransitionTranslates = props => {
 
   useEffect(() => {
     dispatch(actions.routing.setIsMounted(true));
-    console.log("loaded");
     return () => {
       dispatch(actions.routing.setIsMounted(false));
-
-      console.log("unloaded");
     };
   }, []);
 
@@ -58,7 +55,7 @@ export const useTransitionTranslates = props => {
     (transition, index) => ({ children }) =>
       transition.map(({ item: isMounted, props, key }) =>
         isMounted ? (
-          <animated.div key={key} style={{ ...props, ...containerStyle }}>
+          <animated.div key={key} style={{ ...containerStyle, ...props }}>
             {children}
           </animated.div>
         ) : (
