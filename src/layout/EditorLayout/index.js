@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 import { Col, Row } from "components/Layout";
 
-import { MainLogo, Controller } from "components";
-import { useTransitionTranslates } from "hooks";
+import { MainLogo, Controller, SubjectIndexList } from "components";
+import { useTransitionTranslates, } from "hooks";
 
 export default function EditorLayoutComp({ children }) {
   const {
@@ -19,6 +19,8 @@ export default function EditorLayoutComp({ children }) {
     }
   });
 
+  
+
   return (
     <EditorLayout>
       <TransitionUpWrapper>
@@ -28,6 +30,7 @@ export default function EditorLayoutComp({ children }) {
         </NavBar>
       </TransitionUpWrapper>
       <TransitionDownWrapper>{children}</TransitionDownWrapper>
+      <SubjectIndexList style={{ position: "fixed", left: 0, top: 150 }} />
     </EditorLayout>
   );
 }

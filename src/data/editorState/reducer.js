@@ -23,6 +23,7 @@ const INITIAL_STATE = {
   readOnly: false,
   editorType: null,
   isLinkInput: false,
+  subjectIndexes: [],
   [AT.ADD_IMAGE]: Remote.NotAsked
 };
 
@@ -73,6 +74,9 @@ export default produce((draft, action) => {
     //TODO reset editorState when PostWrite page will unmaount.
     case AT.RESET_EDITOR_STATE:
       return INITIAL_STATE;
+    case AT.SET_SUBJECT_INDEXES:
+      draft.subjectIndexes = action.payload;
+      break;
     default:
       return;
   }

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import PlugInsEditor from "draft-js-plugins-editor";
 import { EditorState } from "draft-js";
 import "prismjs/themes/prism.css";
-import "./style.css";
 
 import { actions, selectors } from "data";
 
@@ -94,7 +93,7 @@ const BasicEditor = forwardRef((props, ref) => {
 
   return (
     <EditorWrapper>
-      {/* <button onMouseDown={logCurrentBlock}>log</button> */}
+      <button onMouseDown={logCurrentBlock}>log</button>
       {editorType === "detail" && <EditorDetailHeader />}
       <PlugInsEditor
         editorState={editorState}

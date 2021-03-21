@@ -11,6 +11,7 @@ import Card from "./Card";
 import Text from "./Text";
 import Tag from "./Tags";
 import LinkTransition from "./LinkTransition";
+import SubjectIndexList from "./SubjectIndexList";
 
 export { default as SideBar } from "./SideBar";
 
@@ -27,5 +28,6 @@ export {
   Card,
   Text,
   Tag,
-  LinkTransition
+  LinkTransition,
+  SubjectIndexList
 };

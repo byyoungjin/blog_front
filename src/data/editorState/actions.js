@@ -1,4 +1,5 @@
 import * as AT from "data/rootActionTypes";
+import { apply } from "redux-saga/effects";
 
 export const addImage = data => ({
   type: AT.ADD_IMAGE,
@@ -120,5 +121,15 @@ export const submitSplashInput = payload => ({
 
 export const selectSplashImage = payload => ({
   type: AT.SELECT_SPLASH_IMAGE,
+  payload
+});
+
+export const updateSubjectIndexes = payload => ({
+  type: AT.UPDATE_SUBJECT_INDEXES,
+  payload
+});
+
+export const setSubjectIndexes = payload => ({
+  type: AT.SET_SUBJECT_INDEXES,
   payload
 });

@@ -14,10 +14,9 @@ const rootReducer = createRootReducer(history);
 
 const env = process.env.NODE_ENV;
 let composeFn = composeWithDevTools;
-// if (env === "production") {
-//   composeFn = compose;
-// }
-
+if (env === "production") {
+  composeFn = compose;
+}
 export default function configureStore() {
   const store = createStore(
     rootReducer,
