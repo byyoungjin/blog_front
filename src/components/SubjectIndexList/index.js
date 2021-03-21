@@ -35,6 +35,7 @@ export default function SubjectIndexList({ style }) {
 const ContaienrUl = styled.ul`
   display: flex;
   flex-direction: column;
+  padding: 0;
 `;
 
 const Li = styled.li`

@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { Col, Row } from "components/Layout";
 
 import { MainLogo, Controller, SubjectIndexList } from "components";
-import { useTransitionTranslates, } from "hooks";
+import { useTransitionTranslates } from "hooks";
 
 export default function EditorLayoutComp({ children }) {
   const {
+    TransitionLeftWrapper,
     TransitionDownWrapper,
     TransitionUpWrapper
   } = useTransitionTranslates({
@@ -19,8 +20,6 @@ export default function EditorLayoutComp({ children }) {
     }
   });
 
-  
-
   return (
     <EditorLayout>
       <TransitionUpWrapper>
@@ -30,7 +29,11 @@ export default function EditorLayoutComp({ children }) {
         </NavBar>
       </TransitionUpWrapper>
       <TransitionDownWrapper>{children}</TransitionDownWrapper>
-      <SubjectIndexList style={{ position: "fixed", left: 0, top: 150 }} />
+      <SideBarContainer>
+        <TransitionLeftWrapper>
+          <SubjectIndexList />
+        </TransitionLeftWrapper>
+      </SideBarContainer>
     </EditorLayout>
   );
 }
@@ -45,4 +48,12 @@ const NavBar = styled(Row.CenterBetween)`
   width: 100%;
 
   margin: 10px;
+`;
+
+const SideBarContainer = styled(Col.Default)`
+  position: fixed;
+  left: 0;
+  top: 150px;
+  width: 20vw;
+  ${`height: calc(100vh - 110px)`}
 `;
