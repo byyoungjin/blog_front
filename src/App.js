@@ -9,10 +9,11 @@ import {
   PostWrite,
   PostWriteTry,
   PostDetail,
-  PostEdit
+  PostEdit,
+  AboutMe
 } from "pages";
 import { PublicRoute, PrivateRoute } from "routes";
-import { DefaultLayout, EditorLayout } from "layout";
+import { DefaultLayout, EditorLayout, AboutMeLayout } from "layout";
 
 function App() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
         layout={EditorLayout}
       />
       <PublicRoute path="/myPage" component={MyPage} layout={DefaultLayout} />
+      <PublicRoute path="/about" component={AboutMe} layout={AboutMeLayout} />
 
       <PrivateRoute
         path="/postWrite"

@@ -93,7 +93,7 @@ const BasicEditor = forwardRef((props, ref) => {
 
   return (
     <EditorWrapper>
-      <button onMouseDown={logCurrentBlock}>log</button>
+      {/* <button onMouseDown={logCurrentBlock}>log</button> */}
       {editorType === "detail" && <EditorDetailHeader />}
       <PlugInsEditor
         editorState={editorState}
