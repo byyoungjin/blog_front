@@ -30,8 +30,8 @@ const Container = styled.div`
 const AnimatedFill = styled(animated.div)`
   position: absolute;
   top: 0;
-  left: -20%;
-  width: 140%;
+  left: -15px;
+  ${`width: calc(100% + 30px)`};
   height: 100%;
   background: ${theme["color-primary-500"]};
   opacity: 0.5;
