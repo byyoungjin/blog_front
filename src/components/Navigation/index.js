@@ -9,15 +9,21 @@ export default function NavigationComp({ userSession }) {
   return (
     <Navigation>
       {userSession && <ProfilePicture diameter="50px" />}
-      <NavItem text="LOGIN" to="/login" show={!userSession} />
-      <NavItem text="SIGN IN" to="/register" show={!userSession} />
+      <NavItem text="BLOG" to="/" show />
+      <NavItem text="ABOUT ME" to="/about" show />
+      <NavItem text="WHO ARE YOU" to="/login" show={!userSession} />
     </Navigation>
   );
 }
 
 const Navigation = styled.div`
   display: flex;
-  justify-content: flex-end;
+
+  flex-direction: column;
   align-items: center;
   grid-area: nav;
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+  }
 `;

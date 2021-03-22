@@ -8,7 +8,7 @@ import { useSidebarPosition, useSideBarIsOpen } from "../hooks";
 
 const plus = process.env.PUBLIC_URL + "/icons/editor/block/plus.svg";
 
-export default function SideBarComp({ children }) {
+export default function SideBarComp({ children, readOnly }) {
   const [isOpen, toggleSidbarIsOpen] = useSideBarIsOpen(false);
   const sidebarPosition = useSidebarPosition();
 
@@ -20,7 +20,7 @@ export default function SideBarComp({ children }) {
         </SideBar>
         <BlockButtons isOpen={isOpen} />
       </SideBarContainer>
-      <EmojiSideButton position={sidebarPosition} />
+      {readOnly ? null : <EmojiSideButton position={sidebarPosition} />}
     </>
   );
 }

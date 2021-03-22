@@ -23,7 +23,7 @@ const ProfileRound = styled.img`
   border-radius: 50%;
   background-size: cover;
   border: 3px solid ${colors.blue_light};
-  backgroud-color: ${colors.yellow};
+  background-color: ${colors.yellow};
   margin: 10px;
 `;
 

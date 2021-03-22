@@ -3,12 +3,16 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import dotenv from "dotenv";
 import { ThemeProvider } from "styled-components";
+import { ConnectedRouter } from "connected-react-router";
 
+import ErrorBoundary from "pages/ErrorBoundary";
+
+import Modal from "components/Modal";
 import App from "./App";
 import "./normalize.css";
 import "./index.css";
 import configureStore from "data/configureStore";
-import theme from "./theme";
+import * as theme from "./theme";
 dotenv.config();
 
 const { history, store } = configureStore();
@@ -16,7 +20,12 @@ const { history, store } = configureStore();
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <App history={history} />
+      <ErrorBoundary>
+        <ConnectedRouter history={history}>
+          <App />
+          <Modal />
+        </ConnectedRouter>
+      </ErrorBoundary>
     </ThemeProvider>
   </Provider>,
   document.getElementById("root")

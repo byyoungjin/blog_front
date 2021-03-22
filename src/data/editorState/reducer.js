@@ -3,9 +3,16 @@ import { EditorState } from "draft-js";
 
 import * as AT from "data/rootActionTypes";
 import Remote from "data/remote";
-import { compositeDecorator } from "../../components/MyEditor/decorators";
+import {
+  multiDecorator,
+  prismDecorator,
+  compositeDecorator,
+  decorators
+} from "../../components/MyEditor/decorators";
 import { forcedSelectionEditorState } from "./helper/content";
 
+console.log(`multiDecorator`, multiDecorator);
+console.log(`prismDecorator`, prismDecorator);
 const INITIAL_STATE = {
   editorState: EditorState.createEmpty(),
   title: "",
@@ -16,6 +23,7 @@ const INITIAL_STATE = {
   readOnly: false,
   editorType: null,
   isLinkInput: false,
+  subjectIndexes: [],
   [AT.ADD_IMAGE]: Remote.NotAsked
 };
 
@@ -66,6 +74,9 @@ export default produce((draft, action) => {
     //TODO reset editorState when PostWrite page will unmaount.
     case AT.RESET_EDITOR_STATE:
       return INITIAL_STATE;
+    case AT.SET_SUBJECT_INDEXES:
+      draft.subjectIndexes = action.payload;
+      break;
     default:
       return;
   }

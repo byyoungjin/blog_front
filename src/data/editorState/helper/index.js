@@ -11,7 +11,7 @@ const addEntity = ({ editorState, src, entityType }) => {
   const contentStateWithEntity = contentState.createEntity(
     entityType,
     "IMMUTABLE",
-    src ? { src } : null
+    src ? { src, imageStyle: { width: "100%" } } : null
   );
   const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
 

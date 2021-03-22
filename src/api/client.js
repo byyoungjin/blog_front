@@ -5,6 +5,8 @@ import { socialApiRequestInterceptor } from "./helper";
 
 const url = config.apiUrl[process.env.NODE_ENV];
 
+console.log(`base api url: `, url);
+
 const socialApiClient = axios.create({
   baseURL: url,
   withCredentials: true

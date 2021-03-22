@@ -57,16 +57,16 @@ export function* getOnePost(action) {
   }
 }
 
+//TODO: not appropriate name, need to change
 export function* getOnePostDetail(action) {
   const { postId } = action;
   yield put(actions.editorState.setEditorType("detail"));
 
   yield put(actions.post.getOnePost(postId));
   yield put(actions.editorState.toggleEditorReadOnly(true));
-
-  yield put(actions.router.push(`/postDetail/${postId}`));
 }
 
+//TODO: not appropriate name, need to change
 export function* getOnePostEdit(action) {
   const { postId } = action;
   yield put(actions.editorState.setEditorType("edit"));
