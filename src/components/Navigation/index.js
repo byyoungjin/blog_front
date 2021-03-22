@@ -18,6 +18,12 @@ export default function NavigationComp({ userSession }) {
 
 const Navigation = styled.div`
   display: flex;
+
+  flex-direction: column;
   align-items: center;
   grid-area: nav;
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+  }
 `;

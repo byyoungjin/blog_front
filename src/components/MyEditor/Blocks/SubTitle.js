@@ -20,11 +20,14 @@ export default function SubTitle({ children }) {
 const SubTitleContent = styled.div`
   width: 100%;
   position: relative;
-  font-size: 24px;
+  font-size: 20px;
   font-family: "Noto Serif KR", serif;
   font-weight: 800;
   color: ${theme["color-basic-500"]};
   margin: 5px 0 3px;
+  @media (min-width: 600px) {
+    font-size: 24px;
+  }
 `;
 
 const SubTitleMarker = styled.div`

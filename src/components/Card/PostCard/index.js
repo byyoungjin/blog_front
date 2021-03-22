@@ -51,12 +51,20 @@ export default function Post({
   );
 }
 
-const PostContainer = styled(Row.Default)`
+const PostContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
   border-radius: 8px;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+  }
+
   &:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   }
@@ -65,11 +73,14 @@ const PostContainer = styled(Row.Default)`
 `;
 
 const ImageBox = styled.img`
-  width: 30%;
+  width: 100%;
   height: 200px;
   border: none;
   border-radius: 8px 0 0 8px;
   object-fit: cover;
+  @media (min-width: 600px) {
+    width: 30%;
+  }
 `;
 
 const TextBox = styled.div`
@@ -81,13 +92,20 @@ const TextBox = styled.div`
 
 const Title = styled.div`
   color: ${colors.blueGray};
-  font-size: 32px;
+  font-size: 24px;
   margin-bottom: 10px;
+
+  @media (min-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 const Subtitle = styled.div`
   color: ${colors.blue_light};
-  font-size: 24px;
+  font-size: 20px;
+  @media (min-width: 600px) {
+    font-size: 24px;
+  }
 `;
 
 const DateOverlay = styled.div`

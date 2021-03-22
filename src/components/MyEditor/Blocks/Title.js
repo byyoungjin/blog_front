@@ -18,7 +18,7 @@ export default function Title({ children }) {
 }
 
 const TitleContent = styled.div`
-  font-size: 40px;
+  font-size: 32px;
   color: ${theme["color-basic-900"]};
   font-family: "Noto Serif KR", serif;
   font-weight: 800;
@@ -26,6 +26,10 @@ const TitleContent = styled.div`
   height: 50px;
   position: relative;
   margin: 20px 0 10px;
+
+  @media (min-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 const TitleMarker = styled.div`

@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 export default function SplashImage({ splashInfo }) {
+  const [imageSize, setImageSize] = useState();
+  const [imageFit, setImageFit] = useState();
+  const [isOpenController, setIsOpenController] = useState(false);
   return (
     <Container>
-      <FullImage src={splashInfo.regularImageSrc} />
+      {/* {isOpenController && (
+        <>
+          <div onClick={() => setImageSize(100)}>100</div>
+          <div onClick={() => setImageSize(200)}>200</div>
+          <div onClick={() => setImageSize(300)}>300</div>
+        </>
+      )} */}
+      <FullImage
+        src={splashInfo.regularImageSrc}
+        alt="splash-image"
+        imageSize={imageSize}
+        imageFit={imageFit}
+        onClick={() => {
+          setIsOpenController(prev => !prev);
+        }}
+      />
       <Attribute>
         Photo by{" "}
         <A
@@ -27,23 +45,29 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
 const FullImage = styled.img`
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  object-fit:contain;
+  max-height:70vh;
   border: 3px solid white;
+  cursor: pointer
   // &:hover {
   //   border: 3px solid ${({ theme }) => theme.colors.yellow};
   // }
 `;
 
 const Attribute = styled.div`
-  font-size: 14px;
+  font-size: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
   color: gray;
+
+  @media (min-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 const A = styled.a`

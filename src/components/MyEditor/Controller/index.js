@@ -113,14 +113,19 @@ const Controller = styled.div`
 `;
 
 const Button = styled.div`
-  width: 100px;
+  width: 80px;
   height: 45px;
   font-size: 16px;
   color: white;
   background-color: ${colors.yellow};
-  margin-right: 30px;
+  margin-right: 10px;
   text-align: center;
   line-height: 45px;
   border-radius: 20px;
   cursor: pointer;
+
+  @media (min-width: 600) {
+    margin-right: 30px;
+    width: 100px;
+  }
 `;

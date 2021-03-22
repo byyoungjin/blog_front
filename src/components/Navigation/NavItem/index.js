@@ -8,8 +8,6 @@ import { actions } from "data";
 import colors from "theme/colors";
 import { WithToggle, WithSelectable } from "hocs";
 
-import LinkTransition from "../../LinkTransition";
-
 function NavItemComp({ text, to }) {
   const dispatch = useDispatch();
   const pathname = window.location.pathname;
@@ -25,22 +23,26 @@ function NavItemComp({ text, to }) {
       <WithSelectable
         isSelected={isSelected}
         onSelect={onClickHanlder}
-        WrappedComponent={() => <NavItem to={to}>{text}</NavItem>}
+        WrappedComponent={() => <StyledA to={to}>{text}</StyledA>}
       />
     </Container>
   );
 }
 
 const Container = styled.div`
-  margin: 0 30px;
+  margin: 10px 30px;
 `;
 
-const NavItem = styled.a`
+const StyledA = styled.a`
   text-decoration: none;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
   color: ${colors.yellow};
-  margin: 20px 10px;
+  margin: 10px 20px;
+
+  @media (min-width: 600px) {
+    font-size: 24px;
+  }
 `;
 
 export default WithToggle(NavItemComp);

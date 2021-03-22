@@ -19,7 +19,7 @@ export default function SideBar() {
         tags={tags}
         direction="column"
         isSelectable={true}
-        style={{ alignItems: "center" }}
+        style={{ alignItems: "flex-start" }}
       />
     </Container>
   );
@@ -28,8 +28,8 @@ export default function SideBar() {
 const Container = styled(Col.Default)`
   background-color: ${theme["color-basic-200"]};
   margin-left: 10px;
-  width: 80%;
+
   height: 80vh;
   border-radius: 8px;
-  padding: 10px 20px;
+  padding: 3px 5px;
 `;

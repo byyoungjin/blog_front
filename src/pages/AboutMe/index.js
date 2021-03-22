@@ -1,11 +1,12 @@
 import React, { Suspense, useRef, useEffect } from "react";
 import styled from "styled-components";
-// import "./App.scss";
+
 import { Canvas, useFrame } from "react-three-fiber";
 import { Html, useGLTF } from "@react-three/drei";
 import { useInView } from "react-intersection-observer";
-//Components
-// import Header from "./components/header";
+
+import { theme } from "theme";
+
 import { Section } from "./section";
 import state from "./state";
 
@@ -80,9 +81,18 @@ export default function AboutMe() {
             bgColor="#f15946"
             rootRef={rootRef}
           >
-            <Container className="container">
-              <Title className="title">
-                Hi I'm youngjin, javascript developer.
+            <Container>
+              <Title>
+                Hi I'm youngjin, javascript developer. <br />I made{" "}
+                <StyledA href="https://github.com/HYJ29/blog_front">
+                  this blog
+                </StyledA>{" "}
+                as my sandbox for new techs and practice <br />
+                This "About" page is really new on my blog. <br />
+                I'm planning to make this page with{" "}
+                <StyledA href="https://threejs.org/">three.js</StyledA> <br />
+                These chairs are kind of dummy. <br />
+                But I think it's funny already!
               </Title>
             </Container>
           </HTMLContent>
@@ -93,10 +103,20 @@ export default function AboutMe() {
             bgColor="#571ec1"
             rootRef={rootRef}
           >
-            <Container className="container">
-              <Title className="title">
-                I develop web with react, mobile with react-native. I'm general
-                service developer.
+            <Container>
+              <Title>
+                I develop web with react,{" "}
+                <StyledA href="https://apps.apple.com/us/app/wedo-mobile/id1546717826">
+                  mobile
+                </StyledA>{" "}
+                with react-native & expo. <br />
+                Know how to develop{" "}
+                <StyledA href="https://github.com/HYJ29/blog_api">
+                  node server.
+                </StyledA>{" "}
+                <br />
+                And have exprienc AWS , Firebase cloud service <br />
+                I'm general service developer.
               </Title>
             </Container>
           </HTMLContent>
@@ -107,8 +127,15 @@ export default function AboutMe() {
             bgColor="#636567"
             rootRef={rootRef}
           >
-            <Container className="container">
-              <Title className="title">Contact me. HYJ2900@gmail.com :)</Title>
+            <Container>
+              <Title>
+                Yes, this blog app needs some refactoring on code and
+                performance <br />
+                I'll do it next time. <br />
+                If you have anything want to talk with me,
+                <br />
+                Contact me. HYJ2900@gmail.com :)
+              </Title>
             </Container>
           </HTMLContent>
 
@@ -132,7 +159,7 @@ const RootContaienr = styled.div`
 `;
 
 const Container = styled.div`
-  margin: 0 auto;
+  /* margin: 0 auto; */
   width: 100%;
   max-width: 100%;
   height: 100vh;
@@ -142,16 +169,20 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 10rem;
+  font-size: 32px;
   text-align: center;
   width: 100%;
   margin: 0 auto;
   color: #fff;
+  line-height: 50px;
+  padding: 10px 0;
+
   span {
     display: block;
   }
-  @media (max-width: 1440px) {
-    font-size: 6rem;
+  @media (min-width: 600px) {
+    font-size: 40px;
+    line-height: 100px;
   }
 `;
 
@@ -162,4 +193,8 @@ const ScrollArea = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: auto;
+`;
+
+const StyledA = styled.a`
+  color: white;
 `;

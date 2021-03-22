@@ -39,7 +39,11 @@ export default function SubjectBlock({ children }) {
 }
 
 const Container = styled(Row.Default)`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 500;
   color: ${theme["color-basic-900"]};
+
+  @media (min-width: 600px) {
+    font-size: 24px;
+  }
 `;

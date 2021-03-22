@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useSpring, animated } from "react-spring";
 
 import { Navigation, AddPost, MainLogo } from "components";
 import AddPostTry from "components/AddPost/AddPostTry";
 import { Row, Col } from "components/Layout";
 import { selectors } from "data";
 import { SideBar } from "components";
-import { useTransitionTranslates } from "hooks";
+import { useTransitionTranslates, useWindowSize } from "hooks";
+import { bp } from "constants/index";
 
 export default function DefaultLayoutComp({ children }) {
   const dispatch = useDispatch();
@@ -23,7 +25,9 @@ export default function DefaultLayoutComp({ children }) {
     <Col.Default>
       <TransitionUpWrapper>
         <NavBar>
-          <MainLogo disabled />
+          <div onClick={() => {}} style={{ cursor: "pointer" }}>
+            <MainLogo disabled />
+          </div>
           <Navigation userSession={userSession} />
         </NavBar>
       </TransitionUpWrapper>
@@ -46,22 +50,34 @@ export default function DefaultLayoutComp({ children }) {
 
 const LayoutContainer = styled.div`
   display: grid;
-  grid-template-columns: 20vw auto;
+  grid-template-columns: 25vw auto;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 20vw auto;
+  }
 `;
 
 const ContentLayout = styled(Col.Center)`
+  padding: 0 20px;
   grid-column-start: 2;
-  padding: 0 100px;
+  @media (min-width: 600px) {
+    padding: 0 100px;
+  }
   ${`min-height: calc(100vh- 110vh)`};
 `;
 
 const SideBarContainer = styled(Col.Default)`
   position: fixed;
-  width: 20vw;
+  width: 25vw;
+
+  @media (min-width: 600px) {
+    width: 20vw;
+  }
+
   ${`height: calc(100vh - 110px)`}
 `;
 
 const NavBar = styled(Row.CenterBetween)`
-  flex:1
+  flex: 1;
   margin: 10px;
 `;

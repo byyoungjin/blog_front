@@ -32,8 +32,14 @@ const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: ${({ direction }) => (direction ? direction : "row")};
+  width: 20vw;
 `;
 
 const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: "stretch";
   margin: ${({ direction }) => (direction === "column" ? "10px 0" : "0 10px")};
+  max-width: 100%;
+  overflow: scroll;
 `;
