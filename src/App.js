@@ -13,7 +13,12 @@ import {
   AboutMe
 } from "pages";
 import { PublicRoute, PrivateRoute } from "routes";
-import { DefaultLayout, EditorLayout, AboutMeLayout } from "layout";
+import {
+  DefaultLayout,
+  EditorLayout,
+  AboutMeLayout,
+  BasicLayout
+} from "layout";
 
 function App() {
   const location = useLocation();
@@ -46,8 +51,8 @@ function App() {
         layout={EditorLayout}
       />
 
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
+      <PublicRoute path="/login" component={Login} layout={BasicLayout} />
+      <PublicRoute path="/register" component={Register} layout={BasicLayout} />
     </Switch>
   );
 }
