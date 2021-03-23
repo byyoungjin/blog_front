@@ -10,8 +10,11 @@ import { theme } from "theme";
 import { Section } from "./section";
 import state from "./state";
 
+const modelBaseUrl = process.env.PUBLIC_URL + "/models";
+
 const Model = ({ modelPath }) => {
   const gltf = useGLTF(modelPath);
+  console.log(`gltf`, gltf);
   return <primitive object={gltf.scene} dispose={null}></primitive>;
 };
 
@@ -76,7 +79,7 @@ export default function AboutMe() {
         <Suspense fallback={null}>
           <HTMLContent
             domContent={domContent}
-            modelPath={"models/armchairYellow.gltf"}
+            modelPath={modelBaseUrl + "/armchairYellow.gltf"}
             positionY={250}
             bgColor="#f15946"
             rootRef={rootRef}
@@ -98,7 +101,7 @@ export default function AboutMe() {
           </HTMLContent>
           <HTMLContent
             domContent={domContent}
-            modelPath={"models/armchairGreen.gltf"}
+            modelPath={modelBaseUrl + "/armchairGreen.gltf"}
             positionY={0}
             bgColor="#571ec1"
             rootRef={rootRef}
@@ -122,7 +125,7 @@ export default function AboutMe() {
           </HTMLContent>
           <HTMLContent
             domContent={domContent}
-            modelPath={"models/armchairGray.gltf"}
+            modelPath={modelBaseUrl + "/armchairGray.gltf"}
             positionY={-250}
             bgColor="#636567"
             rootRef={rootRef}
