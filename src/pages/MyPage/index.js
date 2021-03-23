@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Post } from "components";
-
-import { ProfilePicture, Button } from "components";
+import { ProfilePicture, Button, Card } from "components";
 import { actions, selectors } from "data";
 
 export default function Mypage() {
@@ -36,7 +34,7 @@ export default function Mypage() {
       <PostContainer>
         {posts.map(
           ({ id, titlePhoto, title, subTitle, createdAt, Tags }, index) => (
-            <Post
+            <Card.PostCard
               key={title + createdAt}
               titlePhoto={titlePhoto}
               title={title}
@@ -63,7 +61,8 @@ const MyProfile = styled.div`
   align-items: center;
   padding: 100px;
   height: 100vh;
-  widht: 100%;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const Name = styled.div`
@@ -83,18 +82,6 @@ const Label = styled.div`
 `;
 
 const PostContainer = styled.div`
-  height: 100%;
-  display: grid;
-  gap: 50px 20px;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 500px;
-  grid-auto-rows: 500px;
-
-  @media (max-width: 1400px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 1000px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  display: flex;
+  flex-direction: column;
 `;

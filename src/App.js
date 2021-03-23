@@ -20,6 +20,7 @@ import {
   BasicLayout
 } from "layout";
 
+
 function App() {
   const location = useLocation();
 
@@ -31,7 +32,7 @@ function App() {
         component={PostDetail}
         layout={EditorLayout}
       />
-      <PublicRoute path="/myPage" component={MyPage} layout={DefaultLayout} />
+      <PublicRoute path="/myPage" component={MyPage} layout={BasicLayout} />
       <PublicRoute path="/about" component={AboutMe} layout={AboutMeLayout} />
 
       <PrivateRoute

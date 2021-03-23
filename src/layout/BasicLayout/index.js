@@ -1,21 +1,25 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
-import { MainLogo, Controller } from "components";
+import { MainLogo, Navigation } from "components";
 import { Row } from "components/Layout";
 import { useTransitionTranslates } from "hooks";
+import { selectors } from "data";
 
 export default function BasicLayout({ children }) {
   const {
     TransitionDownWrapper,
     TransitionUpWrapper
   } = useTransitionTranslates();
+
+  const userSession = useSelector(selectors.user.getUserSession);
   return (
     <Container>
       <TransitionUpWrapper>
         <NavBar>
           <MainLogo />
-          <Controller />
+          <Navigation userSession={userSession} />
         </NavBar>
       </TransitionUpWrapper>
       <TransitionDownWrapper>{children}</TransitionDownWrapper>
