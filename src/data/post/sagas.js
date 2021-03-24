@@ -79,8 +79,12 @@ export function* getPosts(action) {
     const { tagId } = action.payload ? action.payload : {};
     const userId = yield select(selectors.user.getUserId);
     let posts;
+
+    // const { action: routerAction } = yield select(selectors.router.getRouter);
+
     yield put(actions.post.getPostsLoading());
-    if (tagId === 0) {
+    // all tags
+    if (tagId === 0 || !tagId) {
       if (userId) {
         posts = yield api.postApi.getPostsOfUser(userId);
       } else {

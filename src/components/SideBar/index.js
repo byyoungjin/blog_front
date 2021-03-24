@@ -1,17 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { FiMenu } from "react-icons/fi";
 
-import { mapping, theme } from "theme";
+import { theme } from "theme";
 import { Col } from "components/Layout";
 import { Tag } from "components";
 import { useTags } from "hooks";
 
-import MainLogo from "../MainLogo";
-
 export default function SideBar() {
-  const { tags } = useTags();
-
+  const { tags, currentTagName, updateCurrentTag } = useTags();
   return (
     <Container>
       <div style={{ marginBottom: 20, fontSize: 24 }}>Tags</div>
@@ -20,6 +16,8 @@ export default function SideBar() {
         direction="column"
         isSelectable={true}
         style={{ alignItems: "flex-start" }}
+        currentTagName={currentTagName}
+        updateCurrentTag={updateCurrentTag}
       />
     </Container>
   );

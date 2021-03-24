@@ -18,6 +18,7 @@ export const useTags = () => {
 
   useEffect(() => {
     if (userId) {
+      console.log("call tags");
       dispatch(actions.post.getTagsByUserId(userId));
     } else {
       dispatch(actions.post.getTagsByUserId(1));

@@ -13,7 +13,7 @@ export default function Home() {
   const posts = useSelector(selectors.post.getPosts);
   const currentTag = useSelector(selectors.post.getCurrentTag);
   const getPostsStatusRemote = useSelector(selectors.post.getPostsStatusRemote);
-  console.log("render home");
+
   useEffect(() => {
     if (currentTag) {
       dispatch(actions.post.getPosts({ tagId: currentTag.id }));
@@ -21,8 +21,6 @@ export default function Home() {
       dispatch(actions.post.getPosts());
     }
   }, [currentTag, dispatch]);
-
-  useEffect(() => (console.log(), console.log()), []);
 
   const postClickHandler = postId => {
     dispatch(actions.routing.routeWithAnimation(`/postDetail/${postId}`));

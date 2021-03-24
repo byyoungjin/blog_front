@@ -2,12 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 import { Text } from "components";
-import { WithSelectable } from "hocs";
-import { useTags } from "hooks";
 
-export default function TagGroup({ tags, direction, isSelectable, ...rest }) {
-  const { currentTagName, updateCurrentTag } = useTags();
-
+export default function TagGroup({
+  tags,
+  direction,
+  isSelectable,
+  currentTagName,
+  updateCurrentTag,
+  ...rest
+}) {
   return (
     <TagsContainer direction={direction} {...rest}>
       {tags.map(tagInfo => (

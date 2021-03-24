@@ -63,6 +63,8 @@ const PostContainer = styled.div`
 
   @media (min-width: 600px) {
     flex-direction: row;
+    height: 200px;
+    overflow: hidden;
   }
 
   &:hover {
