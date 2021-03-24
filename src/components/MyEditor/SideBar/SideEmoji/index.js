@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { emojiPlugin } from "../../Plugins/emoji";
 
@@ -12,7 +12,7 @@ export default function EmojiSideButton({ position }) {
     transform: "scale(1)"
   };
   return (
-    <Container position={position}>
+    <Container style={newPosition}>
       <EmojiSelect />
     </Container>
   );
@@ -20,13 +20,4 @@ export default function EmojiSideButton({ position }) {
 
 const Container = styled.div`
   position: absolute;
-  ${({ position }) =>
-    css`
-      ${{ ...position }}
-    `}
-  ${({ position }) => `
-  
-    left: ${position.left ? position.left - 80 : 0},
-    transform: "scale(1)" 
-  `}
 `;
