@@ -13,7 +13,6 @@ const url = config.apiUrl[process.env.NODE_ENV];
 
 const cache = setupCache({ maxAge: 1 * 1000 });
 
-// console.log(`base api url: `, url);
 
 const socialApiClient = axios.create({
   baseURL: url,

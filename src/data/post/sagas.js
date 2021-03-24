@@ -83,7 +83,7 @@ export function* getPosts(action) {
     // const { action: routerAction } = yield select(selectors.router.getRouter);
 
     yield put(actions.post.getPostsLoading());
-    // all tags
+    // not specific tag || on mypage (TODO: refactoring needed)
     if (tagId === 0 || !tagId) {
       if (userId) {
         posts = yield api.postApi.getPostsOfUser(userId);

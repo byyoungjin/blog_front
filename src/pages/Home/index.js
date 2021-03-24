@@ -8,6 +8,8 @@ import Helmet from "components/Helmet";
 import LoadingPage from "pages/LoadingPage";
 import { Card } from "components";
 
+const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.svg";
+
 export default function Home() {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
@@ -54,7 +56,12 @@ export default function Home() {
 
   return (
     <>
-      <Helmet title="LOG" description="blog main page" />
+      <Helmet
+        title="LOG"
+        description="blog main page"
+        imageUrl={defaultCover}
+        type="website"
+      />
 
       {getPostsStatusRemote.cata({
         NotAsked: () => <LoadingPage>loading 중입니다.</LoadingPage>,
