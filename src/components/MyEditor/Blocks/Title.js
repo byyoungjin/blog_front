@@ -23,7 +23,6 @@ const TitleContent = styled.div`
   font-family: "Noto Serif KR", serif;
   font-weight: 800;
   width: 100%;
-  height: 50px;
   position: relative;
   margin: 20px 0 10px;
 

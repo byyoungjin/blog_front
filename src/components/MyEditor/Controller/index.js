@@ -113,8 +113,9 @@ const Controller = styled.div`
 `;
 
 const Button = styled.div`
-  width: 80px;
+  /* width: 80px; */
   height: 45px;
+  padding: 0 10px;
   font-size: 16px;
   color: white;
   background-color: ${colors.yellow};
@@ -126,6 +127,6 @@ const Button = styled.div`
 
   @media (min-width: 600) {
     margin-right: 30px;
-    width: 100px;
+    /* width: 100px; */
   }
 `;

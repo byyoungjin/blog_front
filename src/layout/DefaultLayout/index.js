@@ -8,11 +8,10 @@ import AddPostTry from "components/AddPost/AddPostTry";
 import { Row, Col } from "components/Layout";
 import { selectors } from "data";
 import { SideBar } from "components";
-import { useTransitionTranslates, useWindowSize } from "hooks";
+import { useTransitionTranslates, useTags } from "hooks";
 import { bp } from "constants/index";
 
 export default function DefaultLayoutComp({ children }) {
-  const dispatch = useDispatch();
   const userSession = useSelector(selectors.user.getUserSession);
 
   const {
@@ -20,7 +19,6 @@ export default function DefaultLayoutComp({ children }) {
     TransitionRightWrapper,
     TransitionUpWrapper
   } = useTransitionTranslates();
-
   return (
     <Col.Default>
       <TransitionUpWrapper>

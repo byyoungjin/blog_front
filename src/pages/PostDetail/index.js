@@ -6,6 +6,8 @@ import Helmet from "components/Helmet";
 import { actions, selectors } from "data";
 import LoadingPage from "pages/LoadingPage";
 
+
+
 export default function PostDetailComp({ match }) {
   const dispatch = useDispatch();
   const getOnePostStatusRemote = useSelector(
@@ -15,6 +17,7 @@ export default function PostDetailComp({ match }) {
 
   const title = useSelector(selectors.post.getTitle);
   const subTitle = useSelector(selectors.post.getSubTitle);
+  const titlePhoto = useSelector(selectors.post.getTitlePhoto);
 
   useEffect(() => {
     dispatch(actions.post.getOnePostDetail(postId));
@@ -28,7 +31,12 @@ export default function PostDetailComp({ match }) {
 
   return (
     <>
-      <Helmet title={title} description={subTitle} />
+      <Helmet
+        title={title}
+        description={subTitle}
+        type="article"
+        imageUrl={titlePhoto}
+      />
       {getOnePostStatusRemote.cata({
         NotAsked: () => <LoadingPage />,
         Loading: () => <LoadingPage />,

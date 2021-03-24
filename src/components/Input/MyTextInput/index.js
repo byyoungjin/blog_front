@@ -18,25 +18,38 @@ export default function MyTextInput(props) {
 const InputContainer = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: column;
   position: relative;
-  width: 500px;
-
-  font-size: 32px;
+  /* width: 300px; */
+  font-size: 20px;
+  @media (min-width: 600px) {
+    flex-direction: row;
+    width: 500px;
+    font-size: 32px;
+  }
 `;
 
 const LabelStyled = styled.div`
   width: 150px;
-  text-align: right;
-  margin-right: 30px;
+  text-align: center;
+  margin-right: 0px;
+
+  @media (min-width: 600px) {
+    text-align: right;
+    margin-right: 30px;
+  }
 `;
 
 const InputStyled = styled.input`
-  width: 350px;
+  width: 250px;
   outline: none;
   border: none;
   background-color: ${colors.gray_light};
   border-radius: 10px;
   padding: 10px;
+  @media (min-width: 600px) {
+    width: 350px;
+  }
 `;
 
 const Error = styled.div`

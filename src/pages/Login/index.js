@@ -32,42 +32,38 @@ export default function Login() {
       .required("필수 항목입니다.")
   });
   return (
-    <EditorLayout logo>
-      <FormContainer>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={yupValidationSchema}
-        >
-          <FormStyled>
-            <LabelStyled>LOG IN</LabelStyled>
-            <GoogleLogin />
-            <Seperator>or</Seperator>
-            <MyTextInput
-              name="emailAddress"
-              label="이메일"
-              type="email"
-              placeholder="이메일"
-            />
-            <MyTextInput
-              name="password"
-              label="비밀번호"
-              type="password"
-              placeholder="비밀번호"
-            />
-            {loginStatus.error && (
-              <ErrorMesssage> {loginStatus.error.message}</ErrorMesssage>
-            )}
-            <Controller>
-              <LinkStyled to="/register">
-                처음이신가요? 가입하러가기.
-              </LinkStyled>
-              <Button type="submit">로그인</Button>
-            </Controller>
-          </FormStyled>
-        </Formik>
-      </FormContainer>
-    </EditorLayout>
+    <FormContainer>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        validationSchema={yupValidationSchema}
+      >
+        <FormStyled>
+          <LabelStyled>LOG IN</LabelStyled>
+          <GoogleLogin />
+          <Seperator>or</Seperator>
+          <MyTextInput
+            name="emailAddress"
+            label="이메일"
+            type="email"
+            placeholder="이메일"
+          />
+          <MyTextInput
+            name="password"
+            label="비밀번호"
+            type="password"
+            placeholder="비밀번호"
+          />
+          {loginStatus.error && (
+            <ErrorMesssage> {loginStatus.error.message}</ErrorMesssage>
+          )}
+          <RouteController>
+            <LinkStyled to="/register">처음이신가요? 가입하러가기.</LinkStyled>
+            <Button type="submit">로그인</Button>
+          </RouteController>
+        </FormStyled>
+      </Formik>
+    </FormContainer>
   );
 }
 
@@ -75,13 +71,13 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  margin-top: 10vh;
 `;
 
 const FormStyled = styled(Form)`
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 400px;
   justify-content: space-around;
 `;
@@ -89,10 +85,15 @@ const FormStyled = styled(Form)`
 const LabelStyled = styled.label`
   font-size: 32px;
   margin-bottom: 10px;
+  align-self: center;
   color: ${colors.yellow};
+
+  @media (min-width: 600px) {
+    align-items: flex-start;
+  }
 `;
 
-const Controller = styled.div`
+const RouteController = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -100,10 +101,15 @@ const Controller = styled.div`
 
 const LinkStyled = styled(Link)`
   color: ${colors.gray_light};
-  font-size: 16px;
-  margin-right: 50px;
+  font-size: 12px;
+  margin-right: 10px;
   text-decoration: none;
   cursor: pointer;
+
+  @media (min-width: 600px) {
+    font-size: 16px;
+    margin-right: 50px;
+  }
 `;
 
 const Seperator = styled(Row.CenterCenter)`

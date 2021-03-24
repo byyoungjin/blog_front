@@ -8,12 +8,14 @@ import Helmet from "components/Helmet";
 import LoadingPage from "pages/LoadingPage";
 import { Card } from "components";
 
+const defaultCover = process.env.PUBLIC_URL + "/images/default_cover_image.svg";
+
 export default function Home() {
   const dispatch = useDispatch();
   const posts = useSelector(selectors.post.getPosts);
   const currentTag = useSelector(selectors.post.getCurrentTag);
   const getPostsStatusRemote = useSelector(selectors.post.getPostsStatusRemote);
-  console.log("render home");
+
   useEffect(() => {
     if (currentTag) {
       dispatch(actions.post.getPosts({ tagId: currentTag.id }));
@@ -21,8 +23,6 @@ export default function Home() {
       dispatch(actions.post.getPosts());
     }
   }, [currentTag, dispatch]);
-
-  useEffect(() => (console.log(), console.log()), []);
 
   const postClickHandler = postId => {
     dispatch(actions.routing.routeWithAnimation(`/postDetail/${postId}`));
@@ -56,7 +56,12 @@ export default function Home() {
 
   return (
     <>
-      <Helmet title="LOG" description="blog main page" />
+      <Helmet
+        title="LOG"
+        description="blog main page"
+        imageUrl={defaultCover}
+        type="website"
+      />
 
       {getPostsStatusRemote.cata({
         NotAsked: () => <LoadingPage>loading 중입니다.</LoadingPage>,

@@ -39,4 +39,9 @@ export default function GoogleLoginComponent() {
 
 const StyledGoogleLogin = styled(GoogleLogin)`
   text-align: center;
+  width: 250px;
+
+  @media (min-width: 600px) {
+    width: 100%;
+  }
 `;

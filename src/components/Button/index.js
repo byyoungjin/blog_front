@@ -8,14 +8,20 @@ export default function Button({ children, ...props }) {
 }
 
 const ButtonStyled = styled.button`
-  width: 150px;
-  height: 70px;
+  padding: 10px;
+  /* height: 50px; */
 
   border: none;
   background-color: ${colors.yellow};
   color: white;
-  font-size: 32px;
-  border-radius: 30px;
+  font-size: 24px;
+  border-radius: 20px;
 
   cursor: pointer;
+  @media (min-width: 600px) {
+    /* width: 150px; */
+    height: 70px;
+    font-size: 32px;
+    border-radius: 30px;
+  }
 `;
