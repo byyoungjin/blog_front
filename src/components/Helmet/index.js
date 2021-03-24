@@ -20,6 +20,8 @@ export default function HelmetComp({ title, description, type, imageUrl }) {
       <meta property="og:description" content={description} />
       <meta property="og:image" content={imageUrl} />
 
+      <meta property="og:site_name" content="LOG" />
+
       {/* <!-- Twitter --> */}
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={currentUrl} />
