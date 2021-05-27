@@ -20,6 +20,7 @@ import {
   AboutMeLayout,
   BasicLayout
 } from "layout";
+import Helmet from "components/Helmet";
 
 const MyPage = lazy(() => import("pages/MyPage"));
 const PostWrite = lazy(() => import("pages/PostWrite"));
@@ -32,36 +33,48 @@ function App() {
   const location = useLocation();
 
   return (
-    <Switch location={location}>
-      <PublicRoute exact path="/" component={Home} layout={DefaultLayout} />
-      <PublicRoute
-        path="/postDetail/:postId"
-        component={PostDetail}
-        layout={EditorLayout}
+    <>
+      <Helmet
+        title="LOG"
+        description="Log everything"
+        type="website"
+        imageUrl="https://mynextblog.s3.ap-northeast-2.amazonaws.com/default_cover_image.png"
       />
-      <PublicRoute path="/myPage" component={MyPage} layout={BasicLayout} />
-      <PublicRoute path="/about" component={AboutMe} layout={AboutMeLayout} />
+      <Switch location={location}>
+        <PublicRoute exact path="/" component={Home} layout={DefaultLayout} />
+        <PublicRoute
+          path="/postDetail/:postId"
+          component={PostDetail}
+          layout={EditorLayout}
+        />
+        <PublicRoute path="/myPage" component={MyPage} layout={BasicLayout} />
+        <PublicRoute path="/about" component={AboutMe} layout={AboutMeLayout} />
 
-      <PrivateRoute
-        path="/postWrite"
-        component={PostWrite}
-        layout={EditorLayout}
-      />
-      <PublicRoute
-        path="/postWriteTry"
-        component={PostWriteTry}
-        layout={EditorLayout}
-      />
+        <PrivateRoute
+          path="/postWrite"
+          component={PostWrite}
+          layout={EditorLayout}
+        />
+        <PublicRoute
+          path="/postWriteTry"
+          component={PostWriteTry}
+          layout={EditorLayout}
+        />
 
-      <PrivateRoute
-        path="/postEdit/:postId"
-        component={PostEdit}
-        layout={EditorLayout}
-      />
+        <PrivateRoute
+          path="/postEdit/:postId"
+          component={PostEdit}
+          layout={EditorLayout}
+        />
 
-      <PublicRoute path="/login" component={Login} layout={BasicLayout} />
-      <PublicRoute path="/register" component={Register} layout={BasicLayout} />
-    </Switch>
+        <PublicRoute path="/login" component={Login} layout={BasicLayout} />
+        <PublicRoute
+          path="/register"
+          component={Register}
+          layout={BasicLayout}
+        />
+      </Switch>
+    </>
   );
 }
 
