@@ -6,8 +6,6 @@ import Helmet from "components/Helmet";
 import { actions, selectors } from "data";
 import LoadingPage from "pages/LoadingPage";
 
-
-
 export default function PostDetailComp({ match }) {
   const dispatch = useDispatch();
   const getOnePostStatusRemote = useSelector(

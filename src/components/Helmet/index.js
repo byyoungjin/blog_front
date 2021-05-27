@@ -1,5 +1,5 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function HelmetComp({ title, description, type, imageUrl }) {
   const currentUrl = window.location.href;

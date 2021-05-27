@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import dotenv from "dotenv";
 import { ThemeProvider } from "styled-components";
 import { ConnectedRouter } from "connected-react-router";
+import { HelmetProvider } from "react-helmet-async";
 
 import ErrorBoundary from "pages/ErrorBoundary";
 
@@ -18,16 +19,18 @@ dotenv.config();
 const { history, store } = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <ErrorBoundary>
-        <ConnectedRouter history={history}>
-          <App />
-          <Modal />
-        </ConnectedRouter>
-      </ErrorBoundary>
-    </ThemeProvider>
-  </Provider>,
+  <HelmetProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <ErrorBoundary>
+          <ConnectedRouter history={history}>
+            <App />
+            <Modal />
+          </ConnectedRouter>
+        </ErrorBoundary>
+      </ThemeProvider>
+    </Provider>
+  </HelmetProvider>,
   document.getElementById("root")
 );
 

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Route } from "react-router-dom";
 
 import useWhoAmI from "hooks/useWhoAmI";
+import { PulseLoading } from "components";
 
 export default function PublciRoute({
   path,
@@ -16,9 +17,11 @@ export default function PublciRoute({
       {...rest}
       path={path}
       render={matchProps => (
-        <Layout>
-          <Component {...matchProps} {...rest} />
-        </Layout>
+        <Suspense fallback={<PulseLoading />}>
+          <Layout>
+            <Component {...matchProps} {...rest} />
+          </Layout>
+        </Suspense>
       )}
     />
   );

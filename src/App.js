@@ -1,17 +1,18 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
+import {
+  Home
+  // MyPage,
+  // PostWrite,
+  // PostWriteTry,
+  // PostDetail,
+  // PostEdit,
+  // AboutMe
+} from "pages";
 
 import Login from "pages/Login";
 import Register from "pages/Register";
-import {
-  Home,
-  MyPage,
-  PostWrite,
-  PostWriteTry,
-  PostDetail,
-  PostEdit,
-  AboutMe
-} from "pages";
+
 import { PublicRoute, PrivateRoute } from "routes";
 import {
   DefaultLayout,
@@ -20,6 +21,12 @@ import {
   BasicLayout
 } from "layout";
 
+const MyPage = lazy(() => import("pages/MyPage"));
+const PostWrite = lazy(() => import("pages/PostWrite"));
+const PostWriteTry = lazy(() => import("pages/PostWriteTry"));
+const PostDetail = lazy(() => import("pages/PostDetail"));
+const PostEdit = lazy(() => import("pages/PostEdit"));
+const AboutMe = lazy(() => import("pages/AboutMe"));
 
 function App() {
   const location = useLocation();

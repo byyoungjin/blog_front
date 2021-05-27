@@ -12,6 +12,7 @@ import Text from "./Text";
 import Tag from "./Tags";
 import LinkTransition from "./LinkTransition";
 import SubjectIndexList from "./SubjectIndexList";
+export * from "./Placeholder";
 
 export { default as SideBar } from "./SideBar";
 
